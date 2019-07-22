@@ -1,7 +1,7 @@
 ---
 title: facebook 营销api集成
 date: 2019-06-28 10:15:25
-tags:
+tags: facebook
 ---
 
 # facebook 营销api集成
@@ -22,14 +22,13 @@ git clone https://github.com/facebook/facebook-java-business-sdk.git
       <version>3.0.0</version>
 </dependency>
 
-```
-
 插件maven-source-plugin 无法下载因缺失版本号
 添加<version>3.1.0</version>
 // 解决idea报错
 在<build></build>标签内添加<defaultGoal>compile</defaultGoal>
 在<plugins></plugins>标签外套一个标签<pluginManagement></pluginManagement>
 
+```
 
 添加java文件
 ```
@@ -97,6 +96,17 @@ public class TestFBJavaSDK
 
 ```
 
+
+执行java文件既可发布请求到facebook服务器，
+*** 需要安全上网 ***
+
+
+## 1、主页推广
+根据提示一步一步提交，到 沙盒账号，如果之前没有添加则新建，要推广的主页，如果无则新建
+
+到下载示例代码，点下载，将会获得一个java文件，里面含有accessToken、appid、ad_account_id、app_secret等信息，
+将该下载的SAMPLE_CODE.java文件放于与上面两个java文件同级目录，直接运行该java文件即可，
+注意此时电脑需要科学上网，不然会报错***Timeout***
 
 
 

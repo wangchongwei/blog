@@ -1,7 +1,7 @@
 ---
 title: facebook sdk 集成
 date: 2019-06-26 16:52:30
-tags:
+tags: facebook
 ---
 
 # Facebook sdk 集成
