@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>Please%20edit/blog/2019/04/vscode%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6%E4%B8%8E%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91.html</loc>
+    <loc>hexo/blog/2019/06/facebook-%E8%90%A5%E9%94%80api%E9%9B%86%E6%88%90.html</loc>
+    <lastmod>2019-07-11</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/07/facebook%E6%8E%A8%E5%B9%BFapi-%E6%8E%A8%E5%B9%BF%E4%B8%BB%E9%A1%B5.html</loc>
+    <lastmod>2019-07-11</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/07/maven.html</loc>
+    <lastmod>2019-07-08</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/06/android-okHttp3.html</loc>
+    <lastmod>2019-07-05</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/06/facebook-sdk-%E9%9B%86%E6%88%90.html</loc>
+    <lastmod>2019-07-05</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/07/react%E5%8F%91%E5%B8%83%E5%88%B0javaweb.html</loc>
+    <lastmod>2019-07-05</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2019/04/vscode%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6%E4%B8%8E%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91.html</loc>
     <lastmod>2019-04-28</lastmod>
   </url>
 </urlset>
