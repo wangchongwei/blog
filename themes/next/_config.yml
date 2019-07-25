@@ -93,11 +93,11 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   home: /
-  archives: /archives
-  categories: /categories
+  # archives: /archives
+  # categories: /categories
   tags: /tags
-  about: /about
-  sitemap: /sitemap.xml
+  # about: /about
+  # sitemap: /sitemap.xml
   # commonweal: /404.html
 
 # Enable/Disable menu icons.
@@ -105,13 +105,13 @@ menu_icons:
   enable: true
   #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
   home: home
-  about: user
-  categories: th
-  schedule: calendar
+  # about: user
+  # categories: th
+  # schedule: calendar
   tags: tags
-  archives: archive
-  sitemap: sitemap
-  commonweal: heartbeat
+  # archives: archive
+  # sitemap: sitemap
+  # commonweal: heartbeat
 
 
 # ---------------------------------------------------------------
@@ -155,8 +155,6 @@ links_icon: link
 links_title: Links
 links_layout: block
 #links_layout: inline
-links:
-  lofter: http://subblogzhaoxunyongm70.lofter.com/
 
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
@@ -360,7 +358,7 @@ han: false
 #swiftype_key:
 
 # Baidu Analytics ID
-baidu_analytics: 0af0c9cfcd648be735ccf119d51ae564
+baidu_analytics: 
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -368,7 +366,7 @@ baidu_analytics: 0af0c9cfcd648be735ccf119d51ae564
 # Disqus
 disqus:
   enable: false
-  shortname: blog-gcalls-cn
+  shortname: 
   count: true
 
 # Hypercomments
@@ -386,8 +384,8 @@ changyan:
 # more info please open https://valine.js.org
 valine:
   enable: false
-  app_id: jozwrL8uJ20tiwfpIlilQEvx-gzGzoHsz
-  app_key: DrpiYQlTyseBEjF9Ujr0SVKk
+  app_id: 
+  app_key: 
   notify: true # mail notifier , https://github.com/xCss/Valine/wiki
   verify: false # Verification code
   placeholder: Just go go # comment box placeholder
@@ -402,7 +400,7 @@ valine:
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-livere_uid: MTAyMC80MTc1MS8xODI5Nw==
+livere_uid: 
 
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
@@ -539,8 +537,8 @@ rating:
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
   enable: true
-  app_id: jozwrL8uJ20tiwfpIlilQEvx-gzGzoHsz
-  app_key: DrpiYQlTyseBEjF9Ujr0SVKk
+  app_id: 
+  app_key: 
 
 
 # Another tool to show number of visitors to each article.
