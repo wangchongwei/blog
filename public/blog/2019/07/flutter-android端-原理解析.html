@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Devops, Microservice">
+  <meta name="keywords" content="flutter,">
 
 
 
@@ -107,17 +107,18 @@
 
 
 
-<meta name="description" content="Please description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="hexo/tags/index.html">
+<meta name="description" content="flutter android端 原理解析首先看MainActivity， 继承FlutterActivity 再看FlutterActivity代码，继承Activity，实现Provider、PluginRegistry、ViewFactory 12345678910111213141516private final FlutterActivityDelegate delegate = new">
+<meta name="keywords" content="flutter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flutter android端 原理解析">
+<meta property="og:url" content="hexo/blog/2019/07/flutter-android端-原理解析.html">
 <meta property="og:site_name" content="Happy To Try">
-<meta property="og:description" content="Please description">
+<meta property="og:description" content="flutter android端 原理解析首先看MainActivity， 继承FlutterActivity 再看FlutterActivity代码，继承Activity，实现Provider、PluginRegistry、ViewFactory 12345678910111213141516private final FlutterActivityDelegate delegate = new">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-19T02:04:38.000Z">
+<meta property="og:updated_time" content="2019-07-25T02:33:34.203Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
-<meta name="twitter:description" content="Please description">
+<meta name="twitter:title" content="flutter android端 原理解析">
+<meta name="twitter:description" content="flutter android端 原理解析首先看MainActivity， 继承FlutterActivity 再看FlutterActivity代码，继承Activity，实现Provider、PluginRegistry、ViewFactory 12345678910111213141516private final FlutterActivityDelegate delegate = new">
 
 
 
@@ -147,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="hexo/tags/">
+  <link rel="canonical" href="hexo/blog/2019/07/flutter-android端-原理解析.html">
 
 
 
 
 
-  <title>标签 | Happy To Try</title>
+  <title>flutter android端 原理解析 | Happy To Try</title>
   
 
 
@@ -280,40 +281,177 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter-android端-原理解析.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 5 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/android/" style="font-size: 21px; color: #6f6f6f">android</a> <a href="/tags/facebook/" style="font-size: 21px; color: #6f6f6f">facebook</a> <a href="/tags/flutter/" style="font-size: 30px; color: #111">flutter</a> <a href="/tags/react-spring/" style="font-size: 12px; color: #ccc">react+spring</a> <a href="/tags/vscode/" style="font-size: 12px; color: #ccc">vscode</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">flutter android端 原理解析</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:32:54+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/flutter-android端-原理解析.html" class="leancloud_visitors" data-flag-title="flutter android端 原理解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="flutter-android端-原理解析"><a href="#flutter-android端-原理解析" class="headerlink" title="flutter android端 原理解析"></a>flutter android端 原理解析</h1><p>首先看MainActivity，</p>
+<p>继承FlutterActivity</p>
+<p>再看FlutterActivity代码，继承Activity，实现Provider、PluginRegistry、ViewFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private final FlutterActivityDelegate delegate = new FlutterActivityDelegate(this, this);</span><br><span class="line">private final FlutterActivityEvents eventDelegate;</span><br><span class="line">private final Provider viewProvider;</span><br><span class="line">private final PluginRegistry pluginRegistry;</span><br><span class="line"></span><br><span class="line">public FlutterActivity() &#123;</span><br><span class="line">    this.eventDelegate = this.delegate;</span><br><span class="line">    this.viewProvider = this.delegate;</span><br><span class="line">    this.pluginRegistry = this.delegate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    this.eventDelegate.onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一看delegate就知道代理模式</p>
+<p>在生命周期onCrreate中，视图由eventDelegate创建，而该对象在构造函数中被初始化赋值，</p>
+<p>FlutterActivityEvents 是一个接口类 继承了ActivityResultListener生命周期、RequestPermissionsResultListener权限请求、ComponentCallbacks2这个类先不管。</p>
+<p>FlutterActivityDelegate 就是FlutterActivityEvents类的实现.</p>
+<p>看FlutterActivityDelegate类中的onCreate函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        if (VERSION.SDK_INT &gt;= 21) &#123;</span><br><span class="line">            Window window = this.activity.getWindow();</span><br><span class="line">            window.addFlags(-2147483648);</span><br><span class="line">            window.setStatusBarColor(1073741824);</span><br><span class="line">            window.getDecorView().setSystemUiVisibility(1280);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String[] args = getArgsFromIntent(this.activity.getIntent());</span><br><span class="line">        FlutterMain.ensureInitializationComplete(this.activity.getApplicationContext(), args);</span><br><span class="line">        this.flutterView = this.viewFactory.createFlutterView(this.activity);</span><br><span class="line">        if (this.flutterView == null) &#123;</span><br><span class="line">            FlutterNativeView nativeView = this.viewFactory.createFlutterNativeView();</span><br><span class="line">            this.flutterView = new FlutterView(this.activity, (AttributeSet)null, nativeView);</span><br><span class="line">            this.flutterView.setLayoutParams(matchParent);</span><br><span class="line">            this.activity.setContentView(this.flutterView);</span><br><span class="line">            this.launchView = this.createLaunchView();</span><br><span class="line">            if (this.launchView != null) &#123;</span><br><span class="line">                this.addLaunchView();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!this.loadIntent(this.activity.getIntent())) &#123;</span><br><span class="line">            String appBundlePath = FlutterMain.findAppBundlePath(this.activity.getApplicationContext());</span><br><span class="line">            if (appBundlePath != null) &#123;</span><br><span class="line">                this.runBundle(appBundlePath);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>首先对android版本做了一个判断，当大于6.0，设置了状态栏颜色，和窗口模式。</p>
+<h2 id="android端与dart端通信"><a href="#android端与dart端通信" class="headerlink" title="android端与dart端通信"></a>android端与dart端通信</h2><h3 id="1、dart端调用android端代码"><a href="#1、dart端调用android端代码" class="headerlink" title="1、dart端调用android端代码"></a>1、dart端调用android端代码</h3><h4 id="1、原生android代码"><a href="#1、原生android代码" class="headerlink" title="1、原生android代码"></a>1、原生android代码</h4><p>新建一个类TestPlugin 实现MethodChannel类里的内部接口类MethodCallHandler。</p>
+<p>重写onMethodCall方法，在此处写需要实现的逻辑代码</p>
+<p>最后是将插件绑定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class TestPlugin implements MethodChannel.MethodCallHandler &#123;</span><br><span class="line"></span><br><span class="line">    public static final String CHANNEL = &quot;plugin/test&quot;;</span><br><span class="line"></span><br><span class="line">    static MethodChannel channel;</span><br><span class="line"></span><br><span class="line">    // 上下文</span><br><span class="line">    private Activity activity;</span><br><span class="line"></span><br><span class="line">    private TestPlugin(Activity activity) &#123;</span><br><span class="line">        this.activity = activity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void registerWith(PluginRegistry.Registrar registrar) &#123;</span><br><span class="line">        channel = new MethodChannel(registrar.messenger(), CHANNEL);</span><br><span class="line">        TestPlugin plugin = new TestPlugin(registrar.activity());</span><br><span class="line">        // 在此通道上接受方法调用的回调</span><br><span class="line">        channel.setMethodCallHandler(plugin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) &#123;</span><br><span class="line"></span><br><span class="line">        if(methodCall.method.equals(&quot;test&quot;)) &#123;</span><br><span class="line">            Toast.makeText(activity.getApplicationContext(), &quot;测试dart调用android原生插件&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line"></span><br><span class="line">            result.success(&quot;调用成功&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        // 当未找到该函数</span><br><span class="line">        result.notImplemented();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在MainActivity中绑定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class MainActivity extends FlutterActivity &#123;</span><br><span class="line">  @Override</span><br><span class="line">  protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    GeneratedPluginRegistrant.registerWith(this);</span><br><span class="line"></span><br><span class="line">    registerPlugin(this);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  private void registerPlugin(PluginRegistry registry) &#123;</span><br><span class="line">    TestPlugin.registerWith(registry.registrarFor(TestPlugin.CHANNEL));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2、在dart中调用该原生方法"><a href="#2、在dart中调用该原生方法" class="headerlink" title="2、在dart中调用该原生方法"></a>2、在dart中调用该原生方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static const _platform = const MethodChannel(&apos;plugin/test&apos;);</span><br><span class="line"></span><br><span class="line">_toast() &#123;</span><br><span class="line">    /// 调用原生的方法</span><br><span class="line">    _platform.invokeMethod(&apos;test&apos;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>一个原生插件调用就完成了。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/flutter/" rel="tag"># flutter</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/07/facebook推广api-推广主页.html" rel="next" title="facebook推广api 推广主页">
+                <i class="fa fa-chevron-left"></i> facebook推广api 推广主页
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/07/dart语言语法糖.html" rel="prev" title="dart语言语法糖">
+                dart语言语法糖 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -322,6 +460,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -342,8 +484,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -410,6 +561,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#flutter-android端-原理解析"><span class="nav-number">1.</span> <span class="nav-text">flutter android端 原理解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#android端与dart端通信"><span class="nav-number">1.1.</span> <span class="nav-text">android端与dart端通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、dart端调用android端代码"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、dart端调用android端代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、原生android代码"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1、原生android代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、在dart中调用该原生方法"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">2、在dart中调用该原生方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
