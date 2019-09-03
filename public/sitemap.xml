@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>hexo/blog/2019/09/hashMap%E8%A7%A3%E6%9E%90.html</loc>
+    
+    <lastmod>2019-09-03T07:31:47.454Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2019/08/%E5%8D%87%E7%BA%A7rn%E7%89%88%E6%9C%AC%E9%80%82%E9%85%8Dandroid64.html</loc>
+    
+    <lastmod>2019-08-21T01:38:46.589Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>hexo/blog/2019/07/Rxjava-Retrofit-%E5%AE%9E%E7%8E%B0BaseResult.html</loc>
     
     <lastmod>2019-07-25T03:25:23.897Z</lastmod>

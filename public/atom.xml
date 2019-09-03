@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="hexo/"/>
-  <updated>2019-07-25T03:25:23.897Z</updated>
+  <updated>2019-09-03T07:31:47.454Z</updated>
   <id>hexo/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hashMap解析</title>
+    <link href="hexo/blog/2019/09/hashMap%E8%A7%A3%E6%9E%90.html"/>
+    <id>hexo/blog/2019/09/hashMap解析.html</id>
+    <published>2019-09-03T06:01:51.000Z</published>
+    <updated>2019-09-03T07:31:47.454Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h1><h3 id="Hash内部类Node："><a href="#Hash内部类Node：" class="headerlink" title="Hash内部类Node："></a>Hash内部类Node：</h3><p>Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。<br>链表数据结构，每一个节点都记录下一个节点的地址。<br>在Node的构造函数中，直接包含了下一个节点，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        final int hash;</span><br><span class="line">        final K key;</span><br><span class="line">        V value;</span><br><span class="line">        Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">        // 将下一个节点作为入参放入构造函数中</span><br><span class="line">        Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            this.hash = hash;</span><br><span class="line">            this.key = key;</span><br><span class="line">            this.value = value;</span><br><span class="line">            this.next = next;</span><br><span class="line">        &#125;</span><br><span class="line">    ....</span><br></pre></td></tr></table></figure></p><p>获取某个节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> public V get(Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab;</span><br><span class="line">        Node&lt;K,V&gt; first, e;</span><br><span class="line">        int n;</span><br><span class="line">        K k;</span><br><span class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line">            if (first.hash == hash &amp;&amp; // always check first node</span><br><span class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                return first;</span><br><span class="line">            if ((e = first.next) != null) &#123;</span><br><span class="line">                // 当为树结构的时候</span><br><span class="line">                if (first instanceof TreeNode)</span><br><span class="line">                // 获取树形结构中某个节点</span><br><span class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                // 遍历链表结构    </span><br><span class="line">                do &#123;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        return e;</span><br><span class="line">                &#125; while ((e = e.next) != null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;HashMap源码分析&quot;&gt;&lt;a href=&quot;#HashMap源码分析&quot; class=&quot;headerlink&quot; title=&quot;HashMap源码分析&quot;&gt;&lt;/a&gt;HashMap源码分析&lt;/h1&gt;&lt;h3 id=&quot;Hash内部类Node：&quot;&gt;&lt;a href=&quot;#Hash内
+      
+    
+    </summary>
+    
+    
+      <category term="java" scheme="hexo/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>升级rn版本适配android64</title>
+    <link href="hexo/blog/2019/08/%E5%8D%87%E7%BA%A7rn%E7%89%88%E6%9C%AC%E9%80%82%E9%85%8Dandroid64.html"/>
+    <id>hexo/blog/2019/08/升级rn版本适配android64.html</id>
+    <published>2019-08-21T01:31:14.000Z</published>
+    <updated>2019-08-21T01:38:46.589Z</updated>
+    
+    <content type="html"><![CDATA[<p>google play在2019/08/01起实施强制支持64位手机的措施。</p><p>因为之前的version为0.55.4,到0.59.1版本更新太多，<br>采取的方案是：新建一个项目version为0.59.1，然后将之前的代码直接移入到新项目</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;google play在2019/08/01起实施强制支持64位手机的措施。&lt;/p&gt;
+&lt;p&gt;因为之前的version为0.55.4,到0.59.1版本更新太多，&lt;br&gt;采取的方案是：新建一个项目version为0.59.1，然后将之前的代码直接移入到新项目&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="react-native" scheme="hexo/tags/react-native/"/>
+    
+  </entry>
   
   <entry>
     <title>Rxjava + Retrofit 实现BaseResult</title>
