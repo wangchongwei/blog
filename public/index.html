@@ -292,6 +292,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View.html" itemprop="url">android 自定义View</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-10T15:42:49+08:00">
+                2019-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View.html" class="leancloud_visitors" data-flag-title="android 自定义View">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Android-自定义View"><a href="#Android-自定义View" class="headerlink" title="Android 自定义View"></a>Android 自定义View</h1><p>自定义View主要用于：需要一些不规则的图形、事件冲突、特定的视图群组、扩展某些组件的功能。</p>
+<p>首页android自定义View有三种类型，<br>1、继承View，多用于实现一些不规则的图形。</p>
+<p>2、继承特定的组件，如TextView，</p>
+<p>3、继承ViewGroup，用于视图组</p>
+<p>在自定义View中有三个关键的方法：<br>onMeasure、onLayout、onDraw</p>
+<h2 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h2><p>测量，<br>ViewGroup 会遍历测量子视图的onMeasure方法。<br>一般view 则是在测量自身。</p>
+<p>在这个方法中，一般是对视图的尺寸做一些要求。<br>如：处理padding、处理wrap_parent</p>
+<p>margin是无需处理的，margin其实是在父容器的onMeasure时处理的。</p>
+<p>在自定义view时，如果没有重写onMeasure方法，我们调用该组件时，除非制定尺寸，否则wrap_parent、match_parent表现一样，都是充满父容器-match_parent</p>
+<p>onMeasure方法有两个参数(int widthMeasureSpec, int heightMeasureSpec); MeasureSpec时测量规格。<br>这两个参数都是父容器传递过来。</p>
+<p>视图的测量大小由两个元素决定，视图本身的LayoutParams 以及 父容器的测量规格MeasureSpec</p>
+<h3 id="LayoutParams"><a href="#LayoutParams" class="headerlink" title="LayoutParams"></a>LayoutParams</h3><p>我们在使用时，一般是在xml文件，配置某个组件，指定视图宽高：<br>android:layout_width = “wrap_parent | 50dp | match_parent”<br>存在三种情况，<br>wrap_parent： 自适应大小，<br>50dp: 具体尺寸<br>match_parent: 充满父容器-父容器大小</p>
+<h3 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h3><p>测量规格，MeasureSpec由size和mode组成</p>
+<p>1.static int getMode(int measureSpec): // 获取mode<br>2.static int getSize(int measureSpec):// 获取size<br>3.static int makeMeasureSpec(int size,int mode):// 构造一个MeasureSpec</p>
+<p>specMode存在三种情况:<br>EXACTLY:<br>具体尺寸、具体值<br>AT_MOST：<br>表示子视图最多只能是specSize中指定的大小<br>UNSPECIFIED：<br>可以将视图按照自己的意愿设置成任意的大小，没有任何限制，很少用到，主要是系统内部会用到。</p>
+<p>size：<br>就是LayputParams中指定的大小</p>
+<p>而子视图的大小也就是通过size和specMode获取的，具体关系如下图：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EXACTLY</th>
+<th>AT_MOST</th>
+<th>UNSPECIFIED</th>
+<th>&lt;-MeasureSpec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wrap_parnet</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>match_parent</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td></td>
+</tr>
+<tr>
+<td>^LayoutParams</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>总结就是，设置了具体尺寸时，具体尺寸生效，未设置具体尺寸时，就会显示最大尺寸</p>
+<p>下面会讲具体使用</p>
+<h2 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h2><p>布局方法</p>
+<p>在调用onLayout时，onMeasure已经完成，<br>子容器的onLyout是在父容器执行onLayout时调用，而自身的onLyout也会触发内部子容器的遍历onLayout。这样就完成了整个视图的布局过程。<br>在onLayout中，会计算该视图的 左上右下 四个顶点的坐标，就完成了该视图的布局。</p>
+<h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><p>绘制的方法<br>onDraw是在容器的draw方法时调用的。<br>而绘制的顺序为：<br>1.绘制背景<br>2.如果有必要，保存画布的图层，以准备失效<br>3.绘制视图的内容<br>4.绘制子控件<br>5.如果必要，绘制衰落边缘和恢复层<br>6.绘制装饰（比如滚动条）</p>
+<p>onDraw 有一个参数(Canvas cancas),<br>canvas 就是画布，画布的范围就是onLayout布局后确定的区域</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/react-redux.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2886,138 +3080,9 @@
 <p>在Actiivty中测试发送自定义事件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onResume() &#123;</span><br><span class="line">    super.onResume();</span><br><span class="line">    logEvent();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void logEvent() &#123;</span><br><span class="line">    Log.d(&quot;========&quot;, &quot;logEvent&quot;);</span><br><span class="line">    AppEventsLogger logger = AppEventsLogger.newLogger(this);</span><br><span class="line">    logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);</span><br><span class="line">    logger.logEvent(&quot;Test Event&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在测试时发现，当打断点调试时发现，发送事件总是会失败，正常运行却可以在facebook分析工具中看得到提交的事件。</p>
+<p>后续：<br>在sdk集成后，可以看到之前定义的事件数据。<br>但是在连接商务平台，想要发布广告时。<br>需要通过自己的事件来定义受众、或者定义类似受众时发现，在商务平台无法获取到自定义事件的数据。<br>甚至都无法获取到我们的应用。<br>后来看官方文档，发现出了自定义事件、自动收集的事件，还有一个标准事件。<br>在我添加了一个标准事件后，就在商务平台上能找到在开发平台提交的app了。<br>但是那些自定义受众、类似受众功能貌似只能绑定到 facebook定义的标准事件，而不能是我们自己的自定义事件</p>
 <p><strong><em>注意，运行时手机需要能连接到facebook后台服务器，大陆用户需要科学上网。</em></strong></p>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/android-okHttp3.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/06/android-okHttp3.html" itemprop="url">android okHttp3</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-18T10:52:40+08:00">
-                2019-06-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/06/android-okHttp3.html" class="leancloud_visitors" data-flag-title="android okHttp3">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1>
           
         
       
@@ -3102,7 +3167,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
