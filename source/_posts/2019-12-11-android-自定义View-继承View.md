@@ -9,6 +9,11 @@ tags: android
 [上篇关于自定义View的介绍](android-自定义View.html)
 接下来将会针对自定义View三种情况一一实现。
 
+<a value="源码地址" target="_blank" href="https://github.com/wangchongwei/customView" style="font-size:25px; color:blue; font-weight:bold">源码地址</a>
+
+最后实现效果如下图：
+
+<img src="../../../images/custom_view_final.jpg" style="zoom:20%" />
 
 ## 继承View
 
@@ -293,4 +298,45 @@ class MainActivity : AppCompatActivity() {
 现在我们完成了图形的大致绘制，但在x、y轴却没有一些文字说明，接下来我们就要加上这些
 
 ### 绘制x、y轴标准线值，将各个点连接起来。
+```
+/** 绘制各个点 */
+    private void drawPoint(Canvas canvas) {
+        if(xValue == null || yValue == null) return;
+        // 先绘制5条y轴标准线位置 取高度的90%作为图线的最高。
+        float maxHeight = (float)((bottom - top) * 0.9);
+        float itemHeight = maxHeight / 5;
+        int itemValue = yMax / 5;
+        for(int i = 1; i <=5; i ++) {
+            canvas.drawLine(left, bottom - itemHeight * i, left + 15, bottom - itemHeight * i, paint);
+            // 绘制y轴标准值
+            canvas.drawText(itemValue * i + "", left - 90, bottom - itemHeight * i, paint);
+        }
 
+        // 再绘制x轴的数据， x轴线的标准值就是x轴的值，数目也是xValue的值
+        float maxWidth = (float)((right - left) * 0.9);
+        float itemWidth = ((float) (maxWidth * 1.0)) / xValue.length;
+        for (int i = 1; i <= xValue.length; i ++) {
+            float x = left + itemWidth * i;
+                    // 绘制轴线
+            canvas.drawLine(x, bottom, x, bottom - 15, paint);
+            // 绘制点
+            float y = bottom - maxHeight * yValue[i-1] / yMax;
+            canvas.drawCircle(x, y, 10, paint);
+
+            // 绘制点与点之间的连线
+            if(lastX > 0f) {
+                canvas.drawLine(lastX, lastY, x, y, paint);
+            }
+
+            // 绘制x轴标准值
+            canvas.drawText(xValue[i-1], x, bottom + 50, paint);
+
+            lastX = x;
+            lastY = y;
+        }
+    }
+
+```
+最后实现效果如下图：
+
+<img src="../../../images/custom_view_final.jpg" style="zoom:20%" />
