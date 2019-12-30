@@ -292,6 +292,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/react发布到javaweb.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/react发布到javaweb.html" itemprop="url">react发布到javaweb</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T14:29:35+08:00">
+                2019-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/react发布到javaweb.html" class="leancloud_visitors" data-flag-title="react发布到javaweb">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="react项目发布到javaweb中"><a href="#react项目发布到javaweb中" class="headerlink" title="react项目发布到javaweb中"></a>react项目发布到javaweb中</h1><h3 id="1、打包react"><a href="#1、打包react" class="headerlink" title="1、打包react"></a>1、打包react</h3><p>直接执行npm run build命令：发现在build目录下生成资源文件，<br>但是打开index.html发现报错，发现在生成的index.html中引入的文件路径有问题：/static</p>
+<p>/多余，或者说少了.  正确的路径应该是：static 或者 ./static</p>
+<p>发现是%PUBLIC_URL%问题，在构建时应该执行</p>
+<p><strong><em> PUBLIC_URL=./ npm run build </em></strong></p>
+<h3 id="2、集成到javaweb中"><a href="#2、集成到javaweb中" class="headerlink" title="2、集成到javaweb中"></a>2、集成到javaweb中</h3><p>将上一步生成build目录下的文件都复制放在webapp路径下，启动应用就能直接访问到index.html文件</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/facebook-营销api集成.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -907,7 +1042,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

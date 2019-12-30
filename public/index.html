@@ -292,6 +292,145 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View-继承EditText.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View-继承EditText.html" itemprop="url">android-自定义View-继承EditText</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-19T17:59:28+08:00">
+                2019-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View-继承EditText.html" class="leancloud_visitors" data-flag-title="android-自定义View-继承EditText">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android-自定义View-继承EditText"><a href="#android-自定义View-继承EditText" class="headerlink" title="android-自定义View-继承EditText"></a>android-自定义View-继承EditText</h1><p>一直觉得flutter中的输入框效果不错。<br>动画，提示标题都有。<br>这次要通过自定义View, 继承重写EditText来实现同样的输入框效果</p>
+<p><a value="源码地址" target="_blank" href="https://github.com/wangchongwei/customView" style="font-size:25px; color:blue; font-weight:bold">源码地址</a></p>
+<p>首先确定大致思路<br>两个元素：TextView、EditText，TextView为标题，EditText为输入框展示<br>当未获取焦点时：<br>1、输入框如果已经有输入的内容，则输入框展示已输入的内容，并且TextView缩小在输入框上部<br>2、输入框如果没有输入的内容，则输入框展示的提示文本<br>当获取焦点时：<br>不管有无输入内容，提示文本缩小在输入框上部</p>
+<p>TextView并非实质组件，只是绘制Text，当作TextView。</p>
+<h3 id="1、先写一个类继承AppCompatEditText，并实现构造函数"><a href="#1、先写一个类继承AppCompatEditText，并实现构造函数" class="headerlink" title="1、先写一个类继承AppCompatEditText，并实现构造函数"></a>1、先写一个类继承AppCompatEditText，并实现构造函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class AnimatedInput extends AppCompatEditText &#123;</span><br><span class="line"></span><br><span class="line"> public AnimatedInput(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">        this.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AnimatedInput(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">        this.context = context;</span><br><span class="line">        initView(attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AnimatedInput(Context context, AttributeSet attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        this.context = context;</span><br><span class="line">        initView(attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2、重写onFocusChanged函数"><a href="#2、重写onFocusChanged函数" class="headerlink" title="2、重写onFocusChanged函数"></a>2、重写onFocusChanged函数</h3><p>这样获取到 是否获取焦点的标识位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) &#123;</span><br><span class="line">        super.onFocusChanged(focused, direction, previouslyFocusedRect);</span><br><span class="line">        isFocus = focused;</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3、重写onTextChanged函数"><a href="#3、重写onTextChanged函数" class="headerlink" title="3、重写onTextChanged函数"></a>3、重写onTextChanged函数</h3><p>这样获取到输入框的内容value<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) &#123;</span><br><span class="line">        super.onTextChanged(text, start, lengthBefore, lengthAfter);</span><br><span class="line">        value = text.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4、绘制提示文本"><a href="#4、绘制提示文本" class="headerlink" title="4、绘制提示文本"></a>4、绘制提示文本</h3><p>这时候要分情况，即是否获取焦点、输入框是否有内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onDraw(Canvas canvas) &#123;</span><br><span class="line">    // onDraw中通过getMeasuredWidth 或者 getMeasuredHeight 获取到的尺寸，就是实际测量的尺寸</span><br><span class="line">    int width = getMeasuredWidth();</span><br><span class="line">    int height = getMeasuredHeight();</span><br><span class="line">    top = getPaddingTop();</span><br><span class="line">    left = getPaddingLeft();</span><br><span class="line">    right = width - left - getPaddingRight();</span><br><span class="line">    bottom = height - top;</span><br><span class="line">    drawTitle(canvas);</span><br><span class="line">    super.onDraw(canvas);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 绘制标题</span><br><span class="line"> * @param canvas</span><br><span class="line"> */</span><br><span class="line">private void drawTitle(Canvas canvas) &#123;</span><br><span class="line">    if(TextUtils.isEmpty(value)) &#123;</span><br><span class="line">        if(isFocus) &#123;</span><br><span class="line">            canvas.drawText(title, left, top + 20, focusTitlePaint);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            canvas.drawText(title, left, bottom - 5 , noFocusTitlePaint);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        canvas.drawText(title, left, top + 20, focusTitlePaint);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如此就基本实现了我们的预期目标。<br>这里没有重写onMeasure函数，没有对尺寸做要求，正确的操作时需要做处理的，具体操作可以参照之前的 自定义View。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View-继承ViewGroup.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -374,8 +513,7 @@
       
         
           
-            <h1 id="android-自定义View-继承ViewGroup"><a href="#android-自定义View-继承ViewGroup" class="headerlink" title="android 自定义View 继承ViewGroup"></a>android 自定义View 继承ViewGroup</h1><p>一直觉得flutter中的输入框效果不错。<br>动画，提示标题都有。<br>这次要通过自定义ViewGroup实现同样的输入框效果</p>
-
+            <h1 id="android-自定义View-继承ViewGroup"><a href="#android-自定义View-继承ViewGroup" class="headerlink" title="android 自定义View 继承ViewGroup"></a>android 自定义View 继承ViewGroup</h1>
           
         
       
@@ -506,6 +644,9 @@
         
           
             <h1 id="android-自定义View-继承View"><a href="#android-自定义View-继承View" class="headerlink" title="android 自定义View 继承View"></a>android 自定义View 继承View</h1><p><a href="android-自定义View.html">上篇关于自定义View的介绍</a><br>接下来将会针对自定义View三种情况一一实现。</p>
+<p><a value="源码地址" target="_blank" href="https://github.com/wangchongwei/customView" style="font-size:25px; color:blue; font-weight:bold">源码地址</a></p>
+<p>最后实现效果如下图：</p>
+<p><img src="../../../images/custom_view_final.jpg" style="zoom:20%"></p>
 <h2 id="继承View"><a href="#继承View" class="headerlink" title="继承View"></a>继承View</h2><p>创建一个class MyView 继承View</p>
 <p>目标是写一个折线图</p>
 <p>现在res/values下面新建一个attrs.xml文件，来申明我们需要的属性。</p>
@@ -2979,141 +3120,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/react发布到javaweb.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/07/react发布到javaweb.html" itemprop="url">react发布到javaweb</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T14:29:35+08:00">
-                2019-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/07/react发布到javaweb.html" class="leancloud_visitors" data-flag-title="react发布到javaweb">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="react项目发布到javaweb中"><a href="#react项目发布到javaweb中" class="headerlink" title="react项目发布到javaweb中"></a>react项目发布到javaweb中</h1><h3 id="1、打包react"><a href="#1、打包react" class="headerlink" title="1、打包react"></a>1、打包react</h3><p>直接执行npm run build命令：发现在build目录下生成资源文件，<br>但是打开index.html发现报错，发现在生成的index.html中引入的文件路径有问题：/static</p>
-<p>/多余，或者说少了.  正确的路径应该是：static 或者 ./static</p>
-<p>发现是%PUBLIC_URL%问题，在构建时应该执行</p>
-<p><strong><em> PUBLIC_URL=./ npm run build </em></strong></p>
-<h3 id="2、集成到javaweb中"><a href="#2、集成到javaweb中" class="headerlink" title="2、集成到javaweb中"></a>2、集成到javaweb中</h3><p>将上一步生成build目录下的文件都复制放在webapp路径下，启动应用就能直接访问到index.html文件</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3164,7 +3170,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
