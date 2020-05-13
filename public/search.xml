@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[jvm 线程私有区]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjvm-%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%E5%8C%BA.html</url>
+    <content type="text"><![CDATA[jvm 线程私有区jvm从多线程角度看，分为线程共享区、线程私有区 而在线程私有区中有：程序计数器、方法栈区（包括虚拟机栈、本地方法栈） 程序计数器较小的内存空间，当前线程执行的字节码的行号指示器；各线程之间独立存储，互不影响 jvm的多线程是通过cpu时间片轮转算法实现的，某个线程在执行过程中会因为时间片耗尽而被挂起，其他线程获得时间片开始执行。当被挂起的线程重新获取到时间片，它要想从之前被挂起的地方开始执行，就需要知道之前执行到了哪里，在jvm中，通过程序计数器来记录字节码执行的位置。因此，程序计数器是具备线程隔离的特性，也就是说，每个线程工作时都有属于自己的独立计数器。 程序计数器的特点1、线程隔离：每个线程都有自己的程序计数器2.执行java方法时，程序计数器是有值的，且记录的是正在执行的字节码指令的地址3.执行native本地方法时，程序计数器的值为空（Undefined）。因为native方法是java通过JNI直接调用本地C/C++库，可以近似的认为native方法相当于C/C++暴露给java的一个接口，java通过调用这个接口从而调用到C/C++方法。由于该方法是通过C/C++而不是java进行实现。那么自然无法产生相应的字节码，并且C/C++执行时的内存分配是由自己语言决定的，而不是由JVM决定的。4.程序计数器占用内存很小，在进行JVM内存计算时，可以忽略不计。5.程序计数器，是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError的区域。 方法栈区线程在运行时，在执行每一个方法的时候都会打包成一个栈帧，然后将栈帧入栈，当方法执行完时，就会将该栈帧出栈。每个时刻正在执行的当前方法就是虚拟机栈顶的栈桢。方法的执行就对应着栈帧在虚拟机栈中入栈和出栈的过程。 栈的大小缺省为1M，可用参数 –Xss调整大小，例如-Xss256k 栈帧结构栈帧中含有：局部变量表、操作数据栈、动态链接、返回地址 局部变量表:顾名思义就是局部变量的表，用于存放我们的局部变量的。首先它是一个32位的长度，主要存放我们的Java的八大基础数据类型，一般32位就可以存放下，如果是64位的就使用高低位占用两个也可以存放下，如果是局部的一些对象，比如我们的Object对象，我们只需要存放它的一个引用地址即可。操作数据栈：存放我们方法执行的操作数的，它就是一个栈，先进后出的栈结构，操作数栈，就是用来操作的，操作的的元素可以是任意的java数据类型，所以我们知道一个方法刚刚开始的时候，这个方法的操作数栈就是空的，操作数栈运行方法是会一直运行入栈/出栈的操作动态连接:Java语言特性多态（需要类加载、运行时才能确定具体的方法），动态特性（Groovy、JS、动态代理）返回地址:正常返回（调用程序计数器中的地址作为返回）、异常的话（通过异常处理器表&lt;非栈帧中的&gt;来确定）]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java 锁]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava-%E9%94%81.html</url>
+    <content type="text"><![CDATA[java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。 并发三要素原子性：在一个操作中，CPU 不可以在中途暂停然后再调度，即不被中断操作，要么执行完成，要么就不执行。 可见性：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。 有序性：程序执行的顺序按照代码的先后顺序执行。 解决并发问题volatile：保证可见性，不保证原子性当写一个volatile变量时，JVM会把本地内存的变量强制刷新到主内存中 这个写操作导致其他线程中的缓存无效，其他线程读，会从主内存读。volatile的写操作对其它线程实时可见 禁止指令重排序指令重排序是指编译器和处理器为了优化程序性能对指令进行排序的一种手段，需要遵守一定规则 不会对存在依赖关系的指令重排序，例如 a = 1;b = a; a 和b存在依赖关系，不会被重排序 不能影响单线程下的执行结果。比如：a=1;b=2;c=a+b这三个操作,前两个操作可以重排序，但是c=a+b不会被重排序，因为要保证结果是3 使用场景对于一个变量，单个线程写，其他线程读，这个时候就可以使用volatile来修饰这个变量 123456789101112131415161718public class Utils &#123; private static volatile Utils instance; public static Utils getInstance() &#123; // 1 if(instance == null) &#123; // 2 synchronized(Utils.class) &#123; // 3 if(instance == null) &#123; // 4 instance = new Utils(); // 5 &#125; &#125; &#125; return instance; &#125;&#125; 初始化一个对象有如下步骤：分配内存，初始化对象，指向内存 如上代码，如果不使用volatile修饰，这时候如果发生指令重排，执行顺序是132，执行到第3的时候，线程B刚好进来了，并且执行到注释2，这时候判断instance 不为空，直接使用一个未初始化的对象。所以使用volatile关键字来禁止指令重排序。 volatile 原理在jvm底层，volatile是通过内存屏障来实现的，内存屏障会提供三个功能： 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置，也不会把前面的指令排到内存屏障的后面；即在执行到内存屏障这句指令时，在它前面的操作已经全部完成； 它会强制将缓存的修改操作立即写到主内存 写操作会导致其它CPU中的缓存行失效，写之后，其它线程的读操作会从主内存读。 valatile局限性volatile 只能保证可见性，不能保证原子性，写操作对其它线程可见，但是不能解决多个线程同时写的问题 Synchronized多个线程同时写一个变量这个时候使用Synchronized，可以保证同一时刻，只有一个线程可执行某个方法或某个代码块 Synchronized锁升级Java1.6 中为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁。 偏向锁 ：大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。 当一个线程A访问加了同步锁的代码块时，会在对象头中存 储当前线程的id，后续这个线程进入和退出这段加了同步锁的代码块时，不需要再次加锁和释放锁。 轻量级锁 ：在偏向锁情况下，如果线程B也访问了同步代码块，比较对象头的线程id不一样，会升级为轻量级锁，并且通过自旋的方式来获取轻量级锁。 重量级锁 ：如果线程A和线程B同时访问同步代码块，则轻量级锁会升级为重量级锁，线程A获取到重量级锁的情况下，线程B只能入队等待，进入BLOCK状态。 Synchromized缺陷不能设置锁超时时间不能通过代码释放锁容易造成死锁 ReentrantLock上面说到Synchronized的缺点，不能设置锁超时时间和不能通过代码释放锁，ReentranLock就可以解决这个问题 在多个条件变量和高度竞争锁的地方 ， 用ReentrantLock更合适，ReentrantLock还提供了Condition，对线程的等待和唤醒等操作更加灵活，一个ReentrantLock可以有多个Condition实例，所以更有扩展性 原文地址(https://www.jianshu.com/p/4eec21c3338e) JVM内存模型、指令重排、内存屏障概念解析(https://www.cnblogs.com/chenyangyao/p/5269622.html)]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java 内存结构]]></title>
+    <url>%2Fblog%2F2020%2F01%2Fjava-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html</url>
+    <content type="text"><![CDATA[java 内存结构首先 java程序是运行在jvm(java虚拟机)中，而jvm是跨平台的。 程序计数器程序计数器： 主要功能是记录当前线程执行程序的位置，通过改变计数值来确定执行下一条指令。每个线程的创建，都会创建一个程序计数器，并且对于每个线程而言是互相独立的。比如我们在debuger模式下运行，for循环的停止，异常的抛出，都是通过改变该线程对应的计数值来确定下一个执行指令。 java虚拟机栈java虚拟机栈：主要功能是临时存储线程执行到的每个方法需要的参数，其内存空间在编译时就已确定。与程序计数器一样，每创建一个线程，则创建一个虚拟机栈，线程每执行到一个方法，对应的栈里就会创建一个栈帧，栈帧会存储局部变量表、动态链接、操作数和方法出口等信息，执行方法，栈帧入栈，方法执行完，栈帧出栈。 本地方法栈本地方法栈与java虚拟机栈一样，只是记录native方法执行。jni native调用的c、c++函数]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[算法（1）简单算法]]></title>
+    <url>%2Fblog%2F2020%2F01%2F%E7%AE%97%E6%B3%95.html</url>
+    <content type="text"><![CDATA[算法（1）简单算法简单常见算法 二分查找法针对有序的数据集，每次查找时都取中间值，逐步缩小查找范围，最后获取到目标值 复杂度：$O(log_n)$ 选择排序选择排序是针对数组的一种排序算法。过程：遍历数组，计算出最值，新建一个数组，将最值放入新数组, 复杂度：$O(n^2)$ 递归递归指函数在内部调用本身，使用递归注意两个条件：基线条件、递归条件。基线条件：跳出递归的条件递归条件：对递归元素逐步减少的条件，要合理利用这两点，不然容易无限循环。 在数组中取最大值12345678910111213function findMax(arr) &#123; let max = 0; if(arr.length === 0) &#123; return max; &#125; else &#123; max = arr[0] &gt; max ? arr[0] : max; arr.splice(0, 1); return findMax(arr); &#125;&#125;var arr = [1, 2, 3, 4, 5];findMax(arr); 递归算法与数据结构中的 栈 是及其相似的。已上面的算法为例，调用findMax([1,2,3,4,5])时，将findMax([1,2,3,4,5])压入栈顶，而findMax会调用findMax([2,3,4,5]),然后将findMax([2,3,4,5])压入栈,如下图所示： 然后从栈顶依次得出计算结果出栈。 快速排序]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据结构 (1)]]></title>
+    <url>%2Fblog%2F2020%2F01%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1.html</url>
+    <content type="text"><![CDATA[数据结构 (1) - 简单数据数组数组：有序、内存连续的数据集， 数组是有序的，顺序就是插入的顺序，先插入的值排在前面，内存连续：在内存分配时，数组中的值的内存空间是分配在一起的所以在我们使用数组时，推荐在申明时申明数组的长度，不然在后续插入值时可能会导致之前的数据内存空间不够，需要重新分配整个数据内存空间 数组的索引就是数组中值的下标：从0开始计数。数组的查找通过索引，所以快。而增删、修改时，当插入一个值，则需要将后面的数据都后移，删除也是类似。 数组查询快，增删慢查询：O(1)增删：O(n)修改：O(n) 链表链表：无序、内存非连续、每个节点都具有下一个节点的地址 链表是无序的，内存非连续，因为每一个节点都含有下一个节点的地址，相比于数组，内存非连续，则当数据增多，也不会存在内存空间的问题，因为只需随便分配下一个节点的内存，然后将上一个节点的中含有的下一个节点地址指向最新分配的地址即可。 链表数据第一个、最后一个节点的值是明确的。因为链表是无序的。所以查询慢，因为想要获取一个节点的值，需要先获取上一个节点，通过上一个节点获取到下一个节点的地址。 查询：O(n)增删：O(1)修改：O(1) 栈栈是一种只允许在一端进行插入或删除的线性表 栈的操作只有两种：出栈、进栈特点：先进后出(FILO:first in last out) 只允许对栈顶的元素操作。最先进入的元素将会被压入栈底]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android 贝塞尔曲线]]></title>
+    <url>%2Fblog%2F2020%2F01%2Fandroid-%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[android-自定义View-继承EditText]]></title>
     <url>%2Fblog%2F2019%2F12%2Fandroid-%E8%87%AA%E5%AE%9A%E4%B9%89View-%E7%BB%A7%E6%89%BFEditText.html</url>
     <content type="text"><![CDATA[android-自定义View-继承EditText一直觉得flutter中的输入框效果不错。动画，提示标题都有。这次要通过自定义View, 继承重写EditText来实现同样的输入框效果 源码地址 首先确定大致思路两个元素：TextView、EditText，TextView为标题，EditText为输入框展示当未获取焦点时：1、输入框如果已经有输入的内容，则输入框展示已输入的内容，并且TextView缩小在输入框上部2、输入框如果没有输入的内容，则输入框展示的提示文本当获取焦点时：不管有无输入内容，提示文本缩小在输入框上部 TextView并非实质组件，只是绘制Text，当作TextView。 1、先写一个类继承AppCompatEditText，并实现构造函数123456789101112131415161718192021public class AnimatedInput extends AppCompatEditText &#123; public AnimatedInput(Context context) &#123; super(context); this.context = context; &#125; public AnimatedInput(Context context, AttributeSet attrs) &#123; super(context, attrs); this.context = context; initView(attrs); &#125; public AnimatedInput(Context context, AttributeSet attrs, int defStyleAttr) &#123; super(context, attrs, defStyleAttr); this.context = context; initView(attrs); &#125;&#125; 2、重写onFocusChanged函数这样获取到 是否获取焦点的标识位123456@Override protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) &#123; super.onFocusChanged(focused, direction, previouslyFocusedRect); isFocus = focused; postInvalidate(); &#125; 3、重写onTextChanged函数这样获取到输入框的内容value12345@Override protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) &#123; super.onTextChanged(text, start, lengthBefore, lengthAfter); value = text.toString(); &#125; 4、绘制提示文本这时候要分情况，即是否获取焦点、输入框是否有内容1234567891011121314151617181920212223242526272829@Overrideprotected void onDraw(Canvas canvas) &#123; // onDraw中通过getMeasuredWidth 或者 getMeasuredHeight 获取到的尺寸，就是实际测量的尺寸 int width = getMeasuredWidth(); int height = getMeasuredHeight(); top = getPaddingTop(); left = getPaddingLeft(); right = width - left - getPaddingRight(); bottom = height - top; drawTitle(canvas); super.onDraw(canvas);&#125;/** * 绘制标题 * @param canvas */private void drawTitle(Canvas canvas) &#123; if(TextUtils.isEmpty(value)) &#123; if(isFocus) &#123; canvas.drawText(title, left, top + 20, focusTitlePaint); &#125; else &#123; canvas.drawText(title, left, bottom - 5 , noFocusTitlePaint); &#125; &#125; else &#123; canvas.drawText(title, left, top + 20, focusTitlePaint); &#125;&#125; 如此就基本实现了我们的预期目标。这里没有重写onMeasure函数，没有对尺寸做要求，正确的操作时需要做处理的，具体操作可以参照之前的 自定义View。]]></content>
