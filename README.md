@@ -40,18 +40,6 @@ yarn config set registry https://registry.npm.taobao.org --global
 yarn config set disturl https://npm.taobao.org/dist --global
 ```
 
-### 安装git
-```bash
-sudo apt-get install git
-git config --global user.name "dave.zhao"
-git config --global user.email dave.zhao@zerofinance.cn
-git config --global core.autocrlf false
-git config --global core.safecrlf warn
-git config --global core.filemode false
-git config --global core.whitespace cr-at-eol
-git config --global credential.helper store
-git config http.postBuffer 524288000
-```
 
 ### blog配置
 
