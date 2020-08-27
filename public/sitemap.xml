@@ -2,6 +2,216 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>hexo/blog/2020/08/java-wait%E6%96%B9%E6%B3%95.html</loc>
+    
+    <lastmod>2020-08-27T09:41:17.350Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/08/java-volatile%E5%85%B3%E9%94%AE%E5%AD%97.html</loc>
+    
+    <lastmod>2020-08-27T09:41:13.124Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/08/java-join%E6%96%B9%E6%B3%95.html</loc>
+    
+    <lastmod>2020-08-27T09:24:35.404Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/08/android-%E6%8C%87%E7%BA%B9%E9%AA%8C%E8%AF%81.html</loc>
+    
+    <lastmod>2020-08-13T03:17:41.339Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/07/kotlin-%E4%BA%8C.html</loc>
+    
+    <lastmod>2020-07-29T13:58:32.468Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/07/android-%E5%8A%A8%E7%94%BB.html</loc>
+    
+    <lastmod>2020-07-27T03:26:53.233Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/07/android-%E5%8A%A8%E7%94%BB.html</loc>
+    
+    <lastmod>2020-07-27T03:26:53.232Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/kotlin.html</loc>
+    
+    <lastmod>2020-07-27T03:26:53.230Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/kotlin.html</loc>
+    
+    <lastmod>2020-07-27T03:26:53.229Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-%E5%BA%8F%E5%88%97%E5%8C%96.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.501Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.500Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java-%E6%B3%9B%E5%9E%8B.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.499Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java-%E6%9E%9A%E4%B8%BE.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.499Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java-%E9%9B%86%E5%90%88.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.498Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1-IBinder.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.498Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/01/java-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.497Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1.html</loc>
+    
+    <lastmod>2020-06-01T02:22:37.496Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-MVP.html</loc>
+    
+    <lastmod>2020-05-30T08:39:07.044Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-MVVM.html</loc>
+    
+    <lastmod>2020-05-30T08:27:55.412Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-%E9%AB%98%E7%BA%A7ui.html</loc>
+    
+    <lastmod>2020-05-30T08:27:36.317Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%A1%86%E6%9E%B6.html</loc>
+    
+    <lastmod>2020-05-30T08:20:51.794Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD.html</loc>
+    
+    <lastmod>2020-05-30T08:20:48.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/react-%E6%8E%89%E8%B5%B7%E6%91%84%E5%83%8F%E5%A4%B4.html</loc>
+    
+    <lastmod>2020-05-22T09:29:17.381Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java-%E9%94%81.html</loc>
+    
+    <lastmod>2020-05-13T08:59:17.567Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/wechat-app.html</loc>
+    
+    <lastmod>2020-05-13T08:24:23.722Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-dialog.html</loc>
+    
+    <lastmod>2020-05-13T08:14:46.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java%E6%B5%81.html</loc>
+    
+    <lastmod>2020-05-13T07:55:32.490Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java%E8%8C%83%E5%9E%8B.html</loc>
+    
+    <lastmod>2020-05-13T07:55:07.530Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2019/07/maven.html</loc>
+    
+    <lastmod>2020-05-13T07:54:35.649Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>hexo/blog/2020/05/jvm-%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%E5%8C%BA.html</loc>
     
     <lastmod>2020-05-13T07:41:22.551Z</lastmod>
@@ -9,30 +219,9 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2020/05/java-%E9%94%81.html</loc>
-    
-    <lastmod>2020-05-07T09:38:54.355Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/01/java-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html</loc>
-    
-    <lastmod>2020-01-13T10:34:24.118Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2020/01/%E7%AE%97%E6%B3%95.html</loc>
     
     <lastmod>2020-01-13T10:07:11.324Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1.html</loc>
-    
-    <lastmod>2020-01-08T09:44:33.702Z</lastmod>
     
   </url>
   
@@ -187,13 +376,6 @@
     <loc>hexo/blog/2019/07/facebook%E6%8E%A8%E5%B9%BFapi-%E6%8E%A8%E5%B9%BF%E4%B8%BB%E9%A1%B5.html</loc>
     
     <lastmod>2019-07-11T03:01:09.159Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2019/07/maven.html</loc>
-    
-    <lastmod>2019-07-08T06:38:37.069Z</lastmod>
     
   </url>
   
