@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="hexo/images/java.jpg">
 <meta property="og:image" content="hexo/images/gc_class.jpg">
-<meta property="og:updated_time" content="2020-01-13T10:34:24.118Z">
+<meta property="og:updated_time" content="2020-06-01T02:22:37.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 内存结构">
 <meta name="twitter:description" content="java 内存结构首先 java程序是运行在jvm(java虚拟机)中，而jvm是跨平台的。 程序计数器程序计数器： 主要功能是记录当前线程执行程序的位置，通过改变计数值来确定执行下一条指令。每个线程的创建，都会创建一个程序计数器，并且对于每个线程而言是互相独立的。比如我们在debuger模式下运行，for循环的停止，异常的抛出，都是通过改变该线程对应的计数值来确定下一个执行指令。 java虚拟机">
@@ -379,6 +379,10 @@
 <h2 id="java虚拟机栈"><a href="#java虚拟机栈" class="headerlink" title="java虚拟机栈"></a>java虚拟机栈</h2><p>java虚拟机栈：主要功能是临时存储线程执行到的每个方法需要的参数，其内存空间在编译时就已确定。与程序计数器一样，每创建一个线程，则创建一个虚拟机栈，线程每执行到一个方法，对应的栈里就会创建一个栈帧，栈帧会存储局部变量表、动态链接、操作数和方法出口等信息，执行方法，栈帧入栈，方法执行完，栈帧出栈。</p>
 <p><img src="../../../images/gc_class.jpg" style="zoom:20%"></p>
 <h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>本地方法栈与java虚拟机栈一样，只是记录native方法执行。jni native调用的c、c++函数</p>
+<h1 id="堆得内存结构"><a href="#堆得内存结构" class="headerlink" title="堆得内存结构"></a>堆得内存结构</h1><p>分为老年代、新生代，内存比为8:2<br>其中新生代分为: edan、from、to 内存分为8:1:1<br>直接new产生的对象被分配到edan（大对象会被直接分配到老年代），当发生GC时，会通过复制清楚算法，清楚edan+from区域可被回收的对象，而不可被<br>回收对象会被复制到to区，而在下一次GC时，会清除edan+to区可回收对象，将不可清楚的对象复制到from区，并且每次回收时，会整理碎片内存。</p>
+<h2 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h2><p>gc分为minor GC、full GC<br>minor 作用区域是新生代内存、算法：复制清除算法。会整理碎片<br>full GC作用区域是老年代内存，算法：标记清除算法，不会整理碎片。</p>
+<p>GC时判断是否可回收的依据是：内存可达化：判断堆、方法栈、静态变量、静态方法区中是否有该对象的引用。</p>
+<p>每次 gc时会 会stw（stop the world）,线程会被挂起两次</p>
 
       
     </div>
@@ -498,7 +502,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -520,7 +524,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -560,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java-内存结构"><span class="nav-number">1.</span> <span class="nav-text">java 内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java-内存结构"><span class="nav-number">1.</span> <span class="nav-text">java 内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆得内存结构"><span class="nav-number">2.</span> <span class="nav-text">堆得内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GC"><span class="nav-number">2.1.</span> <span class="nav-text">GC</span></a></li></ol></li></ol></div>
             
 
           </div>

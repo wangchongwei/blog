@@ -1,6 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[java volatile关键字]]></title>
+    <url>%2Fblog%2F2020%2F08%2Fjava-volatile%E5%85%B3%E9%94%AE%E5%AD%97.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java wait方法]]></title>
+    <url>%2Fblog%2F2020%2F08%2Fjava-wait%E6%96%B9%E6%B3%95.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java join方法]]></title>
+    <url>%2Fblog%2F2020%2F08%2Fjava-join%E6%96%B9%E6%B3%95.html</url>
+    <content type="text"><![CDATA[t.join()方法阻塞调用此方法的线程(calling thread)进入 TIMED_WAITING 状态，直到线程t完成，此线程再继续如在main线程调用t.join(),则会阻塞main线程直到t线程执行完。 而join()函数参数，当调用为t.join(2000),代表阻塞2000毫秒, 当2000毫秒完后，main线程会向下执行，但也有例外，join(millis)如在t线程使用 synchronized时，则必须等到synchronized包裹的代码块执行完并传递的millis毫秒后，t.join()的调用线程才会向下执行。 12345678910111213141516171819202122232425262728293031323334public class Test &#123; public static void main(String[] args) &#123; Thread thread = new Thread() &#123; @Override public void run() &#123; super.run();// synchronized (currentThread()) &#123; for (int i = 0; i &lt; 5; i ++) &#123; try &#123; sleep(1000); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; System.out.println(&quot;休眠&quot; + i); &#125; System.out.println(&quot;线程结束&quot;);// &#125; &#125; &#125;; long start = System.currentTimeMillis(); thread.start(); try &#123; thread.join(1000); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; System.out.println(&quot;main线程结束&quot;); System.out.println(System.currentTimeMillis() - start); &#125;&#125; 输出结果： main线程结束1005休眠0休眠1休眠2休眠3休眠4线程结束 将thread.join(1000) 改为2000 时，输出结果如下：休眠0main线程结束2005休眠1休眠2休眠3休眠4线程结束 将上面代码synchronized 注释放开后再运行，输出结果如下：休眠0休眠1休眠2休眠3休眠4线程结束main线程结束5011 查看join方法源码12345678910111213141516171819202122232425262728293031/** * Waits at most &lt;code&gt;millis&lt;/code&gt; milliseconds for this thread to * die. A timeout of &lt;code&gt;0&lt;/code&gt; means to wait forever. 当为0时，会一直阻塞调用join函数的线程，直到调用join函数的对象线程执行完毕 */public final synchronized void join(long millis) throws InterruptedException &#123; // 获取当时系统时间 long base = System.currentTimeMillis(); long now = 0; if (millis &lt; 0) &#123; // 当传过来的入参时间小于0，抛出异常 throw new IllegalArgumentException(&quot;timeout value is negative&quot;); &#125; if (millis == 0) &#123; // 当等于0时，只要线程未执行完毕，则一直阻塞 while (isAlive()) &#123; // 当前线程未执行完一直阻塞 wait(0); &#125; &#125; else &#123; // 当时间大于0 while (isAlive()) &#123; // 当前线程还未执行完，则一直循环获取时间，阻塞调用线程到时间结束 long delay = millis - now; if (delay &lt;= 0) &#123; break; &#125; wait(delay); now = System.currentTimeMillis() - base; &#125; &#125;&#125; 注意：wait()是运行在调用线程的，如在main线程中调用t.join();则join()函数的调用线程是main线程，wait()也是运行在main线程的，所以阻塞main线程，而t才是join()的调用对象线程，isAlive也是判断的t线程是否执行完毕，只有在t线程执行完毕，isAlive才为false]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android 指纹验证]]></title>
+    <url>%2Fblog%2F2020%2F08%2Fandroid-%E6%8C%87%E7%BA%B9%E9%AA%8C%E8%AF%81.html</url>
+    <content type="text"><![CDATA[android 指纹识别android API 23时新增的功能，指纹识别 主要类：FingerpringManager 在API28后，FingerpringManager被遗弃，使用BiometricPrompt，此时授权识别的弹窗不能自定义，只能使用官方统一弹窗，只能设置各个授权文案。各个开发商内部实现可能不一致。 通过只是使用指纹识别，直接使用官方api即可，但出于安全或业务场景需求，很多都需要去检测生物库信息是否变更，如指纹库在重新指纹识别前是否发生变更，这个官方api就没有提供方法，需要我们自己实现。 检测指纹库是否发生变更参考：通过检测密钥查看是否变更(https://www.jianshu.com/p/dbb1a43cfb21) 在API28以前，指纹库信息时可以通过反射获取，获取的信息有指纹id、groupId、指纹名称、指纹个数、设备id等等， 12345678910111213141516if(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) &#123; Log.d(TAG, &quot;getFingerPrintInfo: &quot;); FingerprintManager fingerprintManager = (FingerprintManager) getCurrentActivity().getSystemService(Context.FINGERPRINT_SERVICE); try&#123; Class clz = Class.forName(&quot;android.hardware.fingerprint.FingerprintManager&quot;); Method method = clz.getDeclaredMethod(&quot;getEnrolledFingerprints&quot;, new Class[]&#123;&#125;); method.setAccessible(true); Object obj = method.invoke(fingerprintManager, null); if (obj != null) &#123; Log.e(TAG, &quot;objStr:&quot; + JsonUtils.toJson(obj)); List&lt;FingerprintBean&gt; list = (List&lt;FingerprintBean&gt;) JsonUtils.fromJson(objStr, new TypeToken&lt;List&lt;FingerprintBean&gt;&gt;()&#123;&#125;.getType()); &#125; &#125;catch (Exception e) &#123; e.printStackTrace(); &#125;&#125; 而FingerprintBean是这样的：123456789public class FingerprintBean implements Serializable &#123; private static final long serialVersionUID = 1L; private long mDeviceId; private long mFingerId; private long mGroupId; private String mName;&#125; 最理想的方式是我们反射获取到这些指纹库信息，然后将这些信息保存到本地，每次调用指纹识别时，获取当前指纹库信息与之前的指纹库信息比较，只有不同即可判定指纹库信息变更，但在实际操作中，发现在手机上获取到的指纹id只是简单的1、2、3即指纹库里的排列顺序，而指纹名称是可以随意更改，groupId、deviceId都为0，如果使用这些信息去校验，错误率太高。 还有一种方式即是上面参考链接中的，检测指纹库密钥信息是否变更 但在上面链接那种方法中，有几个问题：1、增加、删除指纹无法检测2、使用修改指纹的手指识别后才能检测出修改 于是将反射、密钥检测两者结合，先反射获取指纹库信息，只是比较指纹库指纹个数，先判断指纹个数是否发生变更，就可知道指纹库信息变更了如果指纹个数没有变更，再来校验密钥是否发生变化]]></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[kotlin (二)]]></title>
+    <url>%2Fblog%2F2020%2F07%2Fkotlin-%E4%BA%8C.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>%2Fblog%2F2020%2F07%2Fandroid-%E5%8A%A8%E7%94%BB.html</url>
+    <content type="text"><![CDATA[android动画动画分为两类，传统动画、属性动画 传统动画传统动画又分为帧动画、补间动画 帧动画是通过在特定帧显示不同图片，使连贯起来在视觉上看起来像动画。有点类似与gif 将图片资源放入到drawable文件夹在drawable下新建资源文件 drawable1.xml 类型：animation-list 123456789101112131415&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;animation-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt; &lt;item android:drawable=&quot;@drawable/image1&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image2&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image3&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image4&quot; android:duration=&quot;1000&quot; /&gt;&lt;/animation-list&gt; android:drawable 指的是要显示的图片资源android:duration: 图片显示时长 还有一些其它参数 在Activity中调用1234imageView = findViewById(R.id.imageView);imageView.setImageResource(R.drawable.image);AnimationDrawable drawable = (AnimationDrawable) imageView.getDrawable();drawable.start(); 这样就可以让四张图片动起来了。 这样就是一个帧动画的简单样例 补间动画补间动画分为四种类形式： alpha（淡入淡出），translate（位移），scale（缩放大小），rotate（旋转）其实就是四种动画效果，我们选择单独选择一种、也可以同时使用几种。 补间动画可以通过xml、或者代码形式实现。 xml实现补间动画]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[android 动画]]></title>
+    <url>%2Fblog%2F2020%2F07%2Fandroid-%E5%8A%A8%E7%94%BB.html</url>
+    <content type="text"><![CDATA[android动画动画分为两类，传统动画、属性动画 传统动画传统动画又分为帧动画、补间动画 帧动画是通过在特定帧显示不同图片，使连贯起来在视觉上看起来像动画。有点类似与gif 将图片资源放入到drawable文件夹在drawable下新建资源文件 drawable1.xml 类型：animation-list 123456789101112131415&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;animation-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt; &lt;item android:drawable=&quot;@drawable/image1&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image2&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image3&quot; android:duration=&quot;1000&quot; /&gt; &lt;item android:drawable=&quot;@drawable/image4&quot; android:duration=&quot;1000&quot; /&gt;&lt;/animation-list&gt; android:drawable 指的是要显示的图片资源android:duration: 图片显示时长 还有一些其它参数 在Activity中调用1234imageView = findViewById(R.id.imageView);imageView.setImageResource(R.drawable.image);AnimationDrawable drawable = (AnimationDrawable) imageView.getDrawable();drawable.start(); 这样就可以让四张图片动起来了。 这样就是一个帧动画的简单样例 补间动画补间动画分为四种类形式： alpha（淡入淡出），translate（位移），scale（缩放大小），rotate（旋转）其实就是四种动画效果，我们选择单独选择一种、也可以同时使用几种。 补间动画可以通过xml、或者代码形式实现。 xml实现补间动画alpha在res/anim下新建文件alpha_anime.xml123456789&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;alpha xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:fromAlpha=&quot;0.0&quot; android:toAlpha=&quot;1.0&quot; android:duration=&quot;1000&quot; android:interpolator=&quot;@android:anim/accelerate_decelerate_interpolator&quot; android:repeatMode=&quot;restart&quot; android:repeatCount=&quot;infinite&quot; /&gt; 在Activity中123Animation animation = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.alpha_anime);ImageView alphaImage = findViewById(R.id.alphaImageView);alphaImage.startAnimation(animation); 这样就能实现图片渐隐的无限循环效果]]></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android MVP]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-MVP.html</url>
+    <content type="text"><![CDATA[MVPandroid MVP是一种开发架构，由MVC演化而来，因为在MVC中，Activity层，糅合逻辑、ui操作，显得臃肿、混乱。 在MVP中， M：model，数据层 V：View，页面操作 P：Present，M、V的桥接，逻辑操作 MVP的优势 1、代码简洁，逻辑清晰 2、解耦，便于维护 因为MVP将逻辑与视图分离，降低了业务耦合，使得整个代码层次分明，所以也就更好维护 下面以登陆做一个示例]]></content>
+      <tags>
+        <tag>andorid</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android MVVM]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-MVVM.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[android 高级ui]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-%E9%AB%98%E7%BA%A7ui.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[android 图片加载]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android 网络请求框架]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%A1%86%E6%9E%B6.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android 序列化]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-%E5%BA%8F%E5%88%97%E5%8C%96.html</url>
+    <content type="text"><![CDATA[android序列化什么是序列化将java对象转化为二进制过程，就是序列化，将二进制转化为java对象的过程，就是反序列化 为什么要序列化在下面几种场景下我们需要序列化 永久性保存对象，保存对象的字节序列到本地文件中； 对象在网络中传递； 对象在IPC间传递（进程通信） 如何序列化序列化有两种方法，java中自带的实现Serializable，android中特有的Parcelable Serializable新建类实现Serializable，Serializable为空接口，没有要实现的方法， 需要 定义一个静态常量serialVersionUID 1234567891011121314public class SerBean implements Serializable &#123; private static final long serialVersionUID = 263894729013938L; private String name; private int age; public SerBean(String name, int age) &#123; this.name = name; this.age = age; &#125;&#125; 这样这个类的序列化就完成了。 Parcelable123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475public class ParBean implements Parcelable &#123; private String name; private int age; // 系统自动添加，给createFromParcel里面用 protected ParBean(Parcel in) &#123; name = in.readString(); age = in.readInt(); &#125; public static final Creator&lt;ParBean&gt; CREATOR = new Creator&lt;ParBean&gt;() &#123; /** * * @param in * @return *createFromParcel()方法中我们要去读取刚才写出的name和age字段， * 并创建一个Person对象进行返回，其中color和size都是调用Parcel的readXxx()方法读取到的， * 注意这里读取的顺序一定要和刚才写出的顺序完全相同。 * 读取的工作我们利用一个构造函数帮我们完成了 * */ @Override public ParBean createFromParcel(Parcel in) &#123; return new ParBean(in); &#125; //供反序列化本类数组时调用的 @Override public ParBean[] newArray(int size) &#123; return new ParBean[size]; &#125; &#125;; // 内容接口描述，默认返回0即可。 @Override public int describeContents() &#123; return 0; &#125; @Override public void writeToParcel(Parcel dest, int flags) &#123; dest.writeString(name); // 写出name dest.writeInt(age); // 写出age &#125; // --------下面为自己写的构造函数和get set public ParBean() &#123; &#125; public ParBean(String name, int age) &#123; this.name = name; this.age = age; &#125; public String getName() &#123; return name; &#125; public void setName(String name) &#123; this.name = name; &#125; public int getAge() &#123; return age; &#125; public void setAge(int age) &#123; this.age = age; &#125;&#125; 序列化方案区别上面讲了两个序列化方案，Serializable：是java就有的，代码量少，但在序列化时，会产生大量的临时对象，容易造成频繁的minor GC Parcelable：android特有的，代码量比Serializable要多，但使用效率高，且没那么占内存 因为在选择序列化时，优先使用Parcelable，但有一种情况特殊，当数据保存在磁盘上时，Parcelable在外界有变化的情况下，不能很好的保证数据的连续性，因此在此种场景下推荐使用Serializable； 序列化某种程度来说并不安全 因为序列化的对象数据转换为二进制，并且完全可逆。但是在RMI调用时所有private字段的数据都以明文二进制的形式出现在网络的套接字上，这显然是不安全的 解决方案1、 序列化Hook化（移位和复位）2、 序列数据加密和签名3、 利用transient的特性解决4、 打包和解包代理 补充 static和transient字段不能被序列化（感兴趣的同学可以深入研究下）]]></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[kotlin]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fkotlin.html</url>
+    <content type="text"><![CDATA[kotlin学习hello world新建一个kt文件， 1234fun main(args:Array&lt;String&gt;) &#123; println(&quot;Hello world!&quot;);&#125; 程序主入口main方法， 无需新建类即可运行，函数声明用fun 123fun sum(a:Int, b:Int):Int&#123; return a + b;&#125; 返回值写在参数之后 表达式可以作为函数体，返回值类型自动推断1fun sun(a:Int, b:Int) = a+b; 返回无意义的值用Unit表示 fun test():Unit { println(“test”);} 变量赋值变量赋值声明关键字：var、valvar：声明变量val：声明常量 var i:Int = 1;val PI:Double = 3.14; 当声明并赋值时，数据类型可以省略, 会自动推断数据类型var i = 1;val PI = 3.14 当声明但不赋值时，不能省略数据类型var i:Int;val PI:Double; 字符串模板123var s = &quot;aaaaa&quot;;var b = &quot;str = $s&quot;;var c = &quot;$&#123;b.replace(&quot;str&quot;, &quot;who&quot;)&#125;&quot; 条件表达式1234fun testIf(a:Int, b:Int):Int &#123; if(a &gt; b) return a; return b;&#125; 在kotlin中，if还可以用作表达式 1fun max(a:Int, b:Int) = if(a &gt; b) a else b 空值与null检测当某个值可以为空时，需要在类型后添加?表示可以为空此时，声明时不能省略类型12345var obj:Objects ? = null;// 表示返回值可以为nullfun parseInt(str:String):Int?&#123; ...&#125; 类型检测与自动类型转换is:判断数据是否是某个类型。如果一个不可变的局部变量已经被判断为某个类型，那么检测后的分支中可以直接当作该类型使用，无需显式转换 123456789fun getStringLength(obj: Any): Int? &#123; if (obj is String) &#123; // 如果走到了这里，说明判断出obj时String，虽然方法参数里obj声明的是any，但是此时已经不需要显式的将obj转为String return obj.length &#125; // 在离开类型检测分支后，`obj` 仍然是 `Any` 类型 return null&#125; 强调为不可变是因为如果可变，那可能会变成其他类型，那就不适用了 for循环12345678910var items = listof(&quot;apple&quot;, &quot;banana&quot;, &quot;&quot;kiwifruit);// 根据元素遍历for (item in items) &#123; println(item);&#125;// 根据下标便利for (item in items.indices) &#123; println(items[item]);&#125; while 循环12345var index = 0;while (index &lt; items.size) &#123; println(items[index]); index ++;&#125; when表达式123456789101112private fun testWhen(s: Any?) &#123; when(s) &#123; &quot;a&quot; -&gt; 1; &quot;b&quot; -&gt; 2; is String -&gt; 3; 1 -&gt; &quot;n&quot;; 2 -&gt; &#123; println(&quot;222&quot;); &#125;; else -&gt; &quot;else&quot;; &#125; &#125; 有点类似java中的 switch 区间 range12345var x = 6;var y = 9;if(x in 0..y) &#123; println(&quot;x in 0 - y&quot;);&#125; 注意：区间只用于数字 集合集合的迭代可以用的上面的 for in 循环1234var items = listof(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);for(item in items) &#123; println(item);&#125; 判断集合中是否包含某元素 用while in || when12345678while (&quot;a&quot; in items) &#123; println(&quot;items include a&quot;);&#125;when &#123; &quot;a&quot; in items -&gt; println(&quot;aaa&quot;); &quot;d&quot; in items -&gt; println(&quot;ddd);&#125; 用lambda来过滤和映射集合 ，与java8 lambda stream大致 1234items.filter&#123; it.indexOf(&quot;a&quot;) &gt;= 0 &#125; .sortBy&#123; it &#125; .map&#123; it.toUpperCase() &#125; .forEach&#123; println(it) &#125;]]></content>
+      <tags>
+        <tag>kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[react 掉起摄像头]]></title>
+    <url>%2Fblog%2F2020%2F05%2Freact-%E6%8E%89%E8%B5%B7%E6%91%84%E5%83%8F%E5%A4%B4.html</url>
+    <content type="text"><![CDATA[在h5中掉起摄像头，碰到一些问题，无法切换到后置摄像头 —-&gt; 将本地http 改为https就可以了chrome浏览器报错：不支持访问用户媒体 —》 将本地http 改为https就可以了 npm start默认采用的是http协议而npm start其实执行的脚本是react-script/start.js文件查看 79行代码1const protocol = process.env.HTTPS === &apos;true&apos; ? &apos;https&apos; : &apos;http&apos;; 我们只要在环境变量中将HTTPS设置为true即可在macos 执行1234567cd ~code .bash_profile添加一行 HTTPS=truesource .bash_profile// 也可以在终端执行export PORT=8081 在 window 新增环境变量 HTTPS true或者在终端执行 set HTTPS=true 本地掉起的摄像头呈现镜像 —-》css 镜像翻转 transform: ‘rotateY(180deg)’ // 水平镜像翻转180 完整代码如下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124import React from &apos;react&apos;;import &#123;StyleSheet,css&#125; from &apos;aphrodite/no-important&apos;import &#123; dpw, dph &#125; from &apos;../../common/tool/ScreenFit&apos;;export default class AliveCheck extends React.PureComponent &#123; componentDidMount() &#123; this.video = document.getElementById(&apos;video&apos;); this.canvas = document.getElementById(&apos;canvas&apos;); this.context = this.canvas.getContext(&apos;2d&apos;); const constraints = &#123; audio: false, video : &#123; width: 480, height: 320, sourceId: &apos;default&apos;, facingMode: &#123; exact: &quot;environment&quot; &#125;, // facingMode: &#123; exact: &quot;user&quot; &#125;, permissions: &#123; &quot;audio-capture&quot;: &#123; &quot;description&quot;: &quot;Required to capture audio using getUserMedia()&quot; &#125;, &quot;video-capture&quot;: &#123; &quot;description&quot;: &quot;Required to capture video using getUserMedia()&quot; &#125; &#125; &#125; &#125; // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象 if (navigator.mediaDevices === undefined) &#123; navigator.mediaDevices = &#123;&#125;; &#125; if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) &#123; //调用用户媒体设备, 访问摄像头 this.getUserMedia(constraints, this.success, this.error); &#125; else &#123; alert(&apos;不支持访问用户媒体&apos;); &#125; &#125; //访问用户媒体设备的兼容方法 getUserMedia =(constraints, success, error) =&gt; &#123; if (navigator.mediaDevices.getUserMedia) &#123; //最新的标准API navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error); &#125; else if (navigator.webkitGetUserMedia) &#123; //webkit核心浏览器 navigator.webkitGetUserMedia(constraints,success, error) &#125; else if (navigator.mozGetUserMedia) &#123; //firfox浏览器 navigator.mozGetUserMedia(constraints, success, error); &#125; else if (navigator.getUserMedia) &#123; //旧版API navigator.getUserMedia(constraints, success, error); &#125; &#125; success =(stream) =&gt; &#123; //兼容webkit核心浏览器 let CompatibleURL = window.URL || window.webkitURL; //将视频流设置为video元素的源 console.log(stream); //video.src = CompatibleURL.createObjectURL(stream); this.video.srcObject = stream; this.video.play(); &#125; error =(error)=&gt; &#123; console.log(`访问用户媒体设备失败$&#123;error.name&#125;, $&#123;error.message&#125;`); &#125; takePhoto =() =&gt; &#123; alert(&apos;takePhoto&apos;) this.context.drawImage(this.video, 0, 0, 480, 320); &#125; stopCamera =() =&gt; &#123; if (!this.video.srcObject) return let stream = this.video.srcObject let tracks = stream.getTracks(); tracks.forEach(track =&gt; &#123; track.stop() &#125;) &#125; render() &#123; return( &lt;div className=&#123;css(styles.box)&#125;&gt; &lt;video className=&#123;css(styles.video)&#125; id=&quot;video&quot; width=&quot;480&quot; height=&quot;320&quot; controls&gt;&lt;/video&gt; &lt;div&gt; &lt;button id=&quot;capture&quot; onClick=&#123;this.takePhoto&#125;&gt;拍照&lt;/button&gt; &lt;/div&gt; &lt;canvas id=&quot;canvas&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;&lt;/canvas&gt; &lt;/div&gt; ) &#125;&#125;const styles = StyleSheet.create(&#123; box: &#123; display: &apos;flex&apos;, width: &apos;100%&apos;, height: &apos;100%&apos;, flexDirection: &apos;column&apos;, &#125;, video: &#123; // 水平镜像翻转180 transform: &apos;rotateY(180deg)&apos;, &#125;&#125;)]]></content>
+      <tags>
+        <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[日常记录]]></title>
+    <url>%2Fblog%2F2020%2F05%2F%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95.html</url>
+    <content type="text"><![CDATA[i++++ 在后，先运算完当前结果，再给i赋值 ex：1234567Object [] obj = new Object [16]i = 0；obj[i ++] = &quot;obj&quot;// 会先执行obj[0]=&quot;obj&quot;;// 再执行i = i + 1; –i;– 在前，则先给i赋值，再执行当前运算]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[位操作符]]></title>
+    <url>%2Fblog%2F2020%2F05%2F%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6.html</url>
+    <content type="text"><![CDATA[&amp;逻辑 与A &amp; B将A、B都转化为二进制，同为均为1则为1，否则为0 ex：5 &amp; 80000 0101&amp;0000 1000 result ： 0000 0000 结果就是0 逻辑或A | B将A、B都转化为二进制，同为有一位为1则为1，否则为0ex ： 5 &amp; 80000 0101&amp;0000 1000 result ： 0000 1101 结果就是13 逻辑非 逻辑异或 5&gt;&gt;2 0000 0101 &gt;&gt; 2 — 0000 0001 === 1 像右移2左移运算符，&gt;&gt;&gt; &lt;&lt; 5 &lt;&lt; 2像左移20000 0101 &lt;&lt; 2 – 0001 0100 === 20左移运算符， 无符号移动 无符号右移，忽略符号位，空位都以0补齐]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java 枚举]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava-%E6%9E%9A%E4%B8%BE.html</url>
+    <content type="text"><![CDATA[枚举enum 的全程事 Enumeration 是jdk1.5引进的 被enum 修饰的数据类型就是枚举类型：1enum Test &#123; TEST0, TEST1, TEST2 &#125; 如果枚举不添加任何方法，枚举值默认为从0开始的递增数值，ru上面的： TEST0：0， TEST1：1，TEST2：2 枚举的好处：可以将常量组织起来，便于管理应用场景：状态码：错误码 枚举的本质枚举的本质是一个类，受限制的类 创建enum是，编译器会自动为你生成一个相关的类，这个类继承 java.lang.Enum b编译过后其实是12public abstract class Enum&lt;E extends Enum&lt;E&gt;&gt; implements Comparable&lt;E&gt;, Serializable &#123; ... &#125; 是一个抽象类，并且继承了Comparable以及Serializable，也就是标记了序列化 而且枚举可以添加自己的方法、变量，但是不能为枚举常量用 “=”赋值，但不能继承其他类，因为已经继承了Enum类，也不能被继承。 枚举可以实现接口，像上面就是内部实现了两个接口，我们也可以自己实现其他接口 枚举添加方法123456789101112131415public enum TestEnum &#123; //此处调用额其实就是下面写的构造函数 TEST(22), TEST1(33), TEST2(44), TEST3(55); private TestEnum(int num) &#123; &#125;&#125;]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java 泛型]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava-%E6%B3%9B%E5%9E%8B.html</url>
+    <content type="text"><![CDATA[声明中有一个或者多个类型化参数的类或者接口，叫做泛型类或者接口。泛型类和接口统称为泛型。 泛型是一种安全规范，帮助我们在编译前就发现类型安全问题，而不需要等到编译报错。泛型在编译时会被擦除。 关于使用泛型的几个规则： 请不要使用原生态类型 如果使用原生态类型，就失掉了泛型在安全性和描述性方面的所有优势 消除非受检的警告 优先考虑泛型 优先考虑泛型方法 通配符无限通配符 ？上限通配符 ？ extends T下限通配符 ? super T]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java 集合]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava-%E9%9B%86%E5%90%88.html</url>
+    <content type="text"><![CDATA[java中的集合包括map、set、list collection 所有的linked 都是链表实现所有的hash 都是hash表，存储的对象都需要重写hashcode、equas函数]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[多线程通信 IBinder]]></title>
+    <url>%2Fblog%2F2020%2F05%2F%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1-IBinder.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[wechat-app]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fwechat-app.html</url>
+    <content type="text"><![CDATA[微信小程序开发]]></content>
+      <tags>
+        <tag>wechatApp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[kotlin 类]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fkotlin.html</url>
+    <content type="text"><![CDATA[kotlin 类kotlin中使用class申明类 构造函数构造函数分为主构造函数、次构造函数 主构造函数kotlin中可以在申明类时申明一个构造函数，并且次构造函数为 主构造函数 12// 申明了主构造函数class Person constructor(var name: String, var age: Int ) &#123;&#125; 如果主构造函数没有使用任何注解或者修饰符，则可以省略constructor关键字 1class Person (var name: String, var age: Int ) &#123;&#125; 主构造函数不能含有代码块，有需要初始化的代码可以放在以init关键字作为前缀的初始化块中。其中init可以申明多个，会根据代码顺序来执行。 123456789class Person (var name: String, var age: Int ) &#123; var myName = name; init &#123; println(&quot;this person&apos;s name was $&#123;myName&#125;&quot;); &#125; init &#123; println(&quot; test &quot;); &#125;&#125; 如果没有申明主构造函数，系统会自动创建一个无参的主构造函数。 次构造函数次构造函数必须要用constructor申明，如果有主构造函数，必须将次构造函数委托给主构造函数 1234567891011121314class MyPerson(str: String, var age: Int) &#123; var name = str; var tall:Double? = null; init &#123; println(&quot;init test $&#123;name&#125;&quot;); &#125; constructor(str: String, age: Int, tall: Double?):this(str, age) &#123; this.tall = tall; &#125;&#125; 初始化init代码块实际上会成为主构造函数的一部分。当次级构造函数委托给主构造函数，init代码块会成为次级构造函数的第一句语句。即使该类没有主构造函数，这种委托也会隐式发生，仍会执行初始化代码块。 如果一个非抽象类没有申明任何主、次构造函数，默认会生成一个不带参的主构造函数。函数的可见性为public。如果不想类有一个公有构造函数，需要声明一个private的主构造函数。1class TestClass private constructor () &#123;&#125; 在JVM上，如果主构造函数中的所有参数都有默认值，则会默认生成一个额外的无参构造函数，它将使用默认值。 创建类的实例kotlin 在创建实例时，不需要new 关键字12class MyPerson(str: String, var age: Int) &#123;&#125;var person = MyPerson(&quot;jack&quot;, 11); 类成员 构造函数与初始化代码块 函数 属性 嵌套类、内部类 对象申明 继承在kotlin中，所有类都有一个超类 Any，这对于没有超类型声明的类是默认超类： var oneClass; // 从Any隐式继承 Any 类中有三个方法 equas()、 hashcode()、 toString(), 因此所有kotlin类都定义有这三个方法 默认情况下，kotlin中类都是final 的，不可被继承，如果需要声明该类可以被继承，需要使用关键字 open。 并且kotlin中是使用 : 来表示继承。 12open class TestClassSuper &#123;&#125;class TestClassChild : TestClassSuper &#123;&#125; 如果超类中有声明主构造函数，则子类可以声明主构造函数，则并必须用子类中主构造函数参数初始化超类。如果子类没有声明主构造函数，则必须声明次级构造函数，并且使用super初始化基类12345678910111213141516171819open class MyPerson(str: String, var age: Int) &#123; var name = str; var tall:Double? = null; init &#123; println(&quot;init test $&#123;name&#125;&quot;); &#125; constructor(str: String, age: Int, tall: Double?):this(str, age) &#123; this.tall = tall; &#125;&#125;class TestPerson(str: String, age: Int) : MyPerson(str, age) &#123;&#125;class Test2 : MyPerson &#123; constructor(str: String, age: Int):super(str, age); constructor(str: String, age: Int, tall: Double?): super(str, age, tall);&#125; 函数的重写正如类的继承需要申明open标识该类开放继承，类中的函数标识可以被重写也是需要使用open申明，如果没有函数没有申明open，则在子类中不允许出现同名并且同参数类型的函数。出现同名但不同参数的函数时允许的，正如java中的重载 12345678910111213141516171819202122232425262728293031323334open class MyPerson(str: String, var age: Int) &#123; var name = str; var tall:Double? = null; init &#123; println(&quot;init test $&#123;name&#125;&quot;); &#125; constructor(str: String, age: Int, tall: Double?):this(str, age) &#123; this.tall = tall; &#125; open fun testMethod() &#123; &#125; fun test1() &#123; &#125;&#125;class TestPerson(str: String, age: Int) : MyPerson(str, age) &#123;&#125;class Test2 : MyPerson &#123; constructor(str: String, age: Int):super(str, age); constructor(str: String, age: Int, tall: Double?): super(str, age, tall); override fun testMethod() &#123; super.testMethod() &#125; fun test1(str:String) &#123; &#125;&#125; 属性的重写同函数的重写，属性的重写也是需要使用open标识，并在子类中使用override1234open var i = 2;// childClassoverride var i = 4; 在属性的重写中，有一点需要注意，可以用var 重写val，却不能用val重写var；这一点是和java不一样的。因为用val申明的属性本质上申明了get方法，而将其重写为var只是在子类新增了一个set方法 派生类的初始化顺序1、进入子类的构造函数2、进入父类的构造函数并完成初始化3、进入父类的init代码块4、父类中属性的初始化5、子类构造函数完成初始化6、子类init代码块7、子类属性初始化 调用父类方法或属性可以使用super关键字1234// 方法super.method();// 属性super.nema; 内部类中调用外部类父类属性或方法，使用super@Outer1super@OutClass.method();]]></content>
+      <tags>
+        <tag>kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[android dialog]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fandroid-dialog.html</url>
+    <content type="text"><![CDATA[dialog在日常开发时会经常使用到弹窗dialog 针对自定义视图的弹窗使用方法， 1234567AlertDialog.Builder builder = new AlertDialog.Builder(context);LayoutInflater inflater = context.getLayoutInflater();View view = inflater.inflate(R.layout.view, null);build.setView(view);AlertDialog dialog = build.create();dialog.show(); 上面就是一个AlertDialog实例的创建过程，其中AlertDialog使用了创建者模式。 关于点击弹窗其他部分、点击手机back而不关闭dialog的方法有如下:12dialog.setCancelable(false); // 点击back、其他部位都不关闭弹窗dialog.setCanceledOnTouchOutside(false);// 点击其他部位不关闭、点back关闭 设置dialog弹窗的大小： 12345678910// 在dialog.show() 之后Window window = dialog.getWindow();if(window != null) &#123; WindowManager.LayoutParams attr = window.getAttributes(); if (attr != null) &#123; attr.height = ViewGroup.LayoutParams.MATCH_PARENT; attr.width = ViewGroup.LayoutParams.MATCH_PARENT; window.setAttributes(attr); &#125;&#125; 这样就将dialog窗口大小设置为了最大，但是可以发现我们的弹窗还是没有充满整个屏幕，因为dialog默认的主题theme就是偏距margin的，所以如果我们想要充满整个屏幕的话，需要改变我们dialog的主题， 12// AlertDialog.Builder builder = new AlertDialog.Builder(context);AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme);]]></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java流]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava%E6%B5%81.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java范型]]></title>
+    <url>%2Fblog%2F2020%2F05%2Fjava%E8%8C%83%E5%9E%8B.html</url>
+    <content type="text"></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[jvm 线程私有区]]></title>
     <url>%2Fblog%2F2020%2F05%2Fjvm-%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%E5%8C%BA.html</url>
     <content type="text"><![CDATA[jvm 线程私有区jvm从多线程角度看，分为线程共享区、线程私有区 而在线程私有区中有：程序计数器、方法栈区（包括虚拟机栈、本地方法栈） 程序计数器较小的内存空间，当前线程执行的字节码的行号指示器；各线程之间独立存储，互不影响 jvm的多线程是通过cpu时间片轮转算法实现的，某个线程在执行过程中会因为时间片耗尽而被挂起，其他线程获得时间片开始执行。当被挂起的线程重新获取到时间片，它要想从之前被挂起的地方开始执行，就需要知道之前执行到了哪里，在jvm中，通过程序计数器来记录字节码执行的位置。因此，程序计数器是具备线程隔离的特性，也就是说，每个线程工作时都有属于自己的独立计数器。 程序计数器的特点1、线程隔离：每个线程都有自己的程序计数器2.执行java方法时，程序计数器是有值的，且记录的是正在执行的字节码指令的地址3.执行native本地方法时，程序计数器的值为空（Undefined）。因为native方法是java通过JNI直接调用本地C/C++库，可以近似的认为native方法相当于C/C++暴露给java的一个接口，java通过调用这个接口从而调用到C/C++方法。由于该方法是通过C/C++而不是java进行实现。那么自然无法产生相应的字节码，并且C/C++执行时的内存分配是由自己语言决定的，而不是由JVM决定的。4.程序计数器占用内存很小，在进行JVM内存计算时，可以忽略不计。5.程序计数器，是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError的区域。 方法栈区线程在运行时，在执行每一个方法的时候都会打包成一个栈帧，然后将栈帧入栈，当方法执行完时，就会将该栈帧出栈。每个时刻正在执行的当前方法就是虚拟机栈顶的栈桢。方法的执行就对应着栈帧在虚拟机栈中入栈和出栈的过程。 栈的大小缺省为1M，可用参数 –Xss调整大小，例如-Xss256k 栈帧结构栈帧中含有：局部变量表、操作数据栈、动态链接、返回地址 局部变量表:顾名思义就是局部变量的表，用于存放我们的局部变量的。首先它是一个32位的长度，主要存放我们的Java的八大基础数据类型，一般32位就可以存放下，如果是64位的就使用高低位占用两个也可以存放下，如果是局部的一些对象，比如我们的Object对象，我们只需要存放它的一个引用地址即可。操作数据栈：存放我们方法执行的操作数的，它就是一个栈，先进后出的栈结构，操作数栈，就是用来操作的，操作的的元素可以是任意的java数据类型，所以我们知道一个方法刚刚开始的时候，这个方法的操作数栈就是空的，操作数栈运行方法是会一直运行入栈/出栈的操作动态连接:Java语言特性多态（需要类加载、运行时才能确定具体的方法），动态特性（Groovy、JS、动态代理）返回地址:正常返回（调用程序计数器中的地址作为返回）、异常的话（通过异常处理器表&lt;非栈帧中的&gt;来确定）]]></content>
@@ -11,7 +207,7 @@
   <entry>
     <title><![CDATA[java 锁]]></title>
     <url>%2Fblog%2F2020%2F05%2Fjava-%E9%94%81.html</url>
-    <content type="text"><![CDATA[java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。 并发三要素原子性：在一个操作中，CPU 不可以在中途暂停然后再调度，即不被中断操作，要么执行完成，要么就不执行。 可见性：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。 有序性：程序执行的顺序按照代码的先后顺序执行。 解决并发问题volatile：保证可见性，不保证原子性当写一个volatile变量时，JVM会把本地内存的变量强制刷新到主内存中 这个写操作导致其他线程中的缓存无效，其他线程读，会从主内存读。volatile的写操作对其它线程实时可见 禁止指令重排序指令重排序是指编译器和处理器为了优化程序性能对指令进行排序的一种手段，需要遵守一定规则 不会对存在依赖关系的指令重排序，例如 a = 1;b = a; a 和b存在依赖关系，不会被重排序 不能影响单线程下的执行结果。比如：a=1;b=2;c=a+b这三个操作,前两个操作可以重排序，但是c=a+b不会被重排序，因为要保证结果是3 使用场景对于一个变量，单个线程写，其他线程读，这个时候就可以使用volatile来修饰这个变量 123456789101112131415161718public class Utils &#123; private static volatile Utils instance; public static Utils getInstance() &#123; // 1 if(instance == null) &#123; // 2 synchronized(Utils.class) &#123; // 3 if(instance == null) &#123; // 4 instance = new Utils(); // 5 &#125; &#125; &#125; return instance; &#125;&#125; 初始化一个对象有如下步骤：分配内存，初始化对象，指向内存 如上代码，如果不使用volatile修饰，这时候如果发生指令重排，执行顺序是132，执行到第3的时候，线程B刚好进来了，并且执行到注释2，这时候判断instance 不为空，直接使用一个未初始化的对象。所以使用volatile关键字来禁止指令重排序。 volatile 原理在jvm底层，volatile是通过内存屏障来实现的，内存屏障会提供三个功能： 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置，也不会把前面的指令排到内存屏障的后面；即在执行到内存屏障这句指令时，在它前面的操作已经全部完成； 它会强制将缓存的修改操作立即写到主内存 写操作会导致其它CPU中的缓存行失效，写之后，其它线程的读操作会从主内存读。 valatile局限性volatile 只能保证可见性，不能保证原子性，写操作对其它线程可见，但是不能解决多个线程同时写的问题 Synchronized多个线程同时写一个变量这个时候使用Synchronized，可以保证同一时刻，只有一个线程可执行某个方法或某个代码块 Synchronized锁升级Java1.6 中为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁。 偏向锁 ：大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。 当一个线程A访问加了同步锁的代码块时，会在对象头中存 储当前线程的id，后续这个线程进入和退出这段加了同步锁的代码块时，不需要再次加锁和释放锁。 轻量级锁 ：在偏向锁情况下，如果线程B也访问了同步代码块，比较对象头的线程id不一样，会升级为轻量级锁，并且通过自旋的方式来获取轻量级锁。 重量级锁 ：如果线程A和线程B同时访问同步代码块，则轻量级锁会升级为重量级锁，线程A获取到重量级锁的情况下，线程B只能入队等待，进入BLOCK状态。 Synchromized缺陷不能设置锁超时时间不能通过代码释放锁容易造成死锁 ReentrantLock上面说到Synchronized的缺点，不能设置锁超时时间和不能通过代码释放锁，ReentranLock就可以解决这个问题 在多个条件变量和高度竞争锁的地方 ， 用ReentrantLock更合适，ReentrantLock还提供了Condition，对线程的等待和唤醒等操作更加灵活，一个ReentrantLock可以有多个Condition实例，所以更有扩展性 原文地址(https://www.jianshu.com/p/4eec21c3338e) JVM内存模型、指令重排、内存屏障概念解析(https://www.cnblogs.com/chenyangyao/p/5269622.html)]]></content>
+    <content type="text"><![CDATA[java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。 并发三要素原子性：在一个操作中，CPU 不可以在中途暂停然后再调度，即不被中断操作，要么执行完成，要么就不执行。 可见性：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。 有序性：程序执行的顺序按照代码的先后顺序执行。 解决并发问题volatile：保证可见性，不保证原子性当写一个volatile变量时，JVM会把本地内存的变量强制刷新到主内存中 这个写操作导致其他线程中的缓存无效，其他线程读，会从主内存读。volatile的写操作对其它线程实时可见 禁止指令重排序指令重排序是指编译器和处理器为了优化程序性能对指令进行排序的一种手段，需要遵守一定规则 不会对存在依赖关系的指令重排序，例如 a = 1;b = a; a 和b存在依赖关系，不会被重排序 不能影响单线程下的执行结果。比如：a=1;b=2;c=a+b这三个操作,前两个操作可以重排序，但是c=a+b不会被重排序，因为要保证结果是3 使用场景对于一个变量，单个线程写，其他线程读，这个时候就可以使用volatile来修饰这个变量 123456789101112131415161718public class Utils &#123; private static volatile Utils instance; public static Utils getInstance() &#123; // 1 if(instance == null) &#123; // 2 synchronized(Utils.class) &#123; // 3 if(instance == null) &#123; // 4 instance = new Utils(); // 5 &#125; &#125; &#125; return instance; &#125;&#125; 初始化一个对象有如下步骤：分配内存，初始化对象，指向内存 如上代码，如果不使用volatile修饰，这时候如果发生指令重排，执行顺序是132，执行到第3的时候，线程B刚好进来了，并且执行到注释2，这时候判断instance 不为空，直接使用一个未初始化的对象。所以使用volatile关键字来禁止指令重排序。 volatile 原理在jvm底层，volatile是通过内存屏障来实现的，内存屏障会提供三个功能： 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置，也不会把前面的指令排到内存屏障的后面；即在执行到内存屏障这句指令时，在它前面的操作已经全部完成； 它会强制将缓存的修改操作立即写到主内存 写操作会导致其它CPU中的缓存行失效，写之后，其它线程的读操作会从主内存读。 valatile局限性volatile 只能保证可见性，不能保证原子性，写操作对其它线程可见，但是不能解决多个线程同时写的问题 Synchronized多个线程同时写一个变量这个时候使用Synchronized，可以保证同一时刻，只有一个线程可执行某个方法或某个代码块 Synchronized锁升级Java1.6 中为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁。 偏向锁 ：大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。 当一个线程A访问加了同步锁的代码块时，会在对象头中存 储当前线程的id，后续这个线程进入和退出这段加了同步锁的代码块时，不需要再次加锁和释放锁。 轻量级锁 ：在偏向锁情况下，如果线程B也访问了同步代码块，比较对象头的线程id不一样，会升级为轻量级锁，并且通过自旋的方式来获取轻量级锁。 重量级锁 ：如果线程A和线程B同时访问同步代码块，则轻量级锁会升级为重量级锁，线程A获取到重量级锁的情况下，线程B只能入队等待，进入BLOCK状态。 Synchromized缺陷不能设置锁超时时间不能通过代码释放锁容易造成死锁 ReentrantLock上面说到Synchronized的缺点，不能设置锁超时时间和不能通过代码释放锁，ReentranLock就可以解决这个问题 在多个条件变量和高度竞争锁的地方 ， 用ReentrantLock更合适，ReentrantLock还提供了Condition，对线程的等待和唤醒等操作更加灵活，一个ReentrantLock可以有多个Condition实例，所以更有扩展性 原文地址(https://www.jianshu.com/p/4eec21c3338e) JVM内存模型、指令重排、内存屏障概念解析(https://www.cnblogs.com/chenyangyao/p/5269622.html) 在java中有一下锁： 公平锁/非公平锁 可重入锁 互斥锁/读写锁 独享锁/共享锁 分段锁 偏向锁/轻量级锁/重量级锁]]></content>
       <tags>
         <tag>java</tag>
       </tags>
@@ -19,7 +215,7 @@
   <entry>
     <title><![CDATA[java 内存结构]]></title>
     <url>%2Fblog%2F2020%2F01%2Fjava-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.html</url>
-    <content type="text"><![CDATA[java 内存结构首先 java程序是运行在jvm(java虚拟机)中，而jvm是跨平台的。 程序计数器程序计数器： 主要功能是记录当前线程执行程序的位置，通过改变计数值来确定执行下一条指令。每个线程的创建，都会创建一个程序计数器，并且对于每个线程而言是互相独立的。比如我们在debuger模式下运行，for循环的停止，异常的抛出，都是通过改变该线程对应的计数值来确定下一个执行指令。 java虚拟机栈java虚拟机栈：主要功能是临时存储线程执行到的每个方法需要的参数，其内存空间在编译时就已确定。与程序计数器一样，每创建一个线程，则创建一个虚拟机栈，线程每执行到一个方法，对应的栈里就会创建一个栈帧，栈帧会存储局部变量表、动态链接、操作数和方法出口等信息，执行方法，栈帧入栈，方法执行完，栈帧出栈。 本地方法栈本地方法栈与java虚拟机栈一样，只是记录native方法执行。jni native调用的c、c++函数]]></content>
+    <content type="text"><![CDATA[java 内存结构首先 java程序是运行在jvm(java虚拟机)中，而jvm是跨平台的。 程序计数器程序计数器： 主要功能是记录当前线程执行程序的位置，通过改变计数值来确定执行下一条指令。每个线程的创建，都会创建一个程序计数器，并且对于每个线程而言是互相独立的。比如我们在debuger模式下运行，for循环的停止，异常的抛出，都是通过改变该线程对应的计数值来确定下一个执行指令。 java虚拟机栈java虚拟机栈：主要功能是临时存储线程执行到的每个方法需要的参数，其内存空间在编译时就已确定。与程序计数器一样，每创建一个线程，则创建一个虚拟机栈，线程每执行到一个方法，对应的栈里就会创建一个栈帧，栈帧会存储局部变量表、动态链接、操作数和方法出口等信息，执行方法，栈帧入栈，方法执行完，栈帧出栈。 本地方法栈本地方法栈与java虚拟机栈一样，只是记录native方法执行。jni native调用的c、c++函数 堆得内存结构分为老年代、新生代，内存比为8:2其中新生代分为: edan、from、to 内存分为8:1:1直接new产生的对象被分配到edan（大对象会被直接分配到老年代），当发生GC时，会通过复制清楚算法，清楚edan+from区域可被回收的对象，而不可被回收对象会被复制到to区，而在下一次GC时，会清除edan+to区可回收对象，将不可清楚的对象复制到from区，并且每次回收时，会整理碎片内存。 GCgc分为minor GC、full GCminor 作用区域是新生代内存、算法：复制清除算法。会整理碎片full GC作用区域是老年代内存，算法：标记清除算法，不会整理碎片。 GC时判断是否可回收的依据是：内存可达化：判断堆、方法栈、静态变量、静态方法区中是否有该对象的引用。 每次 gc时会 会stw（stop the world）,线程会被挂起两次]]></content>
       <tags>
         <tag>java</tag>
       </tags>
@@ -35,7 +231,7 @@
   <entry>
     <title><![CDATA[数据结构 (1)]]></title>
     <url>%2Fblog%2F2020%2F01%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1.html</url>
-    <content type="text"><![CDATA[数据结构 (1) - 简单数据数组数组：有序、内存连续的数据集， 数组是有序的，顺序就是插入的顺序，先插入的值排在前面，内存连续：在内存分配时，数组中的值的内存空间是分配在一起的所以在我们使用数组时，推荐在申明时申明数组的长度，不然在后续插入值时可能会导致之前的数据内存空间不够，需要重新分配整个数据内存空间 数组的索引就是数组中值的下标：从0开始计数。数组的查找通过索引，所以快。而增删、修改时，当插入一个值，则需要将后面的数据都后移，删除也是类似。 数组查询快，增删慢查询：O(1)增删：O(n)修改：O(n) 链表链表：无序、内存非连续、每个节点都具有下一个节点的地址 链表是无序的，内存非连续，因为每一个节点都含有下一个节点的地址，相比于数组，内存非连续，则当数据增多，也不会存在内存空间的问题，因为只需随便分配下一个节点的内存，然后将上一个节点的中含有的下一个节点地址指向最新分配的地址即可。 链表数据第一个、最后一个节点的值是明确的。因为链表是无序的。所以查询慢，因为想要获取一个节点的值，需要先获取上一个节点，通过上一个节点获取到下一个节点的地址。 查询：O(n)增删：O(1)修改：O(1) 栈栈是一种只允许在一端进行插入或删除的线性表 栈的操作只有两种：出栈、进栈特点：先进后出(FILO:first in last out) 只允许对栈顶的元素操作。最先进入的元素将会被压入栈底]]></content>
+    <content type="text"><![CDATA[数据结构 (1) - 简单数据数组数组：有序、内存连续的数据集， 数组是有序的，顺序就是插入的顺序，先插入的值排在前面，内存连续：在内存分配时，数组中的值的内存空间是分配在一起的所以在我们使用数组时，推荐在申明时申明数组的长度，不然在后续插入值时可能会导致之前的数据内存空间不够，需要重新分配整个数据内存空间 数组的索引就是数组中值的下标：从0开始计数。数组的查找通过索引，所以快。而增删、修改时，当插入一个值，则需要将后面的数据都后移，删除也是类似。 数组查询快，增删慢查询：O(1)增删：O(n)修改：O(n) 链表链表：无序、内存非连续、每个节点都具有下一个节点的地址 链表是无序的，内存非连续，因为每一个节点都含有下一个节点的地址，相比于数组，内存非连续，则当数据增多，也不会存在内存空间的问题，因为只需随便分配下一个节点的内存，然后将上一个节点的中含有的下一个节点地址指向最新分配的地址即可。 链表数据第一个、最后一个节点的值是明确的。因为链表是无序的。所以查询慢，因为想要获取一个节点的值，需要先获取上一个节点，通过上一个节点获取到下一个节点的地址。 查询：O(n)增删：O(1)修改：O(1) 栈栈是一种只允许在一端进行插入或删除的线性表 栈的操作只有两种：出栈、进栈特点：先进后出(FILO:first in last out) 只允许对栈顶的元素操作。最先进入的元素将会被压入栈底 集合队列树]]></content>
       <tags>
         <tag>数据结构</tag>
       </tags>
@@ -200,7 +396,7 @@
   <entry>
     <title><![CDATA[maven]]></title>
     <url>%2Fblog%2F2019%2F07%2Fmaven.html</url>
-    <content type="text"><![CDATA[mavenmaven 查看依赖树mvn dependency:tree &gt; xxx // 将maven依赖树关系导入到文件 XXXcode xxx // 打开xxx文件 gradle 查看依赖树gradle app:dependency // 查看依赖树关系]]></content>
+    <content type="text"><![CDATA[mavenmaven 查看依赖树mvn dependency:tree &gt; xxx // 将maven依赖树关系导入到文件 XXXcode xxx // 打开xxx文件 // gradle 查看依赖树gradle app:dependency // 查看依赖树关系]]></content>
   </entry>
   <entry>
     <title><![CDATA[react发布到javaweb]]></title>

@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-07T09:38:54.355Z">
+<meta property="og:updated_time" content="2020-05-13T08:59:17.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 锁">
 <meta name="twitter:description" content="java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无">
@@ -404,6 +404,15 @@
 <p><strong><em> 在多个条件变量和高度竞争锁的地方 </em></strong> ， 用ReentrantLock更合适，ReentrantLock还提供了Condition，对线程的等待和唤醒等操作更加灵活，一个ReentrantLock可以有多个Condition实例，所以更有扩展性</p>
 <p>原文地址(<a href="https://www.jianshu.com/p/4eec21c3338e" target="_blank" rel="noopener">https://www.jianshu.com/p/4eec21c3338e</a>)</p>
 <p>JVM内存模型、指令重排、内存屏障概念解析(<a href="https://www.cnblogs.com/chenyangyao/p/5269622.html" target="_blank" rel="noopener">https://www.cnblogs.com/chenyangyao/p/5269622.html</a>)</p>
+<p>在java中有一下锁：</p>
+<ul>
+<li>公平锁/非公平锁</li>
+<li>可重入锁</li>
+<li>互斥锁/读写锁</li>
+<li>独享锁/共享锁</li>
+<li>分段锁</li>
+<li>偏向锁/轻量级锁/重量级锁</li>
+</ul>
 
       
     </div>
@@ -523,7 +532,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -545,7 +554,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
