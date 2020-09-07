@@ -63,3 +63,42 @@ public interface Future<V> {
     V get(long var1, TimeUnit var3) throws ExecutionException, InterruptedException, TimeoutException;
 }
 ```
+
+
+get()函数是返回计算结果，注意get会同步操作，每天返回结果前，会阻塞线程。
+get还有一个重载函数get(long var1, TimeUnit var3)，第一个参数是时长，第二个是单位。
+表示在多少时长内获取结果，如果仍未返回，则抛出异常TimeoutException。
+```
+try{
+    int result2 = future2.get(1000, TimeUnit.MILLISECONDS);
+} catch(TimeoutException e) {
+    e.printStackTrace();
+}
+```
+
+cancel(boolean) 表示是否取消该future，
+
+不能在调用cancel(true)/cancel(false)后，调用get()函数，否则会抛出异常CancellationException
+
+
+isCancelled()函数是判断该future是否已取消
+
+isDone()函数是判断该future是否已完成
+
+isDone()函数是实时状态读取，不会阻塞线程。
+
+## Callback
+
+Callback 是一个接口，内部只有一个函数
+
+```
+@FunctionalInterface
+public interface Callable<V> {
+    V call() throws Exception;
+}
+
+```
+
+
+
+
