@@ -99,6 +99,43 @@ public interface Callable<V> {
 
 ```
 
+Callback 可以理解为一个执行任务，如上面例子中的计算
 
+
+## FutureTask介绍
+
+Future是一个接口，
+RunnableFuture也是一个接口，继承Future、Runnable两个接口
+```
+public interface RunnableFuture<V> extends Runnable, Future<V> {
+    /**
+     * Sets this Future to the result of its computation
+     * unless it has been cancelled.
+     */
+    void run();
+}
+
+```
+而FutureTask是对RunnableFuture的基本实现
+
+FutureTask 有一个状态值
+```
+/*
+* 状态值存在如下几种变化：
+* Possible state transitions:
+* NEW -> COMPLETING -> NORMAL
+* NEW -> COMPLETING -> EXCEPTIONAL
+* NEW -> CANCELLED
+* NEW -> INTERRUPTING -> INTERRUPTED
+*/
+private volatile int state;
+private static final int NEW          = 0;
+private static final int COMPLETING   = 1;
+private static final int NORMAL       = 2;
+private static final int EXCEPTIONAL  = 3;
+private static final int CANCELLED    = 4;
+private static final int INTERRUPTING = 5;
+private static final int INTERRUPTED  = 6;
+```
 
 
