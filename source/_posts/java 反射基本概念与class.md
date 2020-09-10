@@ -90,37 +90,5 @@ newInstance(Object... initargs)	根据传递的参数创建类的对象
 
 
 
-# java 线程池
-线程池是用来管理以及调度线程的容器。
 
-## 线程池的优势
-
-* 复用线程，避免大量线程重复创建、销毁，降低消耗
-* 提升效率，当线程池内未饱和时，无需等待线程的重新创建和初始化，便能立即执行
-* 方便线程并发管理，避免线程无限制的创建，可能造成的OOM、cpu过高等问题，规定了最大并发数
-* 延时定时执行任务
-
-
-## 线程池参数
-
-```
-public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
-    this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
-         Executors.defaultThreadFactory(), defaultHandler);
-}
-```
-
-* corePoolSize: 核心线程数量，当向线程池提交一个任务时，如果线程数小于核心线程数，不管是否有线程处于空闲状态，都会创建一个新的线程来执行该任务，
-直到线程池中的线程数大于等于核心线程数量
-* maximumPoolSize: 最大线程数，线程池中线程数量最大值，当向线程池提交任务，并线程池中线程数量等于最大线程数时，并没有线程处于空闲状态，此时不会创建线程执行该任务，而是进入阻塞队列，直到有线程处于空闲来处理该任务。
-
-* keepAliveTime：非核心线程可空闲时长，非核心线程处于空闲时，且空闲时长超过keepAliveTime，则该线程会被回收，但不会回收核心线程
-
-* unit： keepAliveTime的时长单位
-
-* workQueue： 阻塞队列，用于保存和运输待执行任务的阻塞队列
-
-* threadFactory：线程工厂，用于创建工作线程，threadFactory也是采用new Thread()形式创建一个新线程，但命名线程名称，格式为：pool-m-thread-n（m为线程池的编号，n为线程池内的线程编号）。
-
-* defaultHandler： 线程饱和策略，当线程池和阻塞队列都满了，再添加任务时，会执行此策略
 
