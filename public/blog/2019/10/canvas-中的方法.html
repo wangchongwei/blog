@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="canvas 中的一些方法在canvas中一般使用的方法为drawXXX(): 绘制的方法clipXXX(): 裁剪的方法 clipRect裁剪画布，clipRect(int left, top, right, bottom);clipRectF(float left, top, right, bottom) 当执行了该方法，如clipRect(0,0,500,500);则后面都只能在(0,0,5">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-22T08:34:19.289Z">
+<meta property="og:updated_time" content="2020-09-04T01:11:22.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="canvas 中的方法">
 <meta name="twitter:description" content="canvas 中的一些方法在canvas中一般使用的方法为drawXXX(): 绘制的方法clipXXX(): 裁剪的方法 clipRect裁剪画布，clipRect(int left, top, right, bottom);clipRectF(float left, top, right, bottom) 当执行了该方法，如clipRect(0,0,500,500);则后面都只能在(0,0,5">
@@ -380,7 +380,8 @@
 <p>绘制多个区域之和</p>
 <h3 id="clipPath-取出某个区域"><a href="#clipPath-取出某个区域" class="headerlink" title="clipPath 取出某个区域"></a>clipPath 取出某个区域</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 实例化路径</span><br><span class="line">mPath = new Path();</span><br><span class="line">// 移动起点至[50,50]</span><br><span class="line">mPath.moveTo(50, 50);  </span><br><span class="line">mPath.lineTo(75, 23);  </span><br><span class="line">mPath.lineTo(150, 100);  </span><br><span class="line">mPath.lineTo(80, 110);  </span><br><span class="line">// 闭合路径</span><br><span class="line">mPath.close();</span><br><span class="line"></span><br><span class="line">// 按照路径进行裁剪</span><br><span class="line">canvas.clipPath(mPath);</span><br></pre></td></tr></table></figure>
 <p>即是将path区域裁剪出来<br>同样后面在能在该path区域绘制图形</p>
-<h3 id="Region-Op"><a href="#Region-Op" class="headerlink" title="Region.Op"></a>Region.Op</h3>
+<h3 id="Region-Op"><a href="#Region-Op" class="headerlink" title="Region.Op"></a>Region.Op</h3><p>canvas.drawRect</p>
+
       
     </div>
     
@@ -499,7 +500,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -521,7 +522,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

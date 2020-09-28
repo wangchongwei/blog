@@ -1,0 +1,3647 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Devops, Microservice">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Happy To Try" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Please description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Happy To Try">
+<meta property="og:url" content="hexo/page/4/index.html">
+<meta property="og:site_name" content="Happy To Try">
+<meta property="og:description" content="Please description">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Happy To Try">
+<meta name="twitter:description" content="Please description">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="hexo/page/4/">
+
+
+
+
+
+  <title>Happy To Try</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Happy To Try</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Plan</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/10/ValueAnimator.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/10/ValueAnimator.html" itemprop="url">ValueAnimator</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-22T16:48:04+08:00">
+                2019-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/10/ValueAnimator.html" class="leancloud_visitors" data-flag-title="ValueAnimator">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="属性动画-ValueAnimator"><a href="#属性动画-ValueAnimator" class="headerlink" title="属性动画 ValueAnimator"></a>属性动画 ValueAnimator</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/10/canvas-中的方法.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/10/canvas-中的方法.html" itemprop="url">canvas 中的方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-22T16:09:46+08:00">
+                2019-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/10/canvas-中的方法.html" class="leancloud_visitors" data-flag-title="canvas 中的方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="canvas-中的一些方法"><a href="#canvas-中的一些方法" class="headerlink" title="canvas 中的一些方法"></a>canvas 中的一些方法</h1><p>在canvas中一般使用的方法为<br>drawXXX(): 绘制的方法<br>clipXXX(): 裁剪的方法</p>
+<h3 id="clipRect"><a href="#clipRect" class="headerlink" title="clipRect"></a>clipRect</h3><p>裁剪画布，clipRect(int left, top, right, bottom);<br>clipRectF(float left, top, right, bottom)</p>
+<p>当执行了该方法，如clipRect(0,0,500,500);<br>则后面都只能在(0,0,500,500)区域绘制</p>
+<h3 id="用Rect实现多区域裁剪"><a href="#用Rect实现多区域裁剪" class="headerlink" title="用Rect实现多区域裁剪"></a>用Rect实现多区域裁剪</h3><h4 id="intersect-交集】"><a href="#intersect-交集】" class="headerlink" title="intersect 交集】"></a>intersect 交集】</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Rect rect = new Rect(0, 0, 500, 500);  </span><br><span class="line">          </span><br><span class="line">rect.intersect(250, 250, 750, 750); </span><br><span class="line">        </span><br><span class="line">canvas.clipRect(rect);</span><br><span class="line"></span><br><span class="line">// 取到区域(250, 250, 500, 500)</span><br></pre></td></tr></table></figure>
+<p>绘制多个区域相交的区域</p>
+<h4 id="union-合集"><a href="#union-合集" class="headerlink" title="union 合集"></a>union 合集</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Rect rect = new Rect(0, 0, 500, 500);  </span><br><span class="line">      </span><br><span class="line">rect.union(250, 250, 750, 750);  </span><br><span class="line">    </span><br><span class="line">canvas.clipRect(rect);</span><br><span class="line"></span><br><span class="line">// 取到的区域为(0, 0, 750, 750)</span><br></pre></td></tr></table></figure>
+<p>绘制多个区域之和</p>
+<h3 id="clipPath-取出某个区域"><a href="#clipPath-取出某个区域" class="headerlink" title="clipPath 取出某个区域"></a>clipPath 取出某个区域</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 实例化路径</span><br><span class="line">mPath = new Path();</span><br><span class="line">// 移动起点至[50,50]</span><br><span class="line">mPath.moveTo(50, 50);  </span><br><span class="line">mPath.lineTo(75, 23);  </span><br><span class="line">mPath.lineTo(150, 100);  </span><br><span class="line">mPath.lineTo(80, 110);  </span><br><span class="line">// 闭合路径</span><br><span class="line">mPath.close();</span><br><span class="line"></span><br><span class="line">// 按照路径进行裁剪</span><br><span class="line">canvas.clipPath(mPath);</span><br></pre></td></tr></table></figure>
+<p>即是将path区域裁剪出来<br>同样后面在能在该path区域绘制图形</p>
+<h3 id="Region-Op"><a href="#Region-Op" class="headerlink" title="Region.Op"></a>Region.Op</h3><p>canvas.drawRect</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/09/hashMap解析.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/09/hashMap解析.html" itemprop="url">hashMap解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-03T14:01:51+08:00">
+                2019-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/09/hashMap解析.html" class="leancloud_visitors" data-flag-title="hashMap解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h1><h3 id="Hash内部类Node："><a href="#Hash内部类Node：" class="headerlink" title="Hash内部类Node："></a>Hash内部类Node：</h3><p>Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。<br>链表数据结构，每一个节点都记录下一个节点的地址。<br>在Node的构造函数中，直接包含了下一个节点，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        final int hash;</span><br><span class="line">        final K key;</span><br><span class="line">        V value;</span><br><span class="line">        Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">        // 将下一个节点作为入参放入构造函数中</span><br><span class="line">        Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            this.hash = hash;</span><br><span class="line">            this.key = key;</span><br><span class="line">            this.value = value;</span><br><span class="line">            this.next = next;</span><br><span class="line">        &#125;</span><br><span class="line">    ....</span><br></pre></td></tr></table></figure></p>
+<p>获取某个节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> public V get(Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab;</span><br><span class="line">        Node&lt;K,V&gt; first, e;</span><br><span class="line">        int n;</span><br><span class="line">        K k;</span><br><span class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line">            if (first.hash == hash &amp;&amp; // always check first node</span><br><span class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                return first;</span><br><span class="line">            if ((e = first.next) != null) &#123;</span><br><span class="line">                // 当为树结构的时候</span><br><span class="line">                if (first instanceof TreeNode)</span><br><span class="line">                // 获取树形结构中某个节点</span><br><span class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                // 遍历链表结构    </span><br><span class="line">                do &#123;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        return e;</span><br><span class="line">                &#125; while ((e = e.next) != null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/08/升级rn版本适配android64.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/08/升级rn版本适配android64.html" itemprop="url">升级rn版本适配android64</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-21T09:31:14+08:00">
+                2019-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/08/升级rn版本适配android64.html" class="leancloud_visitors" data-flag-title="升级rn版本适配android64">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>google play在2019/08/01起实施强制支持64位手机的措施。</p>
+<p>因为之前的version为0.55.4,到0.59.1版本更新太多，<br>采取的方案是：新建一个项目version为0.59.1，然后将之前的代码直接移入到新项目</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html" itemprop="url">Rxjava + Retrofit 实现BaseResult</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T11:24:56+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html" class="leancloud_visitors" data-flag-title="Rxjava + Retrofit 实现BaseResult">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Rxjava-Retrofit-实现BaseResult"><a href="#Rxjava-Retrofit-实现BaseResult" class="headerlink" title="Rxjava + Retrofit 实现BaseResult"></a>Rxjava + Retrofit 实现BaseResult</h1><p>最近在学习Rxjava、Retrofit的使用，同时想到想一般项目中接口返回都是由特定格式，如java后端的Resultful风格，那我们能不能在请求时写一个基础的返回类，并统一对code判断，再来处理。<br>答案肯定是可以的。本文只讲使用。</p>
+<h4 id="依赖："><a href="#依赖：" class="headerlink" title="依赖："></a>依赖：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.squareup.retrofit2:retrofit:2.3.0&apos;</span><br><span class="line">implementation &apos;com.squareup.retrofit2:converter-gson:2.3.0&apos;</span><br><span class="line">implementation &apos;io.reactivex.rxjava2:rxandroid:2.0.2&apos;</span><br><span class="line">implementation &apos;io.reactivex.rxjava2:rxjava:2.x.y&apos;</span><br><span class="line">implementation &apos;com.squareup.retrofit2:adapter-rxjava2:2.3.0&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="普通使用案例"><a href="#普通使用案例" class="headerlink" title="普通使用案例"></a>普通使用案例</h4><p>首先创建实体数据类Test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG = &quot;=====TEST&quot;;</span><br><span class="line"></span><br><span class="line">    String key = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    String test = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    public void log() &#123;</span><br><span class="line">        Log.d(TAG,&quot;key=&quot;  + key);</span><br><span class="line">        Log.d(TAG, &quot;test=&quot; + test);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在写一个接口TestServer，申明请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface TestService &#123;</span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Test&gt;getObJson();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">private void testService() &#123;</span><br><span class="line">      // 实例化一个Retrofit 对象</span><br><span class="line">        Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">                .baseUrl(&quot;http://192.168.1.42:8080/&quot;)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        TestServer service = retrofit.create(TestService.class);</span><br><span class="line">         service.getObJson()</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .subscribe(new Observer&lt;Test&gt;() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onSubscribe(Disposable d) &#123;</span><br><span class="line">                        </span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onNext(Test test) &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onError(Throwable e) &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onComplete() &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="开发考虑"><a href="#开发考虑" class="headerlink" title="开发考虑"></a>开发考虑</h3><p>我们不可能每个请求都重新创建一个Retrofit对象，<br>而且要基于项目后端数据，例如resultful风格，不可能在每个请求都对code判断。<br>所以我们要将返回的Call 对象封装，对code判断，并返回具体的数据结构。</p>
+<h5 id="1、写一个result实体类"><a href="#1、写一个result实体类" class="headerlink" title="1、写一个result实体类"></a>1、写一个result实体类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// 因为每一个接口返回的数据结构都不同，肯定要用泛型。</span><br><span class="line">public class Result&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final String TAG = &quot;Result ====&quot;;</span><br><span class="line"></span><br><span class="line">    private String msg;</span><br><span class="line"></span><br><span class="line">    private String code = &quot;0&quot;;</span><br><span class="line"></span><br><span class="line">    private T data;</span><br><span class="line"></span><br><span class="line">    public void logCode() &#123;</span><br><span class="line">        Log.d(TAG, code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getLongCode() &#123;</span><br><span class="line">        long resultCode = 0;</span><br><span class="line">        if(code != null &amp;&amp; !code.equals(&quot;&quot;)) &#123;</span><br><span class="line">            resultCode = Long.parseLong(code);</span><br><span class="line">        &#125;</span><br><span class="line">        return resultCode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void log() &#123;</span><br><span class="line">        Log.d(TAG, &quot;msg:&quot; +msg + &quot;\n code:&quot; + code + &quot;\n data:&quot; + data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public T getResultData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意，此处的get数据的方法不能直接用getCode，会报空指针异常，后续讨论</strong></p>
+<p>然后需要写一个BaseObserver观察者基类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 这里还是因为接口返回数据格式问题，使用泛型。</span><br><span class="line">public abstract class BaseObserver&lt;T&gt; implements Observer&lt;Result&lt;T&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final String TAG = &quot;====BaseObserver===&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 请求成功</span><br><span class="line">     * @param t</span><br><span class="line">     */</span><br><span class="line">    public abstract void onSuccess(T t);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 当返回的code值错误时的默认方法</span><br><span class="line">     * @param code</span><br><span class="line">     */</span><br><span class="line">    public void onResultCodeErr(long code) &#123;</span><br><span class="line">        Log.d(TAG, &quot;状态码错误,错误码为：&quot; + code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onSubscribe(Disposable d) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onSubscribe&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onNext(Result result) &#123;</span><br><span class="line">        if(result.getLongCode() != 200) &#123;</span><br><span class="line">            onResultCodeErr(result.getLongCode());</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            onSuccess((T)result.getResultData());</span><br><span class="line">        &#125;</span><br><span class="line">        result.log();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onError&quot;);</span><br><span class="line">        Log.d(TAG, e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onComplete() &#123;</span><br><span class="line">        Log.d(TAG, &quot;onComplete&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们的Server类就变成了如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public interface TestService &#123;</span><br><span class="line"></span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Result&lt;Test&gt;&gt; getTestRxjavaJson();</span><br><span class="line"></span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Test&gt;getObJson();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用就变成了这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">BaseObserver observer = new BaseObserver&lt;Test&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onSuccess(Test test) &#123;</span><br><span class="line">            Log.d(&quot;======&quot;, &quot;onSuccess&quot;);</span><br><span class="line">            test.log();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    /** Retrofit + Rxjav */</span><br><span class="line">    private void testRxjavaService() &#123;</span><br><span class="line">        Retrofit retrofit = RetrofitUtil.getRetrofit();</span><br><span class="line">        TestService ts = retrofit.create(TestService.class);</span><br><span class="line">        ts.getTestRxjavaJson()</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .subscribe(observer);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>写的还比较粗糙，单个接口调用时可能效果还不明显。但大致思路是这样的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（三）布局组件.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（三）布局组件.html" itemprop="url">Flutter入门（三）布局组件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T11:00:09+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（三）布局组件.html" class="leancloud_visitors" data-flag-title="Flutter入门（三）布局组件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（三）布局组件"><a href="#Flutter入门（三）布局组件" class="headerlink" title="Flutter入门（三）布局组件"></a>Flutter入门（三）布局组件</h1><p>之前吐槽过flutter中文网文档写的不好，后来发现维护者更新的好快，而且也从各种开发的角度来介绍flutter，很skr，点赞！</p>
+<p><img src="../images/flutter1.png" alt="fluttercn.png"></p>
+<p>查看这些可以从这些角度去理解flutter开发，学起来也会事半功倍</p>
+<h3 id="ui组件"><a href="#ui组件" class="headerlink" title="ui组件"></a>ui组件</h3><p>学一个新的开发框架，当hello world运行起来后，接下来肯定是了解并使用一些基本的ui组件。</p>
+<h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Text(</span><br><span class="line">    &apos;要显示的文本&apos;, </span><br><span class="line">    &#123;</span><br><span class="line">        textAlign: TextAlign.center, // 文本横向对齐方式 居中</span><br><span class="line">        overflow: TextOverflow.ellipsis, // 文本溢出处理方式</span><br><span class="line">        textDirection: TextDirection.ltr, // 文本方向 ltr(left to right) rtl(right to left)</span><br><span class="line">        softWrap: true, // 是否自动换行</span><br><span class="line">        textScaleFactor: 2.0, // 字体显示倍率</span><br><span class="line">        maxLines: 1, // 文本最大行数</span><br><span class="line">        style: new TextStyle(</span><br><span class="line">            color: Colors.purple,</span><br><span class="line">            fontSize: 20.0,</span><br><span class="line">        ), // 文本样式</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter入门-vscode调试及查看日志.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/flutter入门-vscode调试及查看日志.html" itemprop="url">flutter入门  vscode调试及查看日志</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:55:36+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/flutter入门-vscode调试及查看日志.html" class="leancloud_visitors" data-flag-title="flutter入门  vscode调试及查看日志">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="flutter入门-vscode调试及查看日志"><a href="#flutter入门-vscode调试及查看日志" class="headerlink" title="flutter入门  vscode调试及查看日志"></a>flutter入门  vscode调试及查看日志</h1><p>开发肯定需要调试应用，以及查看日志。</p>
+<p>在flutter中有logger包，调用未找到Log里的函数，只有Logger.root.info(‘’)等函数，运行时也不起作用。</p>
+<p>还有一个print()函数，最终发现这个是可以的。</p>
+<h4 id="情景再现"><a href="#情景再现" class="headerlink" title="情景再现"></a>情景再现</h4><p>a、通过 flutter run方法启动应用，通过flutter logs查看日志，发现并没有日志输出。</p>
+<p>b、通过flutter run方法启动应用，在 调试控制台 也没看到日志输出</p>
+<p>c、通过vscode 自带的调试台启动启用，flutter logs，也没有日志输出</p>
+<h4 id="正确方法"><a href="#正确方法" class="headerlink" title="正确方法"></a>正确方法</h4><p>print()日志输出函数<br>通过vscode 自带的调试台启动应用， 查看调试控制台，有日志输出</p>
+<p>ps: 我重启应用后发现，在终端cmd 通过flutter 也能看到日志输出了。</p>
+<h4 id="用vscode调试flutetr"><a href="#用vscode调试flutetr" class="headerlink" title="用vscode调试flutetr"></a>用vscode调试flutetr</h4><p><img src="../images/log1.png" alt="fluttervscode.png"><br>一个正常的flutter项目用vscode应该是这样的。<br>之前有说过可以用flutter run命令运行，还有android studio运行。在vscode中也有按钮运行调试。</p>
+<p>点击调试按钮/启动调试按钮，就相当于flutter run运行该flutter项目<br><img src="../images/log2.png" alt="run.png"></p>
+<p>我打了一个断点，当项目运行起来，如下图。<br><img src="../images/log3.png" alt="debugger.png"></p>
+<p>当我点击按钮，进入断点。如下图<br>可以看到左上角的操作按钮，其实跟android studio调试原生代码，以及浏览器调试rn一样。<br><img src="../images/log4.png" alt="indebugger.png"></p>
+<p>添加断点点击代码左侧的红框区域即可（下图）。<br><img src="../images/log5.png" alt="adddebugger.png"></p>
+<p>在左上角的调试/新建断点 也可以。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html" itemprop="url">Flutter入门（二） 使用vscode编写第一个Flutter应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:51:37+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html" class="leancloud_visitors" data-flag-title="Flutter入门（二） 使用vscode编写第一个Flutter应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（二）-使用vscode编写第一个Flutter应用"><a href="#Flutter入门（二）-使用vscode编写第一个Flutter应用" class="headerlink" title="Flutter入门（二） 使用vscode编写第一个Flutter应用"></a>Flutter入门（二） 使用vscode编写第一个Flutter应用</h1><p>在上一篇中我们利用android studio运行了一个hello word项目。<br>作为我个人而言最喜欢的编辑器是vscode，肯定要能在vscode中写代码并运行flutter项目才行。</p>
+<p>###1、配置插件<br>需要在vscode中下载插件<br><img src="../images/dart1.png" alt="dartPlugin.png"><br><img src="../images/dart2.png" alt="flutterPlugin.png"><br>找到这两个插件下载好并重新加载vscode就可以了。</p>
+<p>###2、运行<br>flutter项目的运行命令是 flutter run<br>但是flutter和react-native不同的是，flutter run之后会检测是否连接设备，如果没有已连接的设备会不往下运行。<br>你可以通 flutter devices, 当然你配置了android的环境的话，也可以用dab命令， adb devices。</p>
+<p>在项目运行起来后，在下方的终端会有一些输出信息，编译耗时、打debug包、安装等。<br>还有有一些提示信息<br><img src="../images/dart3.png" alt="tips.png"></p>
+<p>当你需要热加载的时候按 r，需要重启应用按R。<br>所以当我们每一次写好代码保存后，只要再按一下r，就可以看到最新的效果，而且flutter的热加载比rn的更快。</p>
+<p>###3、写第一个flutter应用。<br>按照flutter中文网（<a href="https://flutterchina.club/get-started/codelab/）" target="_blank" rel="noopener">https://flutterchina.club/get-started/codelab/）</a><br>写我们第一个flutter应用。<br>其中我个人碰到一个问题。<br>就是在第2步、使用外部package中，<br><img src="../images/dart4.png" alt="package.png"></p>
+<p>在pubspec.yaml文件中申明了插件依赖，保存之后自动下载了，然后在main.dart文件中引用该插件，发现没有自动补全提示，我手写全部路径，提示找不到。<br>然后重新打开vscode才好，应该是vscode对这个以来的读取问题。</p>
+<p>然后是接着照着中文的代码写。flutter的也有state，据说是根据react中的state来的想法加入的。</p>
+<p>###个人体会</p>
+<p><strong>flutter项目比rn流畅，编译快，热加载快，应用运行也更流畅，但dart语法是真蛋疼</strong></p>
+<p>fluuter中文网写的文档感觉也不是很友好，很多关键的东西写的不够具体、甚至没写。<br>没有对state这个做解释、没有state的使用说明，然后那个路由也是。</p>
+<p>##待续</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（一）环境配置.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（一）环境配置.html" itemprop="url">Flutter入门（一）环境配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:41:53+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（一）环境配置.html" class="leancloud_visitors" data-flag-title="Flutter入门（一）环境配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（一）环境配置"><a href="#Flutter入门（一）环境配置" class="headerlink" title="Flutter入门（一）环境配置"></a>Flutter入门（一）环境配置</h1><p>在/flutter/bin目录下执行 flutter doctor命令。</p>
+<h3 id="3、android-studio插件"><a href="#3、android-studio插件" class="headerlink" title="3、android studio插件"></a>3、android studio插件</h3><p>下载android studio就不说了，打开android studio/file/setting/plugin/<br><img src="../images/image.png" alt="plugin.png"><br>输入 flutter查找并install。<br>第一次可能下不下来。我的电脑第一次就没下下来，是回家后打开电脑重新下载才下下来的，猜测可能是下载完flutter sdk、或者配置flutter环境变量后需要重启电脑。</p>
+<p>在安装完插件并重新启动android studio就可以在 file/new/中看到一个新选项 New Flutter Project<br><img src="../images/image0.png" alt="flutter.png"></p>
+<h2 id="hello-word"><a href="#hello-word" class="headerlink" title="hello word"></a>hello word</h2><p>按照惯例，接下来我们跑一个hello world。</p>
+<p>照上面的new/new Flutter Project 然后 next、next、next一个新项目就建好了。</p>
+<h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><p><img src="../images/image1.png" alt="flutterRun.png"></p>
+<p>项目目录和rn目录类似，android、ios原生工程。lib放混合开发的dart文件，<br>pubspec.yaml项目的配置文件，类似于rn、react中的package.json，声明项目版本、依赖等。<br>在运行后如android，会在项目根目录的build（和android同目录）下生成构建之后的文件，这一点和rn以及之前的android项目很不一样，之前的androidbuild都是在/app/build/目录下。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>点击上面截图右上角绿三角run，第一次运行会比较慢。main.dart是主入口的混合文件。我们可以修改截图中间的文本内容，再运行</p>
+<p><img src="../images/image2.png" alt="hello.png"></p>
+<p>第一次运行结束，后面就需要熟悉dart语法，查看原生里的源码看实现原理。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter数据持久化.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/flutter数据持久化.html" itemprop="url">flutter数据持久化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:40:34+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/flutter数据持久化.html" class="leancloud_visitors" data-flag-title="flutter数据持久化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="flutter数据持久化"><a href="#flutter数据持久化" class="headerlink" title="flutter数据持久化"></a>flutter数据持久化</h3><h5 id="shared-preferences"><a href="#shared-preferences" class="headerlink" title="shared_preferences"></a>shared_preferences</h5><p>本地存储临时数据<br>此插件在 iOS 上使用 NSUserDefaults，在 Android 上使用 SharedPreferences，为简单数据提供持久存储。</p>
+<p>添加插件依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 在pubspec.yaml文件中添加依赖</span><br><span class="line"></span><br><span class="line">dependencies:</span><br><span class="line">  flutter:</span><br><span class="line">    sdk: flutter</span><br><span class="line">  shared_preferences: &quot;&lt;newest version&gt;&quot;</span><br></pre></td></tr></table></figure>
+<p>调用：</p>
+<p>shared_preference 存储方式是根据key-value形式<br>使用便捷，但有限制：<br>    a: 只能使用原始类型: int，double，bool，string 和 string list。<br>    b: 它不是用来存储大量数据，因此不适合作为应用程序缓存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import &apos;package:shared_preferences/shared_preferences.dart&apos;;</span><br><span class="line"></span><br><span class="line">getAsyncData() async &#123;</span><br><span class="line">    // 获取实例</span><br><span class="line">    var prefs = await SharedPreferences.getInstance();</span><br><span class="line">    // 获取存储数据</span><br><span class="line">    var count = prefs.getInt(&apos;count&apos;) ?? 0 + 1;</span><br><span class="line">    // 设置存储数据</span><br><span class="line">    await prefs.setInt(&apos;count&apos;, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/dart语言语法糖.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/dart语言语法糖.html" itemprop="url">dart语言语法糖</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:35:05+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/dart语言语法糖.html" class="leancloud_visitors" data-flag-title="dart语言语法糖">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="dart语言语法糖"><a href="#dart语言语法糖" class="headerlink" title="dart语言语法糖"></a>dart语言语法糖</h3><p>a、 以 _命名的变量或函数为强制私有</p>
+<p>var _num;</p>
+<p>b、 支持箭头函数,但后面不能接代码段，只能接受返回值 和 表达式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int getInt() =&gt; 2;</span><br><span class="line"></span><br><span class="line">int getInt() =&gt; isTrue ? 2 : 0;</span><br></pre></td></tr></table></figure>
+<p>c、 运算符</p>
+<p>aa ?? bb; ?? 为null 时</p>
+<p>d、异步 </p>
+<p>async await then</p>
+<p>async、await使用与rn中使用方式一致</p>
+<p>.then也是异步操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/// 设置需要填写的内容</span><br><span class="line">    _setDefaultData(List&lt;dynamic&gt; list) &#123;</span><br><span class="line">      Future&lt;String&gt; jsonStr = DefaultAssetBundle.of(context).loadString(&quot;json/billcontent.json&quot;);</span><br><span class="line">      List&lt;dynamic&gt; list1 = [];</span><br><span class="line"></span><br><span class="line">      /// 对jsonStr数据做解析</span><br><span class="line">      jsonStr.then((value) &#123;</span><br><span class="line">        var data = json.decode(value);</span><br><span class="line">        if(list != null || list.length &gt; 0) &#123;</span><br><span class="line">          data = list;</span><br><span class="line">        &#125;</span><br><span class="line">        print(&apos;data ====&apos; + data.toString());</span><br><span class="line">        data.forEach((item) &#123;</span><br><span class="line">          if(item[&apos;type&apos;] == &apos;1&apos;) &#123;</span><br><span class="line">            list1.add(item);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      print(&apos;list1======&apos; + list1.toString());</span><br><span class="line">      this.setState(() &#123;</span><br><span class="line">        this.saveList = list1;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如图这种代码会先输出list1的信息，然后在输出data的信息<br>说明jsonStr.then 为异步操作</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter-android端-原理解析.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/flutter-android端-原理解析.html" itemprop="url">flutter android端 原理解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:32:54+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/flutter-android端-原理解析.html" class="leancloud_visitors" data-flag-title="flutter android端 原理解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="flutter-android端-原理解析"><a href="#flutter-android端-原理解析" class="headerlink" title="flutter android端 原理解析"></a>flutter android端 原理解析</h1><p>首先看MainActivity，</p>
+<p>继承FlutterActivity</p>
+<p>再看FlutterActivity代码，继承Activity，实现Provider、PluginRegistry、ViewFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private final FlutterActivityDelegate delegate = new FlutterActivityDelegate(this, this);</span><br><span class="line">private final FlutterActivityEvents eventDelegate;</span><br><span class="line">private final Provider viewProvider;</span><br><span class="line">private final PluginRegistry pluginRegistry;</span><br><span class="line"></span><br><span class="line">public FlutterActivity() &#123;</span><br><span class="line">    this.eventDelegate = this.delegate;</span><br><span class="line">    this.viewProvider = this.delegate;</span><br><span class="line">    this.pluginRegistry = this.delegate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    this.eventDelegate.onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一看delegate就知道代理模式</p>
+<p>在生命周期onCrreate中，视图由eventDelegate创建，而该对象在构造函数中被初始化赋值，</p>
+<p>FlutterActivityEvents 是一个接口类 继承了ActivityResultListener生命周期、RequestPermissionsResultListener权限请求、ComponentCallbacks2这个类先不管。</p>
+<p>FlutterActivityDelegate 就是FlutterActivityEvents类的实现.</p>
+<p>看FlutterActivityDelegate类中的onCreate函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        if (VERSION.SDK_INT &gt;= 21) &#123;</span><br><span class="line">            Window window = this.activity.getWindow();</span><br><span class="line">            window.addFlags(-2147483648);</span><br><span class="line">            window.setStatusBarColor(1073741824);</span><br><span class="line">            window.getDecorView().setSystemUiVisibility(1280);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String[] args = getArgsFromIntent(this.activity.getIntent());</span><br><span class="line">        FlutterMain.ensureInitializationComplete(this.activity.getApplicationContext(), args);</span><br><span class="line">        this.flutterView = this.viewFactory.createFlutterView(this.activity);</span><br><span class="line">        if (this.flutterView == null) &#123;</span><br><span class="line">            FlutterNativeView nativeView = this.viewFactory.createFlutterNativeView();</span><br><span class="line">            this.flutterView = new FlutterView(this.activity, (AttributeSet)null, nativeView);</span><br><span class="line">            this.flutterView.setLayoutParams(matchParent);</span><br><span class="line">            this.activity.setContentView(this.flutterView);</span><br><span class="line">            this.launchView = this.createLaunchView();</span><br><span class="line">            if (this.launchView != null) &#123;</span><br><span class="line">                this.addLaunchView();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!this.loadIntent(this.activity.getIntent())) &#123;</span><br><span class="line">            String appBundlePath = FlutterMain.findAppBundlePath(this.activity.getApplicationContext());</span><br><span class="line">            if (appBundlePath != null) &#123;</span><br><span class="line">                this.runBundle(appBundlePath);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>首先对android版本做了一个判断，当大于6.0，设置了状态栏颜色，和窗口模式。</p>
+<h2 id="android端与dart端通信"><a href="#android端与dart端通信" class="headerlink" title="android端与dart端通信"></a>android端与dart端通信</h2><h3 id="1、dart端调用android端代码"><a href="#1、dart端调用android端代码" class="headerlink" title="1、dart端调用android端代码"></a>1、dart端调用android端代码</h3><h4 id="1、原生android代码"><a href="#1、原生android代码" class="headerlink" title="1、原生android代码"></a>1、原生android代码</h4><p>新建一个类TestPlugin 实现MethodChannel类里的内部接口类MethodCallHandler。</p>
+<p>重写onMethodCall方法，在此处写需要实现的逻辑代码</p>
+<p>最后是将插件绑定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class TestPlugin implements MethodChannel.MethodCallHandler &#123;</span><br><span class="line"></span><br><span class="line">    public static final String CHANNEL = &quot;plugin/test&quot;;</span><br><span class="line"></span><br><span class="line">    static MethodChannel channel;</span><br><span class="line"></span><br><span class="line">    // 上下文</span><br><span class="line">    private Activity activity;</span><br><span class="line"></span><br><span class="line">    private TestPlugin(Activity activity) &#123;</span><br><span class="line">        this.activity = activity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void registerWith(PluginRegistry.Registrar registrar) &#123;</span><br><span class="line">        channel = new MethodChannel(registrar.messenger(), CHANNEL);</span><br><span class="line">        TestPlugin plugin = new TestPlugin(registrar.activity());</span><br><span class="line">        // 在此通道上接受方法调用的回调</span><br><span class="line">        channel.setMethodCallHandler(plugin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) &#123;</span><br><span class="line"></span><br><span class="line">        if(methodCall.method.equals(&quot;test&quot;)) &#123;</span><br><span class="line">            Toast.makeText(activity.getApplicationContext(), &quot;测试dart调用android原生插件&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line"></span><br><span class="line">            result.success(&quot;调用成功&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        // 当未找到该函数</span><br><span class="line">        result.notImplemented();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在MainActivity中绑定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class MainActivity extends FlutterActivity &#123;</span><br><span class="line">  @Override</span><br><span class="line">  protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    GeneratedPluginRegistrant.registerWith(this);</span><br><span class="line"></span><br><span class="line">    registerPlugin(this);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  private void registerPlugin(PluginRegistry registry) &#123;</span><br><span class="line">    TestPlugin.registerWith(registry.registrarFor(TestPlugin.CHANNEL));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2、在dart中调用该原生方法"><a href="#2、在dart中调用该原生方法" class="headerlink" title="2、在dart中调用该原生方法"></a>2、在dart中调用该原生方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static const _platform = const MethodChannel(&apos;plugin/test&apos;);</span><br><span class="line"></span><br><span class="line">_toast() &#123;</span><br><span class="line">    /// 调用原生的方法</span><br><span class="line">    _platform.invokeMethod(&apos;test&apos;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>一个原生插件调用就完成了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/facebook推广api-推广主页.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/facebook推广api-推广主页.html" itemprop="url">facebook推广api 推广主页</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T10:58:31+08:00">
+                2019-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/facebook推广api-推广主页.html" class="leancloud_visitors" data-flag-title="facebook推广api 推广主页">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="主页推广"><a href="#主页推广" class="headerlink" title="主页推广"></a>主页推广</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/maven.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/maven.html" itemprop="url">maven</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-08T14:36:59+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/maven.html" class="leancloud_visitors" data-flag-title="maven">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h1><p>maven 查看依赖树<br>mvn dependency:tree &gt; xxx // 将maven依赖树关系导入到文件 XXX<br>code xxx // 打开xxx文件</p>
+<p>// gradle 查看依赖树<br>gradle app:dependency // 查看依赖树关系</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/react发布到javaweb.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/react发布到javaweb.html" itemprop="url">react发布到javaweb</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T14:29:35+08:00">
+                2019-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/react发布到javaweb.html" class="leancloud_visitors" data-flag-title="react发布到javaweb">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="react项目发布到javaweb中"><a href="#react项目发布到javaweb中" class="headerlink" title="react项目发布到javaweb中"></a>react项目发布到javaweb中</h1><h3 id="1、打包react"><a href="#1、打包react" class="headerlink" title="1、打包react"></a>1、打包react</h3><p>直接执行npm run build命令：发现在build目录下生成资源文件，<br>但是打开index.html发现报错，发现在生成的index.html中引入的文件路径有问题：/static</p>
+<p>/多余，或者说少了.  正确的路径应该是：static 或者 ./static</p>
+<p>发现是%PUBLIC_URL%问题，在构建时应该执行</p>
+<p><strong><em> PUBLIC_URL=./ npm run build </em></strong></p>
+<h3 id="2、集成到javaweb中"><a href="#2、集成到javaweb中" class="headerlink" title="2、集成到javaweb中"></a>2、集成到javaweb中</h3><p>将上一步生成build目录下的文件都复制放在webapp路径下，启动应用就能直接访问到index.html文件</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/facebook-营销api集成.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/06/facebook-营销api集成.html" itemprop="url">facebook 营销api集成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T10:15:25+08:00">
+                2019-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/06/facebook-营销api集成.html" class="leancloud_visitors" data-flag-title="facebook 营销api集成">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="facebook-营销api集成"><a href="#facebook-营销api集成" class="headerlink" title="facebook 营销api集成"></a>facebook 营销api集成</h1><p>营销api需要通过后端服务器与facebook服务器交互</p>
+<h3 id="1、下载营销api-java代码"><a href="#1、下载营销api-java代码" class="headerlink" title="1、下载营销api java代码"></a>1、下载营销api java代码</h3><p>git clone <a href="https://github.com/facebook/facebook-java-business-sdk.git" target="_blank" rel="noopener">https://github.com/facebook/facebook-java-business-sdk.git</a></p>
+<p>编辑器：IDEA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 在pom.xml中添加依赖</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.facebook.business.sdk&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;facebook-java-business-sdk&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">插件maven-source-plugin 无法下载因缺失版本号</span><br><span class="line">添加&lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">// 解决idea报错</span><br><span class="line">在&lt;build&gt;&lt;/build&gt;标签内添加&lt;defaultGoal&gt;compile&lt;/defaultGoal&gt;</span><br><span class="line">在&lt;plugins&gt;&lt;/plugins&gt;标签外套一个标签&lt;pluginManagement&gt;&lt;/pluginManagement&gt;</span><br></pre></td></tr></table></figure>
+<p>添加java文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import com.facebook.ads.sdk.APIContext;</span><br><span class="line">import com.facebook.ads.sdk.AdAccount;</span><br><span class="line">import com.facebook.ads.sdk.Campaign;</span><br><span class="line">import com.facebook.ads.sdk.APIException;</span><br><span class="line"></span><br><span class="line">public class QuickStartExample &#123;</span><br><span class="line"></span><br><span class="line">    public static final String ACCESS_TOKEN = &quot;[Your access token]&quot;;//Your access token</span><br><span class="line">    public static final Long ACCOUNT_ID = 123456789L; //Your account ID</span><br><span class="line">    public static final String APP_SECRET = &quot;[Your app secret]&quot;;//Your app secret</span><br><span class="line"></span><br><span class="line">    public static final APIContext context = new APIContext(ACCESS_TOKEN, APP_SECRET);</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            System.out.println(&quot;==========&quot;);</span><br><span class="line">            AdAccount account = new AdAccount(ACCOUNT_ID, context);</span><br><span class="line"></span><br><span class="line">            Campaign campaign = account.createCampaign()</span><br><span class="line">                    .setName(&quot;Java SDK Test Campaign&quot;)</span><br><span class="line">                    .setObjective(Campaign.EnumObjective.VALUE_LINK_CLICKS)</span><br><span class="line">                    .setSpendCap(10000L)</span><br><span class="line">                    .setStatus(Campaign.EnumStatus.VALUE_PAUSED)</span><br><span class="line">                    .execute();</span><br><span class="line">            System.out.println(campaign.fetch());</span><br><span class="line">        &#125; catch (APIException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>or</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import com.facebook.ads.sdk.APIContext;</span><br><span class="line">import com.facebook.ads.sdk.APINodeList;</span><br><span class="line">import com.facebook.ads.sdk.AdAccount;</span><br><span class="line">import com.facebook.ads.sdk.Campaign;</span><br><span class="line"></span><br><span class="line">public class TestFBJavaSDK</span><br><span class="line">&#123;</span><br><span class="line">    public static final APIContext context = new APIContext(</span><br><span class="line">            &quot;your-access-token&quot;,</span><br><span class="line">            &quot;your-appsecret&quot;</span><br><span class="line">    );</span><br><span class="line">    public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        AdAccount account = new AdAccount(&quot;act_&#123;your-adaccount-id&#125;&quot;, context);</span><br><span class="line">        try &#123;</span><br><span class="line">            APINodeList&lt;Campaign&gt; campaigns = account.getCampaigns().requestAllFields().execute();</span><br><span class="line">            for(Campaign campaign : campaigns) &#123;</span><br><span class="line">                System.out.println(campaign.getFieldName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>执行java文件既可发布请求到facebook服务器，<br><strong><em> 需要安全上网 </em></strong></p>
+<h2 id="1、主页推广"><a href="#1、主页推广" class="headerlink" title="1、主页推广"></a>1、主页推广</h2><p>根据提示一步一步提交，到 沙盒账号，如果之前没有添加则新建，要推广的主页，如果无则新建</p>
+<p>到下载示例代码，点下载，将会获得一个java文件，里面含有accessToken、appid、ad_account_id、app_secret等信息，<br>将该下载的SAMPLE_CODE.java文件放于与上面两个java文件同级目录，直接运行该java文件即可，<br>注意此时电脑需要科学上网，不然会报错<strong><em>Timeout</em></strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/facebook-sdk-集成.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/06/facebook-sdk-集成.html" itemprop="url">facebook sdk 集成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-26T16:52:30+08:00">
+                2019-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/06/facebook-sdk-集成.html" class="leancloud_visitors" data-flag-title="facebook sdk 集成">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Facebook-sdk-集成"><a href="#Facebook-sdk-集成" class="headerlink" title="Facebook sdk 集成"></a>Facebook sdk 集成</h1><p>首先需要在facebook注册一个账号，<br>自通过账号进入facebook的开发者平台</p>
+<p>创建应用，只需要填写应用名即可，回生成一个appid。</p>
+<h2 id="集成事件功能"><a href="#集成事件功能" class="headerlink" title="集成事件功能"></a>集成事件功能</h2><p>1、配置远端maven仓库地址<br>    在项目android/build.gradle文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">buildscript&#123;</span><br><span class="line">    repositories&#123;</span><br><span class="line">        ...</span><br><span class="line">        mavenCentral(); // 添加这行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">allprojects&#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">        mavenCentral() // 添加这行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2、添加依赖<br>在app/build.gradle文件中添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dependencies&#123;</span><br><span class="line">    ...</span><br><span class="line">    implementation &apos;com.facebook.android:facebook-android-sdk:[4,5)&apos; // 添加这行</span><br><span class="line">    // 最新sdk版本为 implementation &apos;com.facebook.android:facebook-android-sdk:[5,6)&apos; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、添加facebook-app-id<br>在res/values/string.xml中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;string name=&quot;facebook_app_id&quot;&gt;462119014332748&lt;/string&gt; </span><br><span class="line">&lt;string name=&quot;fb_login_protocol_scheme&quot;&gt;fb462119014332748&lt;/string&gt;</span><br><span class="line">// 462119014332748为你在facebook应用的appid</span><br><span class="line">// fb_login_protocol_scheme应该是用于登陆的</span><br></pre></td></tr></table></figure></p>
+<p>在/app/manifest/AndroidManifest.xml中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;application&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;com.facebook.sdk.ApplicationId&quot; android:value=&quot;@string/facebook_app_id&quot;/&gt; </span><br><span class="line">    &lt;activity android:name=&quot;com.facebook.FacebookActivity&quot;</span><br><span class="line">        android:configChanges= &quot;keyboard|keyboardHidden|screenLayout|screenSize|orientation&quot;</span><br><span class="line">        android:label=&quot;@string/app_name&quot; /&gt; </span><br><span class="line">    &lt;activity android:name=&quot;com.facebook.CustomTabActivity&quot;</span><br><span class="line">        android:exported=&quot;true&quot;&gt;</span><br><span class="line">            &lt;intent-filter&gt;</span><br><span class="line">            &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt; </span><br><span class="line">            &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;</span><br><span class="line">            &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;</span><br><span class="line">            &lt;data android:scheme=&quot;@string/fb_login_protocol_scheme&quot; /&gt;</span><br><span class="line">        &lt;/intent-filter&gt;</span><br><span class="line">    &lt;/activity&gt;</span><br><span class="line"></span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure></p>
+<p>4、在facebook开发者控制台配置analytics sdk<br>在facebook开发者官网，点击「我的应用」即可进入应用控制台，<br>可以创建应用，只需提供应用名，以及邮箱即可，</p>
+<p>点击单个应用即可进入应用控制台进行编辑<br><img src="&#39;../images/facebook1.png&#39;" alt="images">;<br>上图是应用可添加的功能，</p>
+<p>点击Analytics即将功能添加进应用，点设置，前几步都是提示，<br>第四步，填入应用id，app/build.gradle中的applicationid，以及应用默认启动的Actiivty，</p>
+<p>第五步，填入密钥散列，注意应该要填入两个，一个开发、一个发布，即debug自带的、一个release时通过jks文件签名生成的。<br>获取方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// macos debug ，按下enter键需要输入开机密码</span><br><span class="line">keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64</span><br><span class="line"></span><br><span class="line">// release </span><br><span class="line">keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64</span><br></pre></td></tr></table></figure></p>
+<p>5、发送事件</p>
+<p>上面的1、2、3都只是基本配置，下面是手动发送事件</p>
+<p>在MainApplication.java中<br>FacebookSdk.sdkInitialize 四个初始化方法都已被遗弃， 看到说是不需要初始化了</p>
+<p> 在MainApplication.java中<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        super.onCreate();</span><br><span class="line"></span><br><span class="line">        // facebook 初始化</span><br><span class="line">        FacebookSdk.setIsDebugEnabled(true);</span><br><span class="line">        AppEventsLogger.activateApp(MainApplication.this);</span><br><span class="line">        FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意facebooksdk回自动收集一些事件,如果不需要自动收集功能需要在清单文件中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;meta-data</span><br><span class="line">    android:name=&quot;com.facebook.sdk.AutoLogAppEventsEnabled&quot;</span><br><span class="line">    android:value=&quot;false&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>在Actiivty中测试发送自定义事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onResume() &#123;</span><br><span class="line">    super.onResume();</span><br><span class="line">    logEvent();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void logEvent() &#123;</span><br><span class="line">    Log.d(&quot;========&quot;, &quot;logEvent&quot;);</span><br><span class="line">    AppEventsLogger logger = AppEventsLogger.newLogger(this);</span><br><span class="line">    logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);</span><br><span class="line">    logger.logEvent(&quot;Test Event&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在测试时发现，当打断点调试时发现，发送事件总是会失败，正常运行却可以在facebook分析工具中看得到提交的事件。</p>
+<p>后续：<br>在sdk集成后，可以看到之前定义的事件数据。<br>但是在连接商务平台，想要发布广告时。<br>需要通过自己的事件来定义受众、或者定义类似受众时发现，在商务平台无法获取到自定义事件的数据。<br>甚至都无法获取到我们的应用。<br>后来看官方文档，发现出了自定义事件、自动收集的事件，还有一个标准事件。<br>在我添加了一个标准事件后，就在商务平台上能找到在开发平台提交的app了。<br>但是那些自定义受众、类似受众功能貌似只能绑定到 facebook定义的标准事件，而不能是我们自己的自定义事件</p>
+<p><strong><em>注意，运行时手机需要能连接到facebook后台服务器，大陆用户需要科学上网。</em></strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/android-okHttp3.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/06/android-okHttp3.html" itemprop="url">android okHttp3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-18T10:52:40+08:00">
+                2019-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/06/android-okHttp3.html" class="leancloud_visitors" data-flag-title="android okHttp3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/04/vscode的常用插件与插件开发.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/04/vscode的常用插件与插件开发.html" itemprop="url">vscode的常用插件与插件开发</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T15:06:57+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/vscode/" itemprop="url" rel="index">
+                    <span itemprop="name">vscode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/04/vscode的常用插件与插件开发.html" class="leancloud_visitors" data-flag-title="vscode的常用插件与插件开发">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Visual Studio Code（VS code）是开发神器，通过插件配置不仅可以开发前端，还可以开发后端(java/go等)，下面介绍一下vscode的常用插件与插件如何开发一个自己的插件。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2019/04/vscode的常用插件与插件开发.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">justin</p>
+              <p class="site-description motion-element" itemprop="description">Please description</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">justin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("", "");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

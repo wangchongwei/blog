@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="Please description">
+<meta name="description" content="valotile 可见性1、修改volatile变量时会强制将修改后的值刷新的主内存中。 2、修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。 1234567891011121314151617181920212223242526272829class TestThread &amp;#123;    public static">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java volatile关键字">
 <meta property="og:url" content="hexo/blog/2020/08/java-volatile关键字.html">
 <meta property="og:site_name" content="Happy To Try">
-<meta property="og:description" content="Please description">
+<meta property="og:description" content="valotile 可见性1、修改volatile变量时会强制将修改后的值刷新的主内存中。 2、修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。 1234567891011121314151617181920212223242526272829class TestThread &amp;#123;    public static">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-27T09:41:13.124Z">
+<meta property="og:updated_time" content="2020-08-28T03:59:27.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java volatile关键字">
-<meta name="twitter:description" content="Please description">
+<meta name="twitter:description" content="valotile 可见性1、修改volatile变量时会强制将修改后的值刷新的主内存中。 2、修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。 1234567891011121314151617181920212223242526272829class TestThread &amp;#123;    public static">
 
 
 
@@ -371,7 +371,12 @@
       
 
       
-        
+        <h2 id="valotile-可见性"><a href="#valotile-可见性" class="headerlink" title="valotile 可见性"></a>valotile 可见性</h2><p>1、修改volatile变量时会强制将修改后的值刷新的主内存中。</p>
+<p>2、修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class TestThread &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        Work work = new Work();</span><br><span class="line"></span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">        new Thread(work::shutdown).start();</span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">        new Thread(work::work).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static class Work&#123;</span><br><span class="line">        volatile boolean isShutdown = false;</span><br><span class="line"></span><br><span class="line">        void shutdown() &#123;</span><br><span class="line">            System.out.println(&quot;shutdown -----&quot;);</span><br><span class="line">            isShutdown = true;</span><br><span class="line">            System.out.println(&quot;shutdown ---- down&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        void work() &#123;</span><br><span class="line">            while (!isShutdown) &#123;</span><br><span class="line">                System.out.println(&quot;work ----&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码运行后输出的结果如下：<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>work —-<br>shutdown —–<br>work —-<br>shutdown —- down<br>work —-<br>work —-</p>
+<p>说明一个问题：<br>volatile的可见性，<br>volatile变量时会强制将修改后的值刷新的主内存<br>修改volatile变量后会导致其他线程工作内存中对应的变量值失效。因此，再读取该变量值的时候就需要重新从读取主内存中的值。<br>将主内存的值刷新，其他线程去读取主内存的值是需要一定时间的，</p>
+
       
     </div>
     
@@ -410,6 +415,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/08/java-ThreadLocal解析.html" rel="prev" title="java ThreadLocal解析">
+                java ThreadLocal解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -461,8 +470,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -477,7 +495,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -499,7 +517,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -529,6 +547,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#valotile-可见性"><span class="nav-number">1.</span> <span class="nav-text">valotile 可见性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
