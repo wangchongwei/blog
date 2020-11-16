@@ -6,10 +6,9 @@ tags: kotlin
 
 # 在android项目中引入kotlin
 
-修改项目的build.gradle 文件
+修改项目的build.gradle 文件中
 
 
-```
 buildscript {
 
     ext {
@@ -19,10 +18,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
-
-    ...
 }
-```
 
 在app/build.gradle中
 
