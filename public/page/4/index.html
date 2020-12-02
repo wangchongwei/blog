@@ -292,6 +292,1195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/01/数据结构-1.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/数据结构-1.html" itemprop="url">数据结构 (1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-03T17:27:20+08:00">
+                2020-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/01/数据结构-1.html" class="leancloud_visitors" data-flag-title="数据结构 (1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据结构-1-简单数据"><a href="#数据结构-1-简单数据" class="headerlink" title="数据结构 (1) - 简单数据"></a>数据结构 (1) - 简单数据</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组：有序、内存连续的数据集，</p>
+<p>数组是有序的，顺序就是插入的顺序，先插入的值排在前面，<br>内存连续：在内存分配时，数组中的值的内存空间是分配在一起的<br>所以在我们使用数组时，推荐在申明时申明数组的长度，不然在后续插入值时可能会导致之前的数据内存空间不够，需要重新分配整个数据内存空间</p>
+<p>数组的索引就是数组中值的下标：从0开始计数。<br>数组的查找通过索引，所以快。<br>而增删、修改时，当插入一个值，则需要将后面的数据都后移，删除也是类似。</p>
+<p>数组查询快，增删慢<br>查询：O(1)<br>增删：O(n)<br>修改：O(n)</p>
+<h3 id="数组查询原理"><a href="#数组查询原理" class="headerlink" title="数组查询原理"></a>数组查询原理</h3><p>我们知道通过数组查询快，但是为何快呢。</p>
+<p>因为数组是内存连续的，当我们通过下标查询时，<br>其实是通过数组0处内存地址+下标 得出该下标对应的内存地址，然后获取存储的对象。</p>
+<p>所以查询会快。</p>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>链表：无序、内存非连续、每个节点都具有下一个节点的地址</p>
+<p>链表是无序的，内存非连续，因为每一个节点都含有下一个节点的地址，<br>相比于数组，内存非连续，则当数据增多，也不会存在内存空间的问题，因为只需随便分配下一个节点的内存，然后将上一个节点的中含有的下一个节点地址指向最新分配的地址即可。</p>
+<p>链表数据第一个、最后一个节点的值是明确的。<br>因为链表是无序的。所以查询慢，因为想要获取一个节点的值，需要先获取上一个节点，通过上一个节点获取到下一个节点的地址。</p>
+<p>查询：O(n)<br>增删：O(1)<br>修改：O(1)</p>
+<p>链表分为：<br>单链表、双链表、循环链表</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>栈是一种只允许在一端进行插入或删除的线性表</p>
+<p>栈的操作只有两种：出栈、进栈<br>特点：先进后出(FILO:first in last out)</p>
+<p>只允许对栈顶的元素操作。<br>最先进入的元素将会被压入栈底</p>
+<p>栈可以通过数组实现，也可以通过链表实现</p>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>FIFO</p>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/01/android-贝塞尔曲线.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/android-贝塞尔曲线.html" itemprop="url">android 贝塞尔曲线</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-03T16:46:06+08:00">
+                2020-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/01/android-贝塞尔曲线.html" class="leancloud_visitors" data-flag-title="android 贝塞尔曲线">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View-继承EditText.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View-继承EditText.html" itemprop="url">android-自定义View-继承EditText</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-19T17:59:28+08:00">
+                2019-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View-继承EditText.html" class="leancloud_visitors" data-flag-title="android-自定义View-继承EditText">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android-自定义View-继承EditText"><a href="#android-自定义View-继承EditText" class="headerlink" title="android-自定义View-继承EditText"></a>android-自定义View-继承EditText</h1><p>一直觉得flutter中的输入框效果不错。<br>动画，提示标题都有。<br>这次要通过自定义View, 继承重写EditText来实现同样的输入框效果</p>
+<p><a value="源码地址" target="_blank" href="https://github.com/wangchongwei/customView" style="font-size:25px; color:blue; font-weight:bold">源码地址</a></p>
+<p>首先确定大致思路<br>两个元素：TextView、EditText，TextView为标题，EditText为输入框展示<br>当未获取焦点时：<br>1、输入框如果已经有输入的内容，则输入框展示已输入的内容，并且TextView缩小在输入框上部<br>2、输入框如果没有输入的内容，则输入框展示的提示文本<br>当获取焦点时：<br>不管有无输入内容，提示文本缩小在输入框上部</p>
+<p>TextView并非实质组件，只是绘制Text，当作TextView。</p>
+<h3 id="1、先写一个类继承AppCompatEditText，并实现构造函数"><a href="#1、先写一个类继承AppCompatEditText，并实现构造函数" class="headerlink" title="1、先写一个类继承AppCompatEditText，并实现构造函数"></a>1、先写一个类继承AppCompatEditText，并实现构造函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class AnimatedInput extends AppCompatEditText &#123;</span><br><span class="line"></span><br><span class="line"> public AnimatedInput(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">        this.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AnimatedInput(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">        this.context = context;</span><br><span class="line">        initView(attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AnimatedInput(Context context, AttributeSet attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        this.context = context;</span><br><span class="line">        initView(attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2、重写onFocusChanged函数"><a href="#2、重写onFocusChanged函数" class="headerlink" title="2、重写onFocusChanged函数"></a>2、重写onFocusChanged函数</h3><p>这样获取到 是否获取焦点的标识位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) &#123;</span><br><span class="line">        super.onFocusChanged(focused, direction, previouslyFocusedRect);</span><br><span class="line">        isFocus = focused;</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3、重写onTextChanged函数"><a href="#3、重写onTextChanged函数" class="headerlink" title="3、重写onTextChanged函数"></a>3、重写onTextChanged函数</h3><p>这样获取到输入框的内容value<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) &#123;</span><br><span class="line">        super.onTextChanged(text, start, lengthBefore, lengthAfter);</span><br><span class="line">        value = text.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4、绘制提示文本"><a href="#4、绘制提示文本" class="headerlink" title="4、绘制提示文本"></a>4、绘制提示文本</h3><p>这时候要分情况，即是否获取焦点、输入框是否有内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onDraw(Canvas canvas) &#123;</span><br><span class="line">    // onDraw中通过getMeasuredWidth 或者 getMeasuredHeight 获取到的尺寸，就是实际测量的尺寸</span><br><span class="line">    int width = getMeasuredWidth();</span><br><span class="line">    int height = getMeasuredHeight();</span><br><span class="line">    top = getPaddingTop();</span><br><span class="line">    left = getPaddingLeft();</span><br><span class="line">    right = width - left - getPaddingRight();</span><br><span class="line">    bottom = height - top;</span><br><span class="line">    drawTitle(canvas);</span><br><span class="line">    super.onDraw(canvas);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 绘制标题</span><br><span class="line"> * @param canvas</span><br><span class="line"> */</span><br><span class="line">private void drawTitle(Canvas canvas) &#123;</span><br><span class="line">    if(TextUtils.isEmpty(value)) &#123;</span><br><span class="line">        if(isFocus) &#123;</span><br><span class="line">            canvas.drawText(title, left, top + 20, focusTitlePaint);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            canvas.drawText(title, left, bottom - 5 , noFocusTitlePaint);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        canvas.drawText(title, left, top + 20, focusTitlePaint);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如此就基本实现了我们的预期目标。<br>这里没有重写onMeasure函数，没有对尺寸做要求，正确的操作时需要做处理的，具体操作可以参照之前的 自定义View。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View-继承ViewGroup.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View-继承ViewGroup.html" itemprop="url">android-自定义View 继承ViewGroup</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-12T15:13:45+08:00">
+                2019-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View-继承ViewGroup.html" class="leancloud_visitors" data-flag-title="android-自定义View 继承ViewGroup">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android-自定义View-继承ViewGroup"><a href="#android-自定义View-继承ViewGroup" class="headerlink" title="android 自定义View 继承ViewGroup"></a>android 自定义View 继承ViewGroup</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View-继承View.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View-继承View.html" itemprop="url">android 自定义View 继承View</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-11T09:47:36+08:00">
+                2019-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View-继承View.html" class="leancloud_visitors" data-flag-title="android 自定义View 继承View">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android-自定义View-继承View"><a href="#android-自定义View-继承View" class="headerlink" title="android 自定义View 继承View"></a>android 自定义View 继承View</h1><p><a href="android-自定义View.html">上篇关于自定义View的介绍</a><br>接下来将会针对自定义View三种情况一一实现。</p>
+<p><a value="源码地址" target="_blank" href="https://github.com/wangchongwei/customView" style="font-size:25px; color:blue; font-weight:bold">源码地址</a></p>
+<p>最后实现效果如下图：</p>
+<p><img src="../../../images/custom_view_final.jpg" style="zoom:20%"></p>
+<h2 id="继承View"><a href="#继承View" class="headerlink" title="继承View"></a>继承View</h2><p>创建一个class MyView 继承View</p>
+<p>目标是写一个折线图</p>
+<p>现在res/values下面新建一个attrs.xml文件，来申明我们需要的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line"></span><br><span class="line">    &lt;declare-styleable name=&quot;LineView&quot;&gt;</span><br><span class="line">        &lt;attr name=&quot;axieColor&quot; format=&quot;color&quot;/&gt;</span><br><span class="line">        &lt;attr name=&quot;pointRadius&quot; format=&quot;dimension&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/declare-styleable&gt;</span><br><span class="line"></span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="先新建一个clas-继承View，-并初始化几个构造函数"><a href="#先新建一个clas-继承View，-并初始化几个构造函数" class="headerlink" title="先新建一个clas 继承View， 并初始化几个构造函数"></a>先新建一个clas 继承View， 并初始化几个构造函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class MyView extends View &#123;</span><br><span class="line">    // 代码生成时，才会调用该构造函数</span><br><span class="line">     public MyView(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">        this.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public MyView(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        this(context, attrs, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    // xml配置时，会调用这个生命周期</span><br><span class="line">    public MyView(Context context, AttributeSet attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        this.context = context;</span><br><span class="line">        initData(attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 做初始化配置 获取各种颜色、尺寸，还有自定义的一些属性。</span><br><span class="line">    private void initData(AttributeSet attrs) &#123;</span><br><span class="line">         Log.d(TAG, &quot;initData: &quot;);</span><br><span class="line">        // 获取xml中配置的数据</span><br><span class="line">        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.MyView);</span><br><span class="line">        paintColor = array.getColor(R.styleable.MyView_axieColor, context.getResources().getColor(R.color.black));</span><br><span class="line"></span><br><span class="line">        // 画笔初始化</span><br><span class="line">        paint = new Paint();</span><br><span class="line">        paint.setColor(context.getResources().getColor(R.color.black));</span><br><span class="line">        paint.setTextSize(40);</span><br><span class="line">        paint.setStrokeWidth(10); // 线条粗细</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在onMeasure函数中对尺寸做约束"><a href="#在onMeasure函数中对尺寸做约束" class="headerlink" title="在onMeasure函数中对尺寸做约束"></a>在onMeasure函数中对尺寸做约束</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">    super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">    Log.d(TAG, &quot;onMeasure: &quot;);</span><br><span class="line">    int height = measuretDimension(defaultHeight, heightMeasureSpec);</span><br><span class="line">    int width = measuretDimension(0, widthMeasureSpec);</span><br><span class="line">    top = 0;</span><br><span class="line">    left = 0;</span><br><span class="line">    bottom = top + height;</span><br><span class="line">    right = left + width;</span><br><span class="line">    setMeasuredDimension(width, height);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 测量实际尺寸</span><br><span class="line"> * @param defaultSize: 默认尺寸</span><br><span class="line"> * @param measureSpec: 测量规格</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">public int measureDimension(int defaultSize, int measureSpec) &#123;</span><br><span class="line">    int resultSize = defaultSize;</span><br><span class="line">    int specMode = MeasureSpec.getMode(measureSpec);</span><br><span class="line">    int specSize = MeasureSpec.getSize(measureSpec);</span><br><span class="line">    switch (specMode) &#123;</span><br><span class="line">        // 没有做限制，取默认值</span><br><span class="line">        case MeasureSpec.UNSPECIFIED:</span><br><span class="line">            resultSize = defaultSize;</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">            // WRAP</span><br><span class="line">        case MeasureSpec.AT_MOST:</span><br><span class="line">            // 要取默认值和测量值中较小值</span><br><span class="line">            // 当默认值为0时，取最大值, 即宽充满屏幕</span><br><span class="line">            resultSize = defaultSize == 0 ？specSize : Math.min(defaultSize, specSize);</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">            // 具体值 或 MATCH</span><br><span class="line">        case MeasureSpec.EXACTLY:</span><br><span class="line">            resultSize = specSize;</span><br><span class="line">            break;</span><br><span class="line"></span><br><span class="line">            default:</span><br><span class="line">                break;</span><br><span class="line">    &#125;</span><br><span class="line">    return resultSize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="先绘制两个轴线"><a href="#先绘制两个轴线" class="headerlink" title="先绘制两个轴线"></a>先绘制两个轴线</h3><p>注意canvas.draw..()方法，中的位置参数都是相对定位尺寸，都是相对于该视图左上角的坐标定位，而onLayout中的四个位置参数都是相对于屏幕左上角。<br>这两个里的坐标不要弄混。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/** 绘制两条轴线 */</span><br><span class="line">private void drawXY(Canvas canvas) &#123;</span><br><span class="line">    Log.d(TAG, &quot;drawXY: &quot;);</span><br><span class="line">    // 绘制x轴</span><br><span class="line">    canvas.drawLine(left + 20, bottom, right, bottom, paint);</span><br><span class="line">    // 绘制y轴</span><br><span class="line">    canvas.drawLine(left + 20, top, left + 20, bottom, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在MainActivity中配置该视图<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.justin.customview.MyView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;100dp&quot;</span><br><span class="line">        app:layout_constraintTop_toBottomOf=&quot;@+id/text_hello&quot;</span><br><span class="line">        android:layout_marginTop=&quot;20dp&quot;</span><br><span class="line">        android:padding=&quot;10dp&quot;</span><br><span class="line">        app:axieColor=&quot;@color/black&quot;</span><br><span class="line">        android:id=&quot;@+id/myView&quot;</span><br><span class="line">        /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>我们直接运行,效果如下：<br><img src="../../../images/view.jpg" style="zoom:20%"></p>
+<p>x,y轴就画好了。但很明显我们设置的padding没起作用，因为padding是需要我们自己处理的。<br>新增一个方法初始化这些尺寸数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 尺寸数据初始化</span><br><span class="line"> */</span><br><span class="line">private void initSize () &#123;</span><br><span class="line">    // 获取padding尺寸</span><br><span class="line">    paddingLeft = getPaddingLeft();</span><br><span class="line">    paddingTop = getPaddingTop();</span><br><span class="line">    paddingRight = getPaddingRight();</span><br><span class="line">    paddingBottom = getPaddingBottom();</span><br><span class="line">    StringBuilder sb = new StringBuilder();</span><br><span class="line">    sb.append(&quot;paddingLeft =&quot;).append(paddingLeft)</span><br><span class="line">            .append(&quot;paddingTop =&quot;).append(paddingTop)</span><br><span class="line">            .append(&quot;paddingRight =&quot;).append(paddingRight)</span><br><span class="line">            .append(&quot;paddingBottom =&quot;).append(paddingBottom);</span><br><span class="line">    Log.d(TAG, &quot;initSize: &quot;.concat(sb.toString()));</span><br><span class="line">    top = paddingTop;</span><br><span class="line">    left = paddingLeft;</span><br><span class="line">    bottom = height - top - paddingBottom;</span><br><span class="line">    right = width - left;</span><br><span class="line">    setMeasuredDimension(width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就对padding做了处理，接下来接着绘制我们需要的图形。<br>我们之前绘制了两个轴，xy，但我们平常绘制的轴都会有箭头，我们再在x轴右侧、y轴上侧绘制两个箭头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private void drawArrow(Canvas canvas) &#123;</span><br><span class="line">    Path path = new Path();</span><br><span class="line">    // 先绘制x轴三角</span><br><span class="line">    //先移动到三角形一个点</span><br><span class="line">    path.moveTo(right-20, bottom + 20);</span><br><span class="line">    path.lineTo(right-20, bottom - 20); // 画线</span><br><span class="line">    path.lineTo(right, bottom); // 画线</span><br><span class="line">    path.close(); // 图形闭合</span><br><span class="line">    canvas.drawPath(path, paint);</span><br><span class="line"></span><br><span class="line">    // 绘制y轴三角</span><br><span class="line">    path.moveTo(left - 20, top + 20);</span><br><span class="line">    path.lineTo(left + 20, top + 20);</span><br><span class="line">    path.lineTo(left, top);</span><br><span class="line">    path.close();</span><br><span class="line">    canvas.drawPath(path, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里主要用到了drawPath函数。其实canvas对象还有很多其他的绘制图形的方法。</p>
+<h3 id="设置数据并绘制点"><a href="#设置数据并绘制点" class="headerlink" title="设置数据并绘制点"></a>设置数据并绘制点</h3><p>我们已经完成了绘制两条轴线，现在要开始绘制数据了。<br>首先我们要确认标准线，x轴的标准线肯定就是xValue的值，<br>但y轴的标准线是不定的，我们要先找出最大值，确定几条标准线，确定每条标准线的值。<br>我们先假设我们的值在0-100以内，取5条标准线，每条间距20.</p>
+<p>先设置两个数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 数据</span><br><span class="line">   private float[] yValue;</span><br><span class="line">   private String[] xValue;</span><br><span class="line">   private int lineNum = 5;</span><br><span class="line"></span><br><span class="line">   /** 设置数据并刷新 */</span><br><span class="line">   public void setData(float[]yValue, String[]xValue) &#123;</span><br><span class="line">       this.yValue = yValue;</span><br><span class="line">       this.xValue = xValue;</span><br><span class="line">       postInvalidate();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   /** 设置标准线数目 */</span><br><span class="line">   public void setData(int lineNum) &#123;</span><br><span class="line">       this.lineNum = lineNum;</span><br><span class="line">       postInvalidate();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们开始绘制标准线、各个点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/** 绘制各个点 */</span><br><span class="line">private void drawPoint(Canvas canvas) &#123;</span><br><span class="line">    if(xValue == null || yValue == null) return;</span><br><span class="line">    // 先绘制5条y轴标准线位置 取高度的90%作为图线的最高。</span><br><span class="line">    float maxHeight = (float)((bottom - top) * 0.9);</span><br><span class="line">    float itemHeight = maxHeight / 5;</span><br><span class="line">    for(int i = 1; i &lt;=5; i ++) &#123;</span><br><span class="line">        canvas.drawLine(left, bottom - itemHeight * i, left + 15, bottom - itemHeight * i, paint);</span><br><span class="line">    &#125;</span><br><span class="line">    // 再绘制x轴的数据， x轴线的标准值就是x轴的值，数目也是xValue的值</span><br><span class="line">    float maxWidth = (float)((right - left) * 0.9);</span><br><span class="line">    float itemWidth = ((float) (maxWidth * 1.0)) / xValue.length;</span><br><span class="line">    for (int i = 1; i &lt;= xValue.length; i ++) &#123;</span><br><span class="line">        float x = left + itemWidth * i;</span><br><span class="line">                // 绘制轴线</span><br><span class="line">        canvas.drawLine(x, bottom, x, bottom - 15, paint);</span><br><span class="line">        // 绘制点</span><br><span class="line">        float y = bottom - maxHeight * yValue[i-1] / yMax;</span><br><span class="line">        canvas.drawCircle(x, y, 5, paint);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而在MainActivity.kt中，我们可以这样使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// kotlin语法</span><br><span class="line">class MainActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        var xValue = arrayOf(&quot;一&quot;, &quot;二&quot;, &quot;san&quot;)</span><br><span class="line">        var yValue = floatArrayOf(70f, 80f, 90f);</span><br><span class="line">        myView.setData(yValue, xValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时的实现效果：</p>
+<p><img src="../../../images/chat.jpg" style="zoom:20%"></p>
+<p>现在我们完成了图形的大致绘制，但在x、y轴却没有一些文字说明，接下来我们就要加上这些</p>
+<h3 id="绘制x、y轴标准线值，将各个点连接起来。"><a href="#绘制x、y轴标准线值，将各个点连接起来。" class="headerlink" title="绘制x、y轴标准线值，将各个点连接起来。"></a>绘制x、y轴标准线值，将各个点连接起来。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/** 绘制各个点 */</span><br><span class="line">    private void drawPoint(Canvas canvas) &#123;</span><br><span class="line">        if(xValue == null || yValue == null) return;</span><br><span class="line">        // 先绘制5条y轴标准线位置 取高度的90%作为图线的最高。</span><br><span class="line">        float maxHeight = (float)((bottom - top) * 0.9);</span><br><span class="line">        float itemHeight = maxHeight / 5;</span><br><span class="line">        int itemValue = yMax / 5;</span><br><span class="line">        for(int i = 1; i &lt;=5; i ++) &#123;</span><br><span class="line">            canvas.drawLine(left, bottom - itemHeight * i, left + 15, bottom - itemHeight * i, paint);</span><br><span class="line">            // 绘制y轴标准值</span><br><span class="line">            canvas.drawText(itemValue * i + &quot;&quot;, left - 90, bottom - itemHeight * i, paint);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 再绘制x轴的数据， x轴线的标准值就是x轴的值，数目也是xValue的值</span><br><span class="line">        float maxWidth = (float)((right - left) * 0.9);</span><br><span class="line">        float itemWidth = ((float) (maxWidth * 1.0)) / xValue.length;</span><br><span class="line">        for (int i = 1; i &lt;= xValue.length; i ++) &#123;</span><br><span class="line">            float x = left + itemWidth * i;</span><br><span class="line">                    // 绘制轴线</span><br><span class="line">            canvas.drawLine(x, bottom, x, bottom - 15, paint);</span><br><span class="line">            // 绘制点</span><br><span class="line">            float y = bottom - maxHeight * yValue[i-1] / yMax;</span><br><span class="line">            canvas.drawCircle(x, y, 10, paint);</span><br><span class="line"></span><br><span class="line">            // 绘制点与点之间的连线</span><br><span class="line">            if(lastX &gt; 0f) &#123;</span><br><span class="line">                canvas.drawLine(lastX, lastY, x, y, paint);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // 绘制x轴标准值</span><br><span class="line">            canvas.drawText(xValue[i-1], x, bottom + 50, paint);</span><br><span class="line"></span><br><span class="line">            lastX = x;</span><br><span class="line">            lastY = y;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>最后实现效果如下图：</p>
+<p><img src="../../../images/custom_view_final.jpg" style="zoom:20%"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/android-自定义View.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/android-自定义View.html" itemprop="url">android 自定义View</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-10T15:42:49+08:00">
+                2019-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/android-自定义View.html" class="leancloud_visitors" data-flag-title="android 自定义View">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Android-自定义View"><a href="#Android-自定义View" class="headerlink" title="Android 自定义View"></a>Android 自定义View</h1><p>自定义View主要用于：需要一些不规则的图形、事件冲突、特定的视图群组、扩展某些组件的功能。</p>
+<p>首页android自定义View有三种类型，<br>1、继承View，多用于实现一些不规则的图形。</p>
+<p>2、继承特定的组件，如TextView，</p>
+<p>3、继承ViewGroup，用于视图组</p>
+<p>在自定义View中有三个关键的方法：<br>onMeasure、onLayout、onDraw</p>
+<h2 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h2><p>测量，<br>ViewGroup 会遍历测量子视图的onMeasure方法。<br>一般view 则是在测量自身。</p>
+<p>在这个方法中，一般是对视图的尺寸做一些要求。<br>如：处理padding、处理wrap_parent</p>
+<p>margin是无需处理的，margin其实是在父容器的onMeasure时处理的。</p>
+<p>在自定义view时，如果没有重写onMeasure方法，我们调用该组件时，除非制定尺寸，否则wrap_parent、match_parent表现一样，都是充满父容器-match_parent</p>
+<p>onMeasure方法有两个参数(int widthMeasureSpec, int heightMeasureSpec); MeasureSpec时测量规格。<br>这两个参数都是父容器传递过来。</p>
+<p>视图的测量大小由两个元素决定，视图本身的LayoutParams 以及 父容器的测量规格MeasureSpec</p>
+<h3 id="LayoutParams"><a href="#LayoutParams" class="headerlink" title="LayoutParams"></a>LayoutParams</h3><p>我们在使用时，一般是在xml文件，配置某个组件，指定视图宽高：<br>android:layout_width = “wrap_parent | 50dp | match_parent”<br>存在三种情况，<br>wrap_parent： 自适应大小，<br>50dp: 具体尺寸<br>match_parent: 充满父容器-父容器大小</p>
+<h3 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h3><p>测量规格，MeasureSpec由size和mode组成</p>
+<p>1.static int getMode(int measureSpec): // 获取mode<br>2.static int getSize(int measureSpec):// 获取size<br>3.static int makeMeasureSpec(int size,int mode):// 构造一个MeasureSpec</p>
+<p>specMode存在三种情况:<br>EXACTLY:<br>具体尺寸、具体值<br>AT_MOST：<br>表示子视图最多只能是specSize中指定的大小<br>UNSPECIFIED：<br>可以将视图按照自己的意愿设置成任意的大小，没有任何限制，很少用到，主要是系统内部会用到。</p>
+<p>size：<br>就是LayputParams中指定的大小</p>
+<p>而子视图的大小也就是通过size和specMode获取的，具体关系如下图：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EXACTLY</th>
+<th>AT_MOST</th>
+<th>UNSPECIFIED</th>
+<th>&lt;-MeasureSpec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wrap_parnet</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>match_parent</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td></td>
+</tr>
+<tr>
+<td>^LayoutParams</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>总结就是，设置了具体尺寸时，具体尺寸生效，未设置具体尺寸时，就会显示最大尺寸</p>
+<p>下面会讲具体使用</p>
+<h2 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h2><p>布局方法</p>
+<p>在调用onLayout时，onMeasure已经完成，<br>子容器的onLyout是在父容器执行onLayout时调用，而自身的onLyout也会触发内部子容器的遍历onLayout。这样就完成了整个视图的布局过程。<br>在onLayout中，会计算该视图的 左上右下 四个顶点的坐标，就完成了该视图的布局。</p>
+<h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><p>绘制的方法<br>onDraw是在容器的draw方法时调用的。<br>而绘制的顺序为：<br>1.绘制背景<br>2.如果有必要，保存画布的图层，以准备失效<br>3.绘制视图的内容<br>4.绘制子控件<br>5.如果必要，绘制衰落边缘和恢复层<br>6.绘制装饰（比如滚动条）</p>
+<p>onDraw 有一个参数(Canvas cancas),<br>canvas 就是画布，画布的范围就是onLayout布局后确定的区域</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/12/react-redux.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/react-redux.html" itemprop="url">react redux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-03T09:54:38+08:00">
+                2019-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/12/react-redux.html" class="leancloud_visitors" data-flag-title="react redux">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="在react-native中集成redux"><a href="#在react-native中集成redux" class="headerlink" title="在react-native中集成redux"></a>在react-native中集成redux</h1><p>对react框架而言，状态树、dom树是它的一大优势。<br>而redux就是对数据、状态进行管理。</p>
+<h2 id="集成redux"><a href="#集成redux" class="headerlink" title="集成redux"></a>集成redux</h2><p>1、执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install redux --save</span><br><span class="line">npm install react-redux --save</span><br><span class="line">npm install redux-thunk --save</span><br><span class="line">npm i redux-logger --save</span><br></pre></td></tr></table></figure></p>
+<p>以上命令下载关于redux的组件。</p>
+<p>2、store的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// configStore.js</span><br><span class="line">import &#123; createStore, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import thunk from &apos;redux-thunk&apos;;</span><br><span class="line">import rootReducer from &apos;./reducer&apos;;</span><br><span class="line"></span><br><span class="line">const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export default configStore =(initState) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    const store = createStoreWithMiddleware(rootReducer, initState);</span><br><span class="line"></span><br><span class="line">    return store;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而rootReducer是根reducer，因为业务都是分模块的，我们对reducer也会分层，这样使用起来也更简洁、清晰</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// rootReducer</span><br><span class="line">import &#123; combineReducers &#125; from &apos;redux&apos;;</span><br><span class="line">import &#123; reducer as test &#125; from &apos;../Home/store&apos;;</span><br><span class="line"></span><br><span class="line">const appReducer = combineReducers(&#123;</span><br><span class="line">    test,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const rootReducer =(state, action) =&gt; &#123;</span><br><span class="line">    return appReducer(state, action);</span><br><span class="line">&#125;</span><br><span class="line">export default rootReducer;</span><br></pre></td></tr></table></figure>
+<p>test是一个测试的reducer。</p>
+<p>在入口处，绑定store，在入口文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">AppRegistry.registerComponent(&apos;projectName&apos;, () =&gt; Root);</span><br><span class="line">// 指向了root.js，在root.js中：</span><br><span class="line"></span><br><span class="line">import &#123; Provider &#125; from &apos;react-redux&apos;;</span><br><span class="line">import configStore from &apos;./store/configStore&apos;;</span><br><span class="line"></span><br><span class="line">const store = configStore();</span><br><span class="line"></span><br><span class="line">export default class Root extends React.PureComponent &#123;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">                &lt;View style=&#123;&#123; flex: 1 &#125;&#125;&gt;</span><br><span class="line">                    &#123;...&#125;</span><br><span class="line">                &lt;/View&gt;</span><br><span class="line">            &lt;/Provider&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">// actionType.js</span><br><span class="line">export const TEST_REDUCE = &quot;TEST_REDUCE&quot;;</span><br><span class="line"></span><br><span class="line">// test action.js</span><br><span class="line">import &#123; TEST_REDUCE &#125; from &apos;./ActionType&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const test =() =&gt; (&#123;</span><br><span class="line">    type: TEST_REDUCE,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export &#123;</span><br><span class="line">    test,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// test reducer.js</span><br><span class="line">import &#123; TEST_REDUCE &#125; from &apos;./ActionType&apos;;</span><br><span class="line"></span><br><span class="line">const initState = &#123;</span><br><span class="line">    num: 0,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export default reducer = (state = initState, action) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    switch(action.type) &#123;</span><br><span class="line"></span><br><span class="line">        case TEST_REDUCE:</span><br><span class="line">            return &#123;</span><br><span class="line">                ...state,</span><br><span class="line">                num: state.num + 1,</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        default:</span><br><span class="line">            return &#123;</span><br><span class="line">                ...initState,</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在组件component中使用<br>Test.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;;</span><br><span class="line">import &#123; bindActionCreators &#125; from &apos;redux&apos;;</span><br><span class="line">import &#123; action &#125; from &apos;./store&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Test extends Component &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    testFunction =() =&gt; &#123;</span><br><span class="line">        this.props.action.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        const &#123; num &#125; = this.props;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;&#123;flex: 1, alignItems: &apos;center&apos;, justifyContent: &apos;center&apos;&#125;&#125;&gt;</span><br><span class="line">                &lt;TouchableOpacity</span><br><span class="line">                    onPress=&#123;this.testFunction&#125;</span><br><span class="line">                &gt;</span><br><span class="line">                    &lt;Text&gt;</span><br><span class="line">                        触发按钮</span><br><span class="line">                    &lt;/Text&gt;</span><br><span class="line">                    &lt;Text&gt;&#123;num&#125;&lt;/Text&gt;</span><br><span class="line">                &lt;/TouchableOpacity&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapStateToProps = (state) =&gt; (&#123;</span><br><span class="line">    num: state.test.num,</span><br><span class="line">&#125;)</span><br><span class="line">const mapActionToProps = dispatch =&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        action: bindActionCreators(action, dispatch),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default connect(mapStateToProps, mapActionToProps)(Test);</span><br></pre></td></tr></table></figure>
+<p><strong><em> 具体的使用方法已在上面，下面再去讲解redux原理 </em></strong></p>
+<h2 id="redux原理说明"><a href="#redux原理说明" class="headerlink" title="redux原理说明"></a>redux原理说明</h2><p>redux状态管理大致流程：</p>
+<p>component -&gt;调用action -&gt; dispatch action -&gt; reducer -&gt; 纯函数数据改变 -&gt; state改变 -&gt; component props改变 -&gt; 回调到component componentWillReceiverProps生命周期 -&gt; render</p>
+<p>reducer中数据改变即store中数据改变为何会导致 component props改变呢？<br>其实就是connect函数。</p>
+<p>我们在组件中，<br>export default connect(mapStateToProps, mapActionToProps)(Test);<br>connet是一个柯里化函数。<br>第一组入参两个：<br>第一个mapStateToProps，其实就是将store中的数据绑定到props，<br>第二个mapActionToProps，是将action函数绑定到props，<br>所以我们在使用是，如取store中的值，<br>const { num } = this.props;<br>dispatch action：this.props.action.test();</p>
+<p>第二组入参：当前的Test对象。</p>
+<p>再往深考虑connect 函数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/11/android-sqlite的使用.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/11/android-sqlite的使用.html" itemprop="url">android sqlite的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-19T14:01:11+08:00">
+                2019-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/11/android-sqlite的使用.html" class="leancloud_visitors" data-flag-title="android sqlite的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android-sqlite的使用"><a href="#android-sqlite的使用" class="headerlink" title="android sqlite的使用"></a>android sqlite的使用</h1><h3 id="1、创建表"><a href="#1、创建表" class="headerlink" title="1、创建表"></a>1、创建表</h3><p>a.创建java类MyDatabase继承SQLiteOpenHelper 并需要实现下面上个方法</p>
+<h4 id="onCreate（SQLiteDatabase）"><a href="#onCreate（SQLiteDatabase）" class="headerlink" title="onCreate（SQLiteDatabase）"></a>onCreate（SQLiteDatabase）</h4><p>在数据库第一次生成的时候会调用这个方法，也就是说，只有在创建数据库的时候才会调用，当然也有一些其它的情况，一般我们在这个方法里边生成数据库表。</p>
+<h4 id="onUpgrade（SQLiteDatabase，int，int）"><a href="#onUpgrade（SQLiteDatabase，int，int）" class="headerlink" title="onUpgrade（SQLiteDatabase，int，int）"></a>onUpgrade（SQLiteDatabase，int，int）</h4><p>当数据库需要升级的时候，Android系统会主动的调用这个方法。一般我们在这个方法里边删除数据表，并建立新的数据表，当然是否还需要做其他的操作，完全取决于应用的需求。</p>
+<h4 id="onOpen（SQLiteDatabase）"><a href="#onOpen（SQLiteDatabase）" class="headerlink" title="onOpen（SQLiteDatabase）"></a>onOpen（SQLiteDatabase）</h4><p>这是当打开数据库时的回调函数，一般在程序中不是很常使用。</p>
+<p>在构造函数中创建数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 数据表名</span><br><span class="line">   private static final String TABLE_NAME = &quot;userlog.db&quot;;</span><br><span class="line"></span><br><span class="line">   public MyDatabase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) &#123;</span><br><span class="line">       super(context, name, factory, version);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public MyDatabase(Context context, int version) &#123;</span><br><span class="line">       this(context, TABLE_NAME, null, version);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在onCreate方法中创建数据表<br>数据库数据类型：<br>NULL：null值<br>INTEGER：整数，1、2、3、4、6、8字节<br>REAL：浮点值，8字节<br>TEXT：字符串<br>BLOB：blob数据<br>DATE：日期 年月日<br>TIME：时刻 时分秒</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Override</span><br><span class="line">   public void onCreate(SQLiteDatabase db) &#123;</span><br><span class="line">       Log.d(TAG, &quot;onCreate: onCreate&quot;);</span><br><span class="line">       String sql = &quot;create table t_log(userId text, weight text, content text, image text, date date, time time)&quot;;</span><br><span class="line">       db.execSQL(sql);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em> 然后在需要建表的实话，初始化一个该java类实例即可 </em></strong></p>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><h4 id="增加-insert-一条数据"><a href="#增加-insert-一条数据" class="headerlink" title="增加 insert 一条数据"></a>增加 insert 一条数据</h4><p>1、使用sql语句插入一条数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String sql = &quot;insert into table_name (userId, weight, content, image) values(&apos;userId&apos;,&apos;70.0&apos;, &apos;content&apos;, &apos;image_uri&apos;)&quot;;</span><br><span class="line">db.execSQL(sql);</span><br></pre></td></tr></table></figure></p>
+<p>但使用上面这种时，字段如果含有某些特殊符号如： : ‘ / 等，时，则会报错。unexpect token ‘:’</p>
+<p>此时应该使用 ? 替代符，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public void insert(String userId, String weight, String content, String imageUrl, Date date, Time time ) &#123;</span><br><span class="line">    SQLiteDatabase db = getWritableDatabase();</span><br><span class="line">    StringBuilder sql = new StringBuilder();</span><br><span class="line">    sql.append(&quot;insert into &quot;)</span><br><span class="line">            .append(table_name)</span><br><span class="line">            .append(&quot;(userId, weight, content, image, date, time) values(?,?,?,?,?,?)&quot;);</span><br><span class="line">    Object []values = new Object[] &#123;userId, weight, content, imageUrl, date, time&#125;;</span><br><span class="line">    Log.d(TAG, &quot;insert ===&quot;.concat(sql.toString().concat(values.toString())));</span><br><span class="line">    db.execSQL(sql.toString(), values);</span><br><span class="line">    db.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2019/10/ValueAnimator.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -646,6 +1835,15 @@
           
             <h1 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h1><h3 id="Hash内部类Node："><a href="#Hash内部类Node：" class="headerlink" title="Hash内部类Node："></a>Hash内部类Node：</h3><p>Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。<br>链表数据结构，每一个节点都记录下一个节点的地址。<br>在Node的构造函数中，直接包含了下一个节点，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        final int hash;</span><br><span class="line">        final K key;</span><br><span class="line">        V value;</span><br><span class="line">        Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">        // 将下一个节点作为入参放入构造函数中</span><br><span class="line">        Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            this.hash = hash;</span><br><span class="line">            this.key = key;</span><br><span class="line">            this.value = value;</span><br><span class="line">            this.next = next;</span><br><span class="line">        &#125;</span><br><span class="line">    ....</span><br></pre></td></tr></table></figure></p>
 <p>获取某个节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> public V get(Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab;</span><br><span class="line">        Node&lt;K,V&gt; first, e;</span><br><span class="line">        int n;</span><br><span class="line">        K k;</span><br><span class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line">            if (first.hash == hash &amp;&amp; // always check first node</span><br><span class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                return first;</span><br><span class="line">            if ((e = first.next) != null) &#123;</span><br><span class="line">                // 当为树结构的时候</span><br><span class="line">                if (first instanceof TreeNode)</span><br><span class="line">                // 获取树形结构中某个节点</span><br><span class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                // 遍历链表结构    </span><br><span class="line">                do &#123;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        return e;</span><br><span class="line">                &#125; while ((e = e.next) != null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>HashMap底部是数组，数组中存放链表，当链表长度大于6时，转为红黑树</p>
+<p>put：初始化table[],使用时再初始化，避免内存。</p>
+<p>根据k获取hash，hash &amp; length 获取 index，放入数组指定下标的链表，头插法, 链表超长6时，转为红黑树</p>
+<p>hash &amp; length 使用位运算符，因为位运算符快，cpu指令就是基于位运算符，</p>
+<p>扩容：hashmap的初识容量是16，每次扩容 * 2， 为何容量取 2的次方，因为这样在位运算时，让每一位都能使用到，效率最高，而且这样保证位运算结果与取模结果一致。</p>
+<p>加载因子：默认0.75，因为大量测试表面。0。6-0.75最佳，0.75保证在该范围内存使用率最高。<br>加载因子过大时，会让hash碰撞概率增加，降低hashmap使用效率。</p>
+<p>hashmap使用缺点：内存使用率最高也只有75%， hash碰撞，极端情况退化为单链表。用空间换时间。</p>
+<p>可以使用其他数据类型替代：<br>SparseArray： 双数组结构，key，value分别使用数组存储， 但SparseArray的key只能为int，<br>有序，通过二分查找来定位元素。<br>用时间换空间。<br>缺点： key值只能是int类型</p>
+<p>ArrayMap：sdk 19引入，双数组结果，key值可以为任何类型，根据key获取hash，就和SparseArray类型一致了。<br>Bundle内部就是使用ArrayMap</p>
 
           
         
@@ -1947,986 +3145,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/facebook推广api-推广主页.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/07/facebook推广api-推广主页.html" itemprop="url">facebook推广api 推广主页</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T10:58:31+08:00">
-                2019-07-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/07/facebook推广api-推广主页.html" class="leancloud_visitors" data-flag-title="facebook推广api 推广主页">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="主页推广"><a href="#主页推广" class="headerlink" title="主页推广"></a>主页推广</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/maven.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/07/maven.html" itemprop="url">maven</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-08T14:36:59+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/07/maven.html" class="leancloud_visitors" data-flag-title="maven">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h1><p>maven 查看依赖树<br>mvn dependency:tree &gt; xxx // 将maven依赖树关系导入到文件 XXX<br>code xxx // 打开xxx文件</p>
-<p>// gradle 查看依赖树<br>gradle app:dependency // 查看依赖树关系</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/react发布到javaweb.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/07/react发布到javaweb.html" itemprop="url">react发布到javaweb</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T14:29:35+08:00">
-                2019-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/07/react发布到javaweb.html" class="leancloud_visitors" data-flag-title="react发布到javaweb">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="react项目发布到javaweb中"><a href="#react项目发布到javaweb中" class="headerlink" title="react项目发布到javaweb中"></a>react项目发布到javaweb中</h1><h3 id="1、打包react"><a href="#1、打包react" class="headerlink" title="1、打包react"></a>1、打包react</h3><p>直接执行npm run build命令：发现在build目录下生成资源文件，<br>但是打开index.html发现报错，发现在生成的index.html中引入的文件路径有问题：/static</p>
-<p>/多余，或者说少了.  正确的路径应该是：static 或者 ./static</p>
-<p>发现是%PUBLIC_URL%问题，在构建时应该执行</p>
-<p><strong><em> PUBLIC_URL=./ npm run build </em></strong></p>
-<h3 id="2、集成到javaweb中"><a href="#2、集成到javaweb中" class="headerlink" title="2、集成到javaweb中"></a>2、集成到javaweb中</h3><p>将上一步生成build目录下的文件都复制放在webapp路径下，启动应用就能直接访问到index.html文件</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/facebook-营销api集成.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/06/facebook-营销api集成.html" itemprop="url">facebook 营销api集成</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T10:15:25+08:00">
-                2019-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/06/facebook-营销api集成.html" class="leancloud_visitors" data-flag-title="facebook 营销api集成">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="facebook-营销api集成"><a href="#facebook-营销api集成" class="headerlink" title="facebook 营销api集成"></a>facebook 营销api集成</h1><p>营销api需要通过后端服务器与facebook服务器交互</p>
-<h3 id="1、下载营销api-java代码"><a href="#1、下载营销api-java代码" class="headerlink" title="1、下载营销api java代码"></a>1、下载营销api java代码</h3><p>git clone <a href="https://github.com/facebook/facebook-java-business-sdk.git" target="_blank" rel="noopener">https://github.com/facebook/facebook-java-business-sdk.git</a></p>
-<p>编辑器：IDEA</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 在pom.xml中添加依赖</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.facebook.business.sdk&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;facebook-java-business-sdk&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">插件maven-source-plugin 无法下载因缺失版本号</span><br><span class="line">添加&lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">// 解决idea报错</span><br><span class="line">在&lt;build&gt;&lt;/build&gt;标签内添加&lt;defaultGoal&gt;compile&lt;/defaultGoal&gt;</span><br><span class="line">在&lt;plugins&gt;&lt;/plugins&gt;标签外套一个标签&lt;pluginManagement&gt;&lt;/pluginManagement&gt;</span><br></pre></td></tr></table></figure>
-<p>添加java文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import com.facebook.ads.sdk.APIContext;</span><br><span class="line">import com.facebook.ads.sdk.AdAccount;</span><br><span class="line">import com.facebook.ads.sdk.Campaign;</span><br><span class="line">import com.facebook.ads.sdk.APIException;</span><br><span class="line"></span><br><span class="line">public class QuickStartExample &#123;</span><br><span class="line"></span><br><span class="line">    public static final String ACCESS_TOKEN = &quot;[Your access token]&quot;;//Your access token</span><br><span class="line">    public static final Long ACCOUNT_ID = 123456789L; //Your account ID</span><br><span class="line">    public static final String APP_SECRET = &quot;[Your app secret]&quot;;//Your app secret</span><br><span class="line"></span><br><span class="line">    public static final APIContext context = new APIContext(ACCESS_TOKEN, APP_SECRET);</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            System.out.println(&quot;==========&quot;);</span><br><span class="line">            AdAccount account = new AdAccount(ACCOUNT_ID, context);</span><br><span class="line"></span><br><span class="line">            Campaign campaign = account.createCampaign()</span><br><span class="line">                    .setName(&quot;Java SDK Test Campaign&quot;)</span><br><span class="line">                    .setObjective(Campaign.EnumObjective.VALUE_LINK_CLICKS)</span><br><span class="line">                    .setSpendCap(10000L)</span><br><span class="line">                    .setStatus(Campaign.EnumStatus.VALUE_PAUSED)</span><br><span class="line">                    .execute();</span><br><span class="line">            System.out.println(campaign.fetch());</span><br><span class="line">        &#125; catch (APIException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>or</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import com.facebook.ads.sdk.APIContext;</span><br><span class="line">import com.facebook.ads.sdk.APINodeList;</span><br><span class="line">import com.facebook.ads.sdk.AdAccount;</span><br><span class="line">import com.facebook.ads.sdk.Campaign;</span><br><span class="line"></span><br><span class="line">public class TestFBJavaSDK</span><br><span class="line">&#123;</span><br><span class="line">    public static final APIContext context = new APIContext(</span><br><span class="line">            &quot;your-access-token&quot;,</span><br><span class="line">            &quot;your-appsecret&quot;</span><br><span class="line">    );</span><br><span class="line">    public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        AdAccount account = new AdAccount(&quot;act_&#123;your-adaccount-id&#125;&quot;, context);</span><br><span class="line">        try &#123;</span><br><span class="line">            APINodeList&lt;Campaign&gt; campaigns = account.getCampaigns().requestAllFields().execute();</span><br><span class="line">            for(Campaign campaign : campaigns) &#123;</span><br><span class="line">                System.out.println(campaign.getFieldName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>执行java文件既可发布请求到facebook服务器，<br><strong><em> 需要安全上网 </em></strong></p>
-<h2 id="1、主页推广"><a href="#1、主页推广" class="headerlink" title="1、主页推广"></a>1、主页推广</h2><p>根据提示一步一步提交，到 沙盒账号，如果之前没有添加则新建，要推广的主页，如果无则新建</p>
-<p>到下载示例代码，点下载，将会获得一个java文件，里面含有accessToken、appid、ad_account_id、app_secret等信息，<br>将该下载的SAMPLE_CODE.java文件放于与上面两个java文件同级目录，直接运行该java文件即可，<br>注意此时电脑需要科学上网，不然会报错<strong><em>Timeout</em></strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/facebook-sdk-集成.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/06/facebook-sdk-集成.html" itemprop="url">facebook sdk 集成</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-26T16:52:30+08:00">
-                2019-06-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/06/facebook-sdk-集成.html" class="leancloud_visitors" data-flag-title="facebook sdk 集成">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Facebook-sdk-集成"><a href="#Facebook-sdk-集成" class="headerlink" title="Facebook sdk 集成"></a>Facebook sdk 集成</h1><p>首先需要在facebook注册一个账号，<br>自通过账号进入facebook的开发者平台</p>
-<p>创建应用，只需要填写应用名即可，回生成一个appid。</p>
-<h2 id="集成事件功能"><a href="#集成事件功能" class="headerlink" title="集成事件功能"></a>集成事件功能</h2><p>1、配置远端maven仓库地址<br>    在项目android/build.gradle文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">buildscript&#123;</span><br><span class="line">    repositories&#123;</span><br><span class="line">        ...</span><br><span class="line">        mavenCentral(); // 添加这行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">allprojects&#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">        mavenCentral() // 添加这行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2、添加依赖<br>在app/build.gradle文件中添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dependencies&#123;</span><br><span class="line">    ...</span><br><span class="line">    implementation &apos;com.facebook.android:facebook-android-sdk:[4,5)&apos; // 添加这行</span><br><span class="line">    // 最新sdk版本为 implementation &apos;com.facebook.android:facebook-android-sdk:[5,6)&apos; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3、添加facebook-app-id<br>在res/values/string.xml中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;string name=&quot;facebook_app_id&quot;&gt;462119014332748&lt;/string&gt; </span><br><span class="line">&lt;string name=&quot;fb_login_protocol_scheme&quot;&gt;fb462119014332748&lt;/string&gt;</span><br><span class="line">// 462119014332748为你在facebook应用的appid</span><br><span class="line">// fb_login_protocol_scheme应该是用于登陆的</span><br></pre></td></tr></table></figure></p>
-<p>在/app/manifest/AndroidManifest.xml中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;application&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;com.facebook.sdk.ApplicationId&quot; android:value=&quot;@string/facebook_app_id&quot;/&gt; </span><br><span class="line">    &lt;activity android:name=&quot;com.facebook.FacebookActivity&quot;</span><br><span class="line">        android:configChanges= &quot;keyboard|keyboardHidden|screenLayout|screenSize|orientation&quot;</span><br><span class="line">        android:label=&quot;@string/app_name&quot; /&gt; </span><br><span class="line">    &lt;activity android:name=&quot;com.facebook.CustomTabActivity&quot;</span><br><span class="line">        android:exported=&quot;true&quot;&gt;</span><br><span class="line">            &lt;intent-filter&gt;</span><br><span class="line">            &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt; </span><br><span class="line">            &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;</span><br><span class="line">            &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;</span><br><span class="line">            &lt;data android:scheme=&quot;@string/fb_login_protocol_scheme&quot; /&gt;</span><br><span class="line">        &lt;/intent-filter&gt;</span><br><span class="line">    &lt;/activity&gt;</span><br><span class="line"></span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure></p>
-<p>4、在facebook开发者控制台配置analytics sdk<br>在facebook开发者官网，点击「我的应用」即可进入应用控制台，<br>可以创建应用，只需提供应用名，以及邮箱即可，</p>
-<p>点击单个应用即可进入应用控制台进行编辑<br><img src="&#39;../images/facebook1.png&#39;" alt="images">;<br>上图是应用可添加的功能，</p>
-<p>点击Analytics即将功能添加进应用，点设置，前几步都是提示，<br>第四步，填入应用id，app/build.gradle中的applicationid，以及应用默认启动的Actiivty，</p>
-<p>第五步，填入密钥散列，注意应该要填入两个，一个开发、一个发布，即debug自带的、一个release时通过jks文件签名生成的。<br>获取方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// macos debug ，按下enter键需要输入开机密码</span><br><span class="line">keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64</span><br><span class="line"></span><br><span class="line">// release </span><br><span class="line">keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64</span><br></pre></td></tr></table></figure></p>
-<p>5、发送事件</p>
-<p>上面的1、2、3都只是基本配置，下面是手动发送事件</p>
-<p>在MainApplication.java中<br>FacebookSdk.sdkInitialize 四个初始化方法都已被遗弃， 看到说是不需要初始化了</p>
-<p> 在MainApplication.java中<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        super.onCreate();</span><br><span class="line"></span><br><span class="line">        // facebook 初始化</span><br><span class="line">        FacebookSdk.setIsDebugEnabled(true);</span><br><span class="line">        AppEventsLogger.activateApp(MainApplication.this);</span><br><span class="line">        FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意facebooksdk回自动收集一些事件,如果不需要自动收集功能需要在清单文件中配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;meta-data</span><br><span class="line">    android:name=&quot;com.facebook.sdk.AutoLogAppEventsEnabled&quot;</span><br><span class="line">    android:value=&quot;false&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p>在Actiivty中测试发送自定义事件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onResume() &#123;</span><br><span class="line">    super.onResume();</span><br><span class="line">    logEvent();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void logEvent() &#123;</span><br><span class="line">    Log.d(&quot;========&quot;, &quot;logEvent&quot;);</span><br><span class="line">    AppEventsLogger logger = AppEventsLogger.newLogger(this);</span><br><span class="line">    logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);</span><br><span class="line">    logger.logEvent(&quot;Test Event&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在测试时发现，当打断点调试时发现，发送事件总是会失败，正常运行却可以在facebook分析工具中看得到提交的事件。</p>
-<p>后续：<br>在sdk集成后，可以看到之前定义的事件数据。<br>但是在连接商务平台，想要发布广告时。<br>需要通过自己的事件来定义受众、或者定义类似受众时发现，在商务平台无法获取到自定义事件的数据。<br>甚至都无法获取到我们的应用。<br>后来看官方文档，发现出了自定义事件、自动收集的事件，还有一个标准事件。<br>在我添加了一个标准事件后，就在商务平台上能找到在开发平台提交的app了。<br>但是那些自定义受众、类似受众功能貌似只能绑定到 facebook定义的标准事件，而不能是我们自己的自定义事件</p>
-<p><strong><em>注意，运行时手机需要能连接到facebook后台服务器，大陆用户需要科学上网。</em></strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/06/android-okHttp3.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/06/android-okHttp3.html" itemprop="url">android okHttp3</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-18T10:52:40+08:00">
-                2019-06-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/06/android-okHttp3.html" class="leancloud_visitors" data-flag-title="android okHttp3">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/04/vscode的常用插件与插件开发.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/04/vscode的常用插件与插件开发.html" itemprop="url">vscode的常用插件与插件开发</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T15:06:57+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/vscode/" itemprop="url" rel="index">
-                    <span itemprop="name">vscode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2019/04/vscode的常用插件与插件开发.html" class="leancloud_visitors" data-flag-title="vscode的常用插件与插件开发">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Visual Studio Code（VS code）是开发神器，通过插件配置不仅可以开发前端，还可以开发后端(java/go等)，下面介绍一下vscode的常用插件与插件如何开发一个自己的插件。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2019/04/vscode的常用插件与插件开发.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2972,7 +3195,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

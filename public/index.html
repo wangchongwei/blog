@@ -292,6 +292,1228 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/11/android消息机制.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/11/android消息机制.html" itemprop="url">android消息机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-24T11:09:22+08:00">
+                2020-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/11/android消息机制.html" class="leancloud_visitors" data-flag-title="android消息机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在andorid中，系统的行为、用户的输入等事件都会被包装为一个消息，<br>进行消息发送、处理</p>
+<p>关于消息的处理，就离不开Handler、Message、Loop<br>在平时使用时，Handler多用于多线程之间通信。</p>
+<ul>
+<li>那么Handler如何实现多线程通信？</li>
+<li>多线程之间为何不会互相干扰？</li>
+<li>为什么不使用用wait/notify？</li>
+</ul>
+<h2 id="Handler多线程通信"><a href="#Handler多线程通信" class="headerlink" title="Handler多线程通信"></a>Handler多线程通信</h2><p>先看一下普通使用案例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class MyActiivty extends Activity &#123;</span><br><span class="line"></span><br><span class="line">    private Handler myHandler = new Handler() &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void handleMessage(Message msg) &#123;</span><br><span class="line">            super.handleMessage(msg);</span><br><span class="line">                if(msg.what=100) &#123;</span><br><span class="line">                    // TODO</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static class MyThread extends Thread() &#123;</span><br><span class="line">        @Overtide</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            Message message = Message.obtain();</span><br><span class="line">            message.what = 100;</span><br><span class="line">            myHandler.sendMessage();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面就是一个简单的在子线程发送消息，回到主线程处理消息的过程，<br>通过在子线程构造一个message对象，在主线程中获取到该message对象，来处理消息。</p>
+<p>所以其实Handler处理多线程通信是通过共享Message对象内存来实现的。<br>内存是不区分线程的，这种通信原理就是在子线程与主线程共享message内存</p>
+<p>所以 那么Handler如何实现多线程通信？<br>通过 内存共享 实现。</p>
+<p>在多线程时，Handler又是如何保证消息如何在正确的线程发送的呢，或者说是如何保证执行的线程是正确的了。<br>这就要引入我们的Loop、消息队列概念了。</p>
+<p>handler处理消息模型:</p>
+<p><img src="../../../images/looper.png" style="zoom:20%"></p>
+<p>handler负责发送、处理消息<br>looper负责一直轮询消息<br>messageQueue消息队列，负责存放、取出消息</p>
+<h2 id="Looper"><a href="#Looper" class="headerlink" title="Looper"></a>Looper</h2><p>讲到looper负责一直轮询消息，但是好像在上面的代码中，都没有使用到looper。</p>
+<p>其实是在主线程中，系统已经默认为我们创建了looper，<br>在ActivityThread.java的main方法中（ActivityThread即为主线程）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, &quot;ActivityThreadMain&quot;);</span><br><span class="line"></span><br><span class="line">        // Install selective syscall interception</span><br><span class="line">        AndroidOs.install();</span><br><span class="line"></span><br><span class="line">        // CloseGuard defaults to true and can be quite spammy.  We</span><br><span class="line">        // disable it here, but selectively enable it later (via</span><br><span class="line">        // StrictMode) on debug builds, but using DropBox, not logs.</span><br><span class="line">        CloseGuard.setEnabled(false);</span><br><span class="line"></span><br><span class="line">        Environment.initForCurrentUser();</span><br><span class="line"></span><br><span class="line">        // Make sure TrustedCertificateStore looks in the right place for CA certificates</span><br><span class="line">        final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());</span><br><span class="line">        TrustedCertificateStore.setDefaultUserDirectory(configDir);</span><br><span class="line"></span><br><span class="line">        Process.setArgV0(&quot;&lt;pre-initialized&gt;&quot;);</span><br><span class="line"></span><br><span class="line">        Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">        // Find the value for &#123;@link #PROC_START_SEQ_IDENT&#125; if provided on the command line.</span><br><span class="line">        // It will be in the format &quot;seq=114&quot;</span><br><span class="line">        long startSeq = 0;</span><br><span class="line">        if (args != null) &#123;</span><br><span class="line">            for (int i = args.length - 1; i &gt;= 0; --i) &#123;</span><br><span class="line">                if (args[i] != null &amp;&amp; args[i].startsWith(PROC_START_SEQ_IDENT)) &#123;</span><br><span class="line">                    startSeq = Long.parseLong(</span><br><span class="line">                            args[i].substring(PROC_START_SEQ_IDENT.length()));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ActivityThread thread = new ActivityThread();</span><br><span class="line">        thread.attach(false, startSeq);</span><br><span class="line"></span><br><span class="line">        if (sMainThreadHandler == null) &#123;</span><br><span class="line">            sMainThreadHandler = thread.getHandler();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (false) &#123;</span><br><span class="line">            Looper.myLooper().setMessageLogging(new</span><br><span class="line">                    LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // End of event ActivityThreadMain.</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">        Looper.loop();</span><br><span class="line"></span><br><span class="line">        throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，调用了Loop.prepareMainLooper()、Looper.loop()函数，<br>而且在Looper.loop()后面就抛出异常，<br>也就是说主线程中loop一旦停止轮询，则会抛出异常闪退。正常情况时，loop就是一直在轮询。</p>
+<p>查看Looper的这两个函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void prepareMainLooper() &#123;</span><br><span class="line">        prepare(false);</span><br><span class="line">        synchronized (Looper.class) &#123;</span><br><span class="line">            if (sMainLooper != null) &#123;</span><br><span class="line">                throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            sMainLooper = myLooper();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在prepareMainLooper中可以看到，不允许调用两次，否则会抛出异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * Run the message queue in this thread. Be sure to call</span><br><span class="line">    * &#123;@link #quit()&#125; to end the loop.</span><br><span class="line">    */</span><br><span class="line">public static void loop() &#123;</span><br><span class="line">    final Looper me = myLooper();</span><br><span class="line">    if (me == null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    final MessageQueue queue = me.mQueue;</span><br><span class="line"></span><br><span class="line">    // Make sure the identity of this thread is that of the local process,</span><br><span class="line">    // and keep track of what that identity token actually is.</span><br><span class="line">    Binder.clearCallingIdentity();</span><br><span class="line">    final long ident = Binder.clearCallingIdentity();</span><br><span class="line"></span><br><span class="line">    // Allow overriding a threshold with a system prop. e.g.</span><br><span class="line">    // adb shell &apos;setprop log.looper.1000.main.slow 1 &amp;&amp; stop &amp;&amp; start&apos;</span><br><span class="line">    final int thresholdOverride =</span><br><span class="line">            SystemProperties.getInt(&quot;log.looper.&quot;</span><br><span class="line">                    + Process.myUid() + &quot;.&quot;</span><br><span class="line">                    + Thread.currentThread().getName()</span><br><span class="line">                    + &quot;.slow&quot;, 0);</span><br><span class="line"></span><br><span class="line">    boolean slowDeliveryDetected = false;</span><br><span class="line"></span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        Message msg = queue.next(); // might block</span><br><span class="line">        if (msg == null) &#123;</span><br><span class="line">            // No message indicates that the message queue is quitting.</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // This must be in a local variable, in case a UI event sets the logger</span><br><span class="line">        final Printer logging = me.mLogging;</span><br><span class="line">        if (logging != null) &#123;</span><br><span class="line">            logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +</span><br><span class="line">                    msg.callback + &quot;: &quot; + msg.what);</span><br><span class="line">        &#125;</span><br><span class="line">        // Make sure the observer won&apos;t change while processing a transaction.</span><br><span class="line">        final Observer observer = sObserver;</span><br><span class="line"></span><br><span class="line">        final long traceTag = me.mTraceTag;</span><br><span class="line">        long slowDispatchThresholdMs = me.mSlowDispatchThresholdMs;</span><br><span class="line">        long slowDeliveryThresholdMs = me.mSlowDeliveryThresholdMs;</span><br><span class="line">        if (thresholdOverride &gt; 0) &#123;</span><br><span class="line">            slowDispatchThresholdMs = thresholdOverride;</span><br><span class="line">            slowDeliveryThresholdMs = thresholdOverride;</span><br><span class="line">        &#125;</span><br><span class="line">        final boolean logSlowDelivery = (slowDeliveryThresholdMs &gt; 0) &amp;&amp; (msg.when &gt; 0);</span><br><span class="line">        final boolean logSlowDispatch = (slowDispatchThresholdMs &gt; 0);</span><br><span class="line"></span><br><span class="line">        final boolean needStartTime = logSlowDelivery || logSlowDispatch;</span><br><span class="line">        final boolean needEndTime = logSlowDispatch;</span><br><span class="line"></span><br><span class="line">        if (traceTag != 0 &amp;&amp; Trace.isTagEnabled(traceTag)) &#123;</span><br><span class="line">            Trace.traceBegin(traceTag, msg.target.getTraceName(msg));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final long dispatchStart = needStartTime ? SystemClock.uptimeMillis() : 0;</span><br><span class="line">        final long dispatchEnd;</span><br><span class="line">        Object token = null;</span><br><span class="line">        if (observer != null) &#123;</span><br><span class="line">            token = observer.messageDispatchStarting();</span><br><span class="line">        &#125;</span><br><span class="line">        long origWorkSource = ThreadLocalWorkSource.setUid(msg.workSourceUid);</span><br><span class="line">        try &#123;</span><br><span class="line">            msg.target.dispatchMessage(msg);</span><br><span class="line">            if (observer != null) &#123;</span><br><span class="line">                observer.messageDispatched(token, msg);</span><br><span class="line">            &#125;</span><br><span class="line">            dispatchEnd = needEndTime ? SystemClock.uptimeMillis() : 0;</span><br><span class="line">        &#125; catch (Exception exception) &#123;</span><br><span class="line">            if (observer != null) &#123;</span><br><span class="line">                observer.dispatchingThrewException(token, msg, exception);</span><br><span class="line">            &#125;</span><br><span class="line">            throw exception;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            ThreadLocalWorkSource.restore(origWorkSource);</span><br><span class="line">            if (traceTag != 0) &#123;</span><br><span class="line">                Trace.traceEnd(traceTag);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (logSlowDelivery) &#123;</span><br><span class="line">            if (slowDeliveryDetected) &#123;</span><br><span class="line">                if ((dispatchStart - msg.when) &lt;= 10) &#123;</span><br><span class="line">                    Slog.w(TAG, &quot;Drained&quot;);</span><br><span class="line">                    slowDeliveryDetected = false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                if (showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart, &quot;delivery&quot;,</span><br><span class="line">                        msg)) &#123;</span><br><span class="line">                    // Once we write a slow delivery log, suppress until the queue drains.</span><br><span class="line">                    slowDeliveryDetected = true;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (logSlowDispatch) &#123;</span><br><span class="line">            showSlowLog(slowDispatchThresholdMs, dispatchStart, dispatchEnd, &quot;dispatch&quot;, msg);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (logging != null) &#123;</span><br><span class="line">            logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Make sure that during the course of dispatching the</span><br><span class="line">        // identity of the thread wasn&apos;t corrupted.</span><br><span class="line">        final long newIdent = Binder.clearCallingIdentity();</span><br><span class="line">        if (ident != newIdent) &#123;</span><br><span class="line">            Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;</span><br><span class="line">                    + Long.toHexString(ident) + &quot; to 0x&quot;</span><br><span class="line">                    + Long.toHexString(newIdent) + &quot; while dispatching to &quot;</span><br><span class="line">                    + msg.target.getClass().getName() + &quot; &quot;</span><br><span class="line">                    + msg.callback + &quot; what=&quot; + msg.what);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        msg.recycleUnchecked();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>loop函数中，首先获取通过myLooper()函数获取looper对象，如果looper对象为空，则抛出异常，提示必须在当前线程先执行Looper.prepare()<br>然后获取looper对象持有的messageQueue，<br>然后就是for(;;)无限循环，获取messageQueue下一条消息<br>获取到message后调用msg.target.dispatchMessage(msg);<br>将这条消息发送出去。<br>最后执行msg.recycleUnchecked()，相当于一个回收利用。</p>
+<p>我们看一下myLooper函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static @Nullable Looper myLooper() &#123;</span><br><span class="line">    return sThreadLocal.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>说明looper是存放在ThreadLocal中的。<br>关于ThreadLocal，在之前已经大致讲过了。<br>ThreadLocal讲解（<a href="https://wangchongwei.github.io/blog/2020/08/java-ThreadLocal%E8%A7%A3%E6%9E%90.html）" target="_blank" rel="noopener">https://wangchongwei.github.io/blog/2020/08/java-ThreadLocal%E8%A7%A3%E6%9E%90.html）</a><br>在每一个线程，都存在一个对应且唯一的值</p>
+<p>我们可以看一下prepare函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static void prepare() &#123;</span><br><span class="line">    prepare(true);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void prepare(boolean quitAllowed) &#123;</span><br><span class="line">    if (sThreadLocal.get() != null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    sThreadLocal.set(new Looper(quitAllowed));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private Looper(boolean quitAllowed) &#123;</span><br><span class="line">        mQueue = new MessageQueue(quitAllowed);</span><br><span class="line">        mThread = Thread.currentThread();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到与prepareMainLooper的不同，因为prepareMainLooper是在主线程调用，而主线程很自由一个，<br>所以直接使用sMainLooper来保存主线程的looper，而且主线程中prepare(false)；标示不允许looper退出。</p>
+<p>而在子线程时，就是将looper对象保存到sThreadLocal中，sThreadLocal.get()不为null时，会抛出异常。<br>也就是说子线程中prepare只允许调用一次，保证了每个线程中的looper对象唯一性</p>
+<p>然后看到子线程和主线程的另一个差异prepare(false) &amp;&amp; prepare(true)<br>因为andorid，所有事件如：用户的操作、ui的渲染等都是作为消息发送的，而这些都是在主线程操作的，所以在主线程中是不允许退出loop循环，否则抛出异常。</p>
+<p>而在子线程中prepare(true)，允许退出，其实在子线程中新建handler、looper时，当我们不需要再使用，需要终止loop循环。<br>此时需要调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void quitSafely() &#123;</span><br><span class="line">    mQueue.quit(true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MessageQueue"><a href="#MessageQueue" class="headerlink" title="MessageQueue"></a>MessageQueue</h2><p>在上面中已经讲过Looper，looper中持有一个messageQueue<br>final MessageQueue queue = me.mQueue;<br>mQueue 在Looper的私有构造函数中被初始化</p>
+<p>接下来我们看一下MessageQueue<br>队列是一种数据结果，FIFO先进先出<br>MessageQueue 是一个消息队列，默认也是先进先出，有序执行</p>
+<p>之前说了，MessageQueue主要用于存放、取出消息。<br>在Looper中主要用到了messagequeue的next函数，用于取出下一条消息</p>
+<p>我们先看一下存放消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">boolean enqueueMessage(Message msg, long when) &#123;</span><br><span class="line">    if (msg.target == null) &#123;</span><br><span class="line">        throw new IllegalArgumentException(&quot;Message must have a target.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    if (msg.isInUse()) &#123;</span><br><span class="line">        throw new IllegalStateException(msg + &quot; This message is already in use.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronized (this) &#123;</span><br><span class="line">        if (mQuitting) &#123;</span><br><span class="line">            IllegalStateException e = new IllegalStateException(</span><br><span class="line">                    msg.target + &quot; sending message to a Handler on a dead thread&quot;);</span><br><span class="line">            Log.w(TAG, e.getMessage(), e);</span><br><span class="line">            msg.recycle();</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        msg.markInUse();</span><br><span class="line">        msg.when = when;</span><br><span class="line">        Message p = mMessages;</span><br><span class="line">        boolean needWake;</span><br><span class="line">        if (p == null || when == 0 || when &lt; p.when) &#123;</span><br><span class="line">            // New head, wake up the event queue if blocked.</span><br><span class="line">            msg.next = p;</span><br><span class="line">            mMessages = msg;</span><br><span class="line">            needWake = mBlocked;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // Inserted within the middle of the queue.  Usually we don&apos;t have to wake</span><br><span class="line">            // up the event queue unless there is a barrier at the head of the queue</span><br><span class="line">            // and the message is the earliest asynchronous message in the queue.</span><br><span class="line">            needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();</span><br><span class="line">            Message prev;</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                prev = p;</span><br><span class="line">                p = p.next;</span><br><span class="line">                if (p == null || when &lt; p.when) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                if (needWake &amp;&amp; p.isAsynchronous()) &#123;</span><br><span class="line">                    needWake = false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            msg.next = p; // invariant: p == prev.next</span><br><span class="line">            prev.next = msg;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // We can assume mPtr != 0 because mQuitting is false.</span><br><span class="line">        if (needWake) &#123;</span><br><span class="line">            nativeWake(mPtr);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果当前线程已经退出，mQuitting为true，则抛出异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">msg.when = when;</span><br><span class="line">Message p = mMessages;</span><br><span class="line">boolean needWake;</span><br><span class="line">if (p == null || when == 0 || when &lt; p.when) &#123;</span><br><span class="line">    // New head, wake up the event queue if blocked.</span><br><span class="line">    msg.next = p;</span><br><span class="line">    mMessages = msg;</span><br><span class="line">    needWake = mBlocked;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当全局变量mMessages为空，或者当前传入的when为0， 或者当前when小于全局变量mMessages.when(即时间在前)<br>其实判断的是两种状态，1:messageQueue队列为空 2:添加的消息执行时间在前<br>此时将该消息置于队首，<br>needWake = mBlocked；<br>如果mBlocked为true，needWake也为true，就是如果之前阻塞则唤醒，反之无需唤醒</p>
+<p>再看不满足上面情况下时,即消息队列中已添加过消息，而且要添加的消息.when在上一次添加的消息之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">else &#123;</span><br><span class="line">    // Inserted within the middle of the queue.  Usually we don&apos;t have to wake</span><br><span class="line">    // up the event queue unless there is a barrier at the head of the queue</span><br><span class="line">    // and the message is the earliest asynchronous message in the queue.</span><br><span class="line">    needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();</span><br><span class="line">    Message prev;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        prev = p;</span><br><span class="line">        p = p.next;</span><br><span class="line">        if (p == null || when &lt; p.when) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        if (needWake &amp;&amp; p.isAsynchronous()) &#123;</span><br><span class="line">            needWake = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    msg.next = p; // invariant: p == prev.next</span><br><span class="line">    prev.next = msg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>for循环，遍历链表，当找到节点为null即遍历完 || 传入的when小于遍历节点的when（即传入消息的时间在遍历节点时间之前时）<br>终止循环，将msg.next -&gt; p<br>原来<br>prev.next -&gt; n.next -&gt; … -&gt; n.next -&gt; p -&gt; …<br>现在<br>prev.next -&gt; n.next -&gt; … -&gt; n.next -&gt; msg.next -&gt; p -&gt; …</p>
+<p>也就是说，message链表是按照when排序的，when越小，在越靠近链头<br>为何要根据when排序了，其实是因为message执行时间是要按时间排序，要执行时间越小，代表时间越早，所以放在链头</p>
+<p>以上是消息队列，入队函数，再看一下出队函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">Message next() &#123;</span><br><span class="line">    // Return here if the message loop has already quit and been disposed.</span><br><span class="line">    // This can happen if the application tries to restart a looper after quit</span><br><span class="line">    // which is not supported.</span><br><span class="line">    final long ptr = mPtr;</span><br><span class="line">    if (ptr == 0) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int pendingIdleHandlerCount = -1; // -1 only during first iteration</span><br><span class="line">    int nextPollTimeoutMillis = 0;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        if (nextPollTimeoutMillis != 0) &#123;</span><br><span class="line">            Binder.flushPendingCommands();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        nativePollOnce(ptr, nextPollTimeoutMillis);</span><br><span class="line"></span><br><span class="line">        synchronized (this) &#123;</span><br><span class="line">            // Try to retrieve the next message.  Return if found.</span><br><span class="line">            final long now = SystemClock.uptimeMillis();</span><br><span class="line">            Message prevMsg = null;</span><br><span class="line">            Message msg = mMessages;</span><br><span class="line">            if (msg != null &amp;&amp; msg.target == null) &#123;</span><br><span class="line">                // Stalled by a barrier.  Find the next asynchronous message in the queue.</span><br><span class="line">                do &#123;</span><br><span class="line">                    prevMsg = msg;</span><br><span class="line">                    msg = msg.next;</span><br><span class="line">                &#125; while (msg != null &amp;&amp; !msg.isAsynchronous());</span><br><span class="line">            &#125;</span><br><span class="line">            if (msg != null) &#123;</span><br><span class="line">                if (now &lt; msg.when) &#123;</span><br><span class="line">                    // Next message is not ready.  Set a timeout to wake up when it is ready.</span><br><span class="line">                    nextPollTimeoutMillis = (int) Math.min(msg.when - now, Integer.MAX_VALUE);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // Got a message.</span><br><span class="line">                    mBlocked = false;</span><br><span class="line">                    if (prevMsg != null) &#123;</span><br><span class="line">                        prevMsg.next = msg.next;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        mMessages = msg.next;</span><br><span class="line">                    &#125;</span><br><span class="line">                    msg.next = null;</span><br><span class="line">                    if (DEBUG) Log.v(TAG, &quot;Returning message: &quot; + msg);</span><br><span class="line">                    msg.markInUse();</span><br><span class="line">                    return msg;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                // No more messages.</span><br><span class="line">                nextPollTimeoutMillis = -1;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // Process the quit message now that all pending messages have been handled.</span><br><span class="line">            if (mQuitting) &#123;</span><br><span class="line">                dispose();</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // If first time idle, then get the number of idlers to run.</span><br><span class="line">            // Idle handles only run if the queue is empty or if the first message</span><br><span class="line">            // in the queue (possibly a barrier) is due to be handled in the future.</span><br><span class="line">            if (pendingIdleHandlerCount &lt; 0</span><br><span class="line">                    &amp;&amp; (mMessages == null || now &lt; mMessages.when)) &#123;</span><br><span class="line">                pendingIdleHandlerCount = mIdleHandlers.size();</span><br><span class="line">            &#125;</span><br><span class="line">            if (pendingIdleHandlerCount &lt;= 0) &#123;</span><br><span class="line">                // No idle handlers to run.  Loop and wait some more.</span><br><span class="line">                mBlocked = true;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (mPendingIdleHandlers == null) &#123;</span><br><span class="line">                mPendingIdleHandlers = new IdleHandler[Math.max(pendingIdleHandlerCount, 4)];</span><br><span class="line">            &#125;</span><br><span class="line">            mPendingIdleHandlers = mIdleHandlers.toArray(mPendingIdleHandlers);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Run the idle handlers.</span><br><span class="line">        // We only ever reach this code block during the first iteration.</span><br><span class="line">        for (int i = 0; i &lt; pendingIdleHandlerCount; i++) &#123;</span><br><span class="line">            final IdleHandler idler = mPendingIdleHandlers[i];</span><br><span class="line">            mPendingIdleHandlers[i] = null; // release the reference to the handler</span><br><span class="line"></span><br><span class="line">            boolean keep = false;</span><br><span class="line">            try &#123;</span><br><span class="line">                keep = idler.queueIdle();</span><br><span class="line">            &#125; catch (Throwable t) &#123;</span><br><span class="line">                Log.wtf(TAG, &quot;IdleHandler threw exception&quot;, t);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (!keep) &#123;</span><br><span class="line">                synchronized (this) &#123;</span><br><span class="line">                    mIdleHandlers.remove(idler);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Reset the idle handler count to 0 so we do not run them again.</span><br><span class="line">        pendingIdleHandlerCount = 0;</span><br><span class="line"></span><br><span class="line">        // While calling an idle handler, a new message could have been delivered</span><br><span class="line">        // so go back and look again for a pending message without waiting.</span><br><span class="line">        nextPollTimeoutMillis = 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中有一段代码可以先不看，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (msg != null &amp;&amp; msg.target == null) &#123;</span><br><span class="line">    // Stalled by a barrier.  Find the next asynchronous message in the queue.</span><br><span class="line">    do &#123;</span><br><span class="line">        prevMsg = msg;</span><br><span class="line">        msg = msg.next;</span><br><span class="line">    &#125; while (msg != null &amp;&amp; !msg.isAsynchronous());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这一块设计到消息的同步屏障，放到下面再将，我们先只看出队时的逻辑<br>next函数就是取出下一条消息。<br>开启for循环<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (nextPollTimeoutMillis != 0) &#123;</span><br><span class="line">    Binder.flushPendingCommands();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果nextPollTimeoutMillis不等于0时，会阻塞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">final long now = SystemClock.uptimeMillis();</span><br><span class="line">Message prevMsg = null;</span><br><span class="line">Message msg = mMessages;</span><br><span class="line">if (msg != null) &#123;</span><br><span class="line">    if (now &lt; msg.when) &#123;</span><br><span class="line">        // Next message is not ready.  Set a timeout to wake up when it is ready.</span><br><span class="line">        nextPollTimeoutMillis = (int) Math.min(msg.when - now, Integer.MAX_VALUE);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // Got a message.</span><br><span class="line">        mBlocked = false;</span><br><span class="line">        if (prevMsg != null) &#123;</span><br><span class="line">            prevMsg.next = msg.next;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            mMessages = msg.next;</span><br><span class="line">        &#125;</span><br><span class="line">        msg.next = null;</span><br><span class="line">        if (DEBUG) Log.v(TAG, &quot;Returning message: &quot; + msg);</span><br><span class="line">        msg.markInUse();</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    // No more messages.</span><br><span class="line">    nextPollTimeoutMillis = -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当当前message不为空时：<br>如果当前时间小于msg.when，即没到执行时间，则阻塞线程到msg.when时间<br>将msg.next赋值给全局变量mMessages，再将msg.next指向null<br>然后返回msg这一个节点，如此不会返回一个链表</p>
+<p>如果msg为空，说明队列为空，没有消息，此时赋值nextPollTimeoutMillis = -1;下一次循环时，就会阻塞。</p>
+<ul>
+<li>MessageQueue 添加消息、取出消息是线程安全的吗？<br>是，是线程安全的。</li>
+<li><p>如何保证线程安全的？<br>通过锁，存放消息以及取出消息时都有设置synchronized (this)，<br>synchronized 后面修饰的是this，同一个对象在多线程环境调用函数时，只会有一个线程获取到锁，进行操作。<br>synchronized 是内置锁，JVM已经内置处理了锁的获取以及释放</p>
+</li>
+<li><p>为什么不使用用wait/notify？<br>在上述代码可以看到使用了阻塞、锁，阻塞是直接调用native 函数来阻塞，<br>其实在内部已经使用了wait/notif。</p>
+</li>
+</ul>
+<h2 id="Message"><a href="#Message" class="headerlink" title="Message"></a>Message</h2><p>上面讲了消息机制中的Handler、Looper、MessageQueue；<br>现在我们再讲一下消息的本体Message</p>
+<p>首先通过我们在上面的分析，可以知道Message在数据结构上看，是一个链表，而且是只有next指针，所以是个单链表。<br>Message中没有什么复杂操作，都是一些赋值函数<br>有两个地址可以注意下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public void recycle() &#123;</span><br><span class="line">    if (isInUse()) &#123;</span><br><span class="line">        if (gCheckRecycle) &#123;</span><br><span class="line">            throw new IllegalStateException(&quot;This message cannot be recycled because it &quot;</span><br><span class="line">                    + &quot;is still in use.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    recycleUnchecked();</span><br><span class="line">&#125;</span><br><span class="line">void recycleUnchecked() &#123;</span><br><span class="line">    // Mark the message as in use while it remains in the recycled object pool.</span><br><span class="line">    // Clear out all other details.</span><br><span class="line">    flags = FLAG_IN_USE;</span><br><span class="line">    what = 0;</span><br><span class="line">    arg1 = 0;</span><br><span class="line">    arg2 = 0;</span><br><span class="line">    obj = null;</span><br><span class="line">    replyTo = null;</span><br><span class="line">    sendingUid = UID_NONE;</span><br><span class="line">    workSourceUid = UID_NONE;</span><br><span class="line">    when = 0;</span><br><span class="line">    target = null;</span><br><span class="line">    callback = null;</span><br><span class="line">    data = null;</span><br><span class="line"></span><br><span class="line">    synchronized (sPoolSync) &#123;</span><br><span class="line">        if (sPoolSize &lt; MAX_POOL_SIZE) &#123;</span><br><span class="line">            next = sPool;</span><br><span class="line">            sPool = this;</span><br><span class="line">            sPoolSize++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Message的回收函数不是将对象置为空，而是将Message中的变量都还原为默认值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static Message obtain() &#123;</span><br><span class="line">    synchronized (sPoolSync) &#123;</span><br><span class="line">        if (sPool != null) &#123;</span><br><span class="line">            Message m = sPool;</span><br><span class="line">            sPool = m.next;</span><br><span class="line">            m.next = null;</span><br><span class="line">            m.flags = 0; // clear in-use flag</span><br><span class="line">            sPoolSize--;</span><br><span class="line">            return m;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return new Message();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Message还提供obtain函数，不会直接new 一个Message对象，而是共享之前的对象，改变对象的内部属性。</p>
+<p>所以我们在实际使用中都是使用Message.obtain()来构建message对象，而不是一直使用new ，这样可以避免频繁的生成、回收，避免内存抖动。</p>
+<p>这种设计被成为 <em> 享元设计模式 </em></p>
+<h2 id="Message-同步屏障"><a href="#Message-同步屏障" class="headerlink" title="Message 同步屏障"></a>Message 同步屏障</h2><p>上面讲的消息message链表是根据when时间排序，那如果有紧急的消息必须马上处理呢，这个时候不可能等其他先执行而必须是马上执行的事件时，怎么办？</p>
+<p>这个时候就可以用到 同步屏障</p>
+<p>handler消息机制大概流程：<br>生成Looper对象，生成Handler对象，Lopper.looper循环<br>在Handler构造函数内，获取到上面生成的looper对象，通过ThreadLocal保存到对应的线程，与MessageQueue绑定<br>在需要发送消息的地方调用handler.sendMessage(),在sendMessage时，将message与handler绑定，将message.target赋值为当前handler<br>同时，sendMessage时，调用messageQueue.enqueueMessage将message放入消息队列。<br>同时，Looper.loop()在循环一直取出消息message，然后通过message.target获取到handler对象，最终回调到handler.handlerMessage函数。</p>
+<p>这样消息从产生到处理流程就走完了。</p>
+<p>总结提问：</p>
+<ul>
+<li>Looper.loop()一直在循环，为什么不会导致应用卡死(ANR)?</li>
+</ul>
+<p>答：loop()循环与ANR是两个不相关的事情，loop只是循环事件，ANR是处理事件耗时，导致无法响应用户的下一次输入。<br>系统的ANR弹窗都是通过消息机制发送，并弹出提示窗的。</p>
+<ul>
+<li>fragment生命周期</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/11/APT注解处理器.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/11/APT注解处理器.html" itemprop="url">APT注解处理器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-16T11:04:49+08:00">
+                2020-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/11/APT注解处理器.html" class="leancloud_visitors" data-flag-title="APT注解处理器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="APT"><a href="#APT" class="headerlink" title="APT"></a>APT</h1><p>APT(Annotation Processing Tool) 是一种处理注释的工具，它对源代码文件进行检测找出<br>其中的Annotation，根据注解自动生成代码，如果想要自定义的注解处理器能够正常运行，必须要通过<br>APT工具来进行处理。 也可以这样理解，只有通过声明APT工具后，程序在编译期间自定义注解解释器<br>才能执行。 通俗理解：根据规则，帮我们生成代码、生成类文件</p>
+<p>在使用APT在项目编译时期动态生成我们需要的java文件时，有两种方式，<br>传统方式、javapoet</p>
+<p>项目源码(<a href="https://github.com/wangchongwei/apt" target="_blank" rel="noopener">https://github.com/wangchongwei/apt</a>)</p>
+<h2 id="javapoet"><a href="#javapoet" class="headerlink" title="javapoet"></a>javapoet</h2><p>以面向对象(OOP)思维，在编译时，动态生成java文件</p>
+<p>优点：OOP思维，不需要导包<br>缺点：倒序写法，从函数-&gt;类-&gt;包</p>
+<p>这种方式和写作思维不同，从调用链尾部到头部。<br>开源组件butterknife、ARouter都是使用javapoet方式</p>
+<p>example:</p>
+<p>新建一个工程，<br>并在工程新建一个javaLib，在此工程新建一个注解类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.TYPE) // 表明注解是添加在类上</span><br><span class="line">@Retention(RetentionPolicy.CLASS) // 表明在编译器执行</span><br><span class="line">public @interface ARouter &#123;</span><br><span class="line"></span><br><span class="line">    String path(); // 声明注解时 必须参数</span><br><span class="line"></span><br><span class="line">    String group() default &quot;&quot;; // 因为已经设置了default值，所以这个是选填参数</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时我们就完成了一个注解的定义<br>然后再新建一个javaLib，在此工程新建一个处理注解的类，而这个类就是我们在编译时生成java类的主要代码部分<br>在此工程build.gradle中添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    // 背后的服务 能够监听 你是否在编译中.....</span><br><span class="line">    // AS3.4.1 + Gradle 5.1.1 + auto-service:1.0-rc4</span><br><span class="line">    compileOnly&apos;com.google.auto.service:auto-service:1.0-rc4&apos;</span><br><span class="line">    annotationProcessor&apos;com.google.auto.service:auto-service:1.0-rc4&apos;</span><br><span class="line"></span><br><span class="line">    // 帮助我们通过类调用的形式来生成Java代码 [JavaPoet]</span><br><span class="line">    implementation &quot;com.squareup:javapoet:1.9.0&quot;</span><br><span class="line"></span><br><span class="line">    // 依赖注解module</span><br><span class="line">    implementation project(&quot;:annotations&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们开始写监听到注解时需要生成java类的部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">@AutoService(Processor.class) // 启用服务 google 自动服务，一直监控</span><br><span class="line">@SupportedAnnotationTypes(&#123;&quot;com.justin.annotationprocessor.ARouter&quot;&#125;) // 注解 包名.类名</span><br><span class="line">@SupportedSourceVersion(SourceVersion.RELEASE_8) // 环境的版本</span><br><span class="line"></span><br><span class="line">@SupportedOptions(&quot;student&quot;) // 接收在app/build.gradle中声明的参数</span><br><span class="line">public class ARouterProcessor extends AbstractProcessor &#123;</span><br><span class="line"></span><br><span class="line">    private Elements elements;</span><br><span class="line"></span><br><span class="line">    private Messager messager;</span><br><span class="line"></span><br><span class="line">    private Filer filer;</span><br><span class="line"></span><br><span class="line">    private Types typeTool;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public synchronized void init(ProcessingEnvironment processingEnvironment) &#123;</span><br><span class="line">        super.init(processingEnvironment);</span><br><span class="line">        elements = processingEnvironment.getElementUtils();</span><br><span class="line">        messager = processingEnvironment.getMessager();</span><br><span class="line">        filer = processingEnvironment.getFiler();</span><br><span class="line">        typeTool = processingEnvironment.getTypeUtils();</span><br><span class="line"></span><br><span class="line">        // 获取在app/build.gradle中申明的参数</span><br><span class="line">        String value = processingEnvironment.getOptions().get(&quot;student&quot;);</span><br><span class="line">        messager.printMessage(Diagnostic.Kind.NOTE, &quot;=========&gt;&quot; + value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean process(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment) &#123;</span><br><span class="line">        // 此时会运行两次，一次执行，一次检查</span><br><span class="line">        messager.printMessage(Diagnostic.Kind.NOTE, &quot;=====&gt; compiler is running&quot;);</span><br><span class="line"></span><br><span class="line">        if(set.isEmpty()) &#123;</span><br><span class="line">            // 使用注解的类集合为空</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        // 获取被 ARouter注解的 &quot;类节点信息&quot;</span><br><span class="line">        Set&lt;? extends Element&gt; elements = roundEnvironment.getElementsAnnotatedWith(ARouter.class);</span><br><span class="line">        for(Element element : elements) &#123;</span><br><span class="line"></span><br><span class="line">            /**</span><br><span class="line">                举例我们需要生成这样一个类</span><br><span class="line">             package com.example.helloworld;</span><br><span class="line"></span><br><span class="line">             public final class HelloWorld &#123;</span><br><span class="line"></span><br><span class="line">             public static void main(String[] args) &#123;</span><br><span class="line">             System.out.println(&quot;Hello, JavaPoet!&quot;);</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">             public int add(int a, int b)&#123;</span><br><span class="line">                return 5;</span><br><span class="line">             &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             */</span><br><span class="line"></span><br><span class="line">            // javapoet生成java文件的方式时，OOP思维，先生成函数，再生成类，最后生成包</span><br><span class="line">            // 1 生成函数</span><br><span class="line">            MethodSpec methodSpec = MethodSpec.methodBuilder(&quot;main&quot;) // 构造一个函数， 函数名</span><br><span class="line">                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC) // public 、static</span><br><span class="line">                    .returns(void.class) // 返回值类型</span><br><span class="line">                    .addParameter(String[].class, &quot;args&quot;) // 入参类型</span><br><span class="line">                    .addStatement(&quot;$T.out.println($S)&quot;, System.class, &quot;Hello, JavaPoet!&quot;)// 函数执行语句 不需要添加分号</span><br><span class="line">                    .addStatement(&quot;$T.out.println($S)&quot;, System.class, &quot;Hello, agent!&quot;)</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">            // 多个函数</span><br><span class="line">            MethodSpec methodSpec1 = MethodSpec.methodBuilder(&quot;add&quot;)</span><br><span class="line">                    .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                    .returns(int.class)</span><br><span class="line">                    .addParameter(int.class, &quot;a&quot;)</span><br><span class="line">                    .addParameter(int.class, &quot;b&quot;) // 可以添加多个入参</span><br><span class="line">                    .addStatement(&quot;return 5&quot;)</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">            // 2 生成类</span><br><span class="line">            TypeSpec myClass = TypeSpec.classBuilder(&quot;HelloWorld&quot;) // 构造一个类，类名</span><br><span class="line">                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL) // 添加申明 public、final</span><br><span class="line">                    .addMethod(methodSpec) // 绑定函数</span><br><span class="line">                    .addMethod(methodSpec1) // 绑定多个函数</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">            // 3、生成包</span><br><span class="line">            JavaFile myPackage = JavaFile.builder(&quot;com.example.helloworld&quot;, myClass).build();</span><br><span class="line">            try &#123;</span><br><span class="line">                myPackage.writeTo(filer);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                messager.printMessage(Diagnostic.Kind.NOTE, &quot;=====&gt; 创建HelloWorld类失败,异常原因：&quot; + e.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后使用@ARouter注解<br>在MainActivity中使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@ARouter(path = &quot;main/MainActivity&quot;)</span><br><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>点击build项目，即会在app/build/ap_generated_sources/debug下生成对应的包以及java文件</p>
+<p><img src="../../../images/javapoet.jpg" style="zoom:20%"></p>
+<p>在上述方式中，我们只是写成了一个固定的java文件，还没有体现动态生成概念。<br>下面我们就要改造，动态接收参数来生成代码<br>只显示动态生成代码部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">// 获取被 ARouter注解的 &quot;类节点信息&quot;</span><br><span class="line">        Set&lt;? extends Element&gt; elements = roundEnvironment.getElementsAnnotatedWith(ARouter.class);</span><br><span class="line">        for(Element element : elements) &#123;</span><br><span class="line">            // 动态生成java代码</span><br><span class="line">            // 获取组件class的包路径</span><br><span class="line">            String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();</span><br><span class="line">            // 获取注解的类名</span><br><span class="line">            String className = element.getSimpleName().toString();</span><br><span class="line">            // 获取到注解以及注解时的参数</span><br><span class="line">            ARouter aRouter = element.getAnnotation(ARouter.class);</span><br><span class="line">            String path = aRouter.path();</span><br><span class="line"></span><br><span class="line">            /**</span><br><span class="line">             模板：</span><br><span class="line">             public class MainActivity3$$$$$$$$$ARouter &#123;</span><br><span class="line">             public static Class findTargetClass(String path) &#123;</span><br><span class="line">             return path.equals(&quot;/app/MainActivity3&quot;) ? MainActivity3.class : null;</span><br><span class="line">             &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             */</span><br><span class="line">            // 1、方法</span><br><span class="line">            MethodSpec method = MethodSpec.methodBuilder(&quot;findTargetClass&quot;)</span><br><span class="line">                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)</span><br><span class="line">                    .returns(Class.class)</span><br><span class="line">                    .addParameter(String.class, &quot;path&quot;)</span><br><span class="line">                    .addStatement(&quot;return path.equals($S) ? $T.class : null&quot;,</span><br><span class="line">                            path,</span><br><span class="line">                            ClassName.get((TypeElement) element) // 获取注解类的class对象</span><br><span class="line">                    )</span><br><span class="line">                    .build();</span><br><span class="line">            // 2 类</span><br><span class="line">            TypeSpec mineClass = TypeSpec.classBuilder(className + &quot;$$$$$$$$$ARouter&quot;)</span><br><span class="line">                    .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                    .addMethod(method)</span><br><span class="line">                    .build();</span><br><span class="line">            // 3 包</span><br><span class="line">            JavaFile minePackage = JavaFile</span><br><span class="line">                    .builder(packageName, mineClass)</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                minePackage.writeTo(filer);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                messager.printMessage(Diagnostic.Kind.NOTE, &quot;创建&quot; + className + &quot;类失败&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>此时我们就完成了自动获取注解类的包名、类名、注解时的path<br>自动生成的类也在相同包名下，获取注解时的path，可以做一些操作</p>
+<h2 id="传统方式生成java文件"><a href="#传统方式生成java文件" class="headerlink" title="传统方式生成java文件"></a>传统方式生成java文件</h2><p>在编译时，一行一行，从头到尾，以写文本的方式写一个java文件</p>
+<p>优点：套版格式，思路清晰<br>缺点：所有代码都需要写，包括导包，如果有任一一个字符错误、分号缺失，都会导致报错。</p>
+<p>这种方式需要及其细心<br>开源组建EventBus就是采用的这种方式</p>
+<p>example：<br>首先自定义注解类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Target(TYPE) </span><br><span class="line">@Retention(CLASS) // 编译期    XUtil==运行期</span><br><span class="line">public @interface Binding &#123;</span><br><span class="line"></span><br><span class="line">    String router();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后写注解处理类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">@SupportedSourceVersion(SourceVersion.RELEASE_7) // 环境的版本</span><br><span class="line">@AutoService(Processor.class) // 启用服务</span><br><span class="line">@SupportedAnnotationTypes(&#123;&quot;com.derry.arouter_annotations.Binding&quot;&#125;) // 注解</span><br><span class="line">public class BindingProcessor extends AbstractProcessor &#123;</span><br><span class="line"></span><br><span class="line">    private Elements elementTool;</span><br><span class="line">    private Messager messager;</span><br><span class="line">    private Filer filer;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public synchronized void init(ProcessingEnvironment processingEnvironment) &#123;</span><br><span class="line">        super.init(processingEnvironment);</span><br><span class="line">        elementTool = processingEnvironment.getElementUtils();</span><br><span class="line">        messager = processingEnvironment.getMessager();</span><br><span class="line">        filer = processingEnvironment.getFiler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean process(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment) &#123;</span><br><span class="line"></span><br><span class="line">        if(set.isEmpty()) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Set&lt;? extends Element&gt; elements = roundEnvironment.getElementsAnnotatedWith(Binding.class);</span><br><span class="line">        for (Element element : elements) &#123;</span><br><span class="line"></span><br><span class="line">            // 获取包名</span><br><span class="line">            String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();</span><br><span class="line">            String className = element.getSimpleName().toString();</span><br><span class="line">            messager.printMessage(Diagnostic.Kind.NOTE, &quot;被@ARetuer注解的类有：&quot; + className);</span><br><span class="line">            String findClassName = className + &quot;$$$$$$$Binding&quot;;</span><br><span class="line"></span><br><span class="line">            Binding binding = element.getAnnotation(Binding.class);</span><br><span class="line">            try &#123;</span><br><span class="line">                JavaFileObject javaFileObject = filer.createSourceFile(packageName + &apos;.&apos; + findClassName, element.getEnclosingElement());</span><br><span class="line">                Writer writer = javaFileObject.openWriter();</span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                sb.append(&quot;package &quot;).append(packageName).append(&quot;;\n\n&quot;);</span><br><span class="line">                sb.append(&quot;public class &quot;).append(findClassName).append(&quot;&#123;\n&quot;);</span><br><span class="line">                sb.append(&quot;public String findTargetRouter()&#123;\n&quot;);</span><br><span class="line">//                sb.append(&quot;return &quot; + binding.router().toString()).append(&quot;;\n&quot;);</span><br><span class="line">                sb.append(&quot;return \&quot;test\&quot;;\n&quot;);</span><br><span class="line">                sb.append(&quot;&#125;\n&quot;);</span><br><span class="line">                sb.append(&quot;&#125;\n&quot;);</span><br><span class="line">                writer.write(sb.toString());</span><br><span class="line">                writer.flush();</span><br><span class="line">                writer.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                messager.printMessage(Diagnostic.Kind.NOTE, &quot;创建&quot; + findClassName + &quot;类失败&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/11/android-性能优化.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/11/android-性能优化.html" itemprop="url">android 性能优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-04T13:56:47+08:00">
+                2020-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/11/android-性能优化.html" class="leancloud_visitors" data-flag-title="android 性能优化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="android性能优化"><a href="#android性能优化" class="headerlink" title="android性能优化"></a>android性能优化</h1><p>性能优化分为几个方向：</p>
+<ul>
+<li>内存优化</li>
+<li>电量优化</li>
+<li>渲染优化</li>
+<li>size大小优化</li>
+<li>异常捕获</li>
+</ul>
+<h2 id="apk瘦身"><a href="#apk瘦身" class="headerlink" title="apk瘦身"></a>apk瘦身</h2><p>针对与apk大小优化而言，<br>首先需要知道apk中主要结构，了解其中是哪些部分比较大。<br>然后来针对性优化。</p>
+<p>一般而言比较占用的是：资源文件、架构文件(.so)</p>
+<h3 id="资源文件优化"><a href="#资源文件优化" class="headerlink" title="资源文件优化"></a>资源文件优化</h3><p>针对资源文件，首先我们去除没有被使用的资源，然后就是降低所用资源的大小。</p>
+<p>在app/build.gradle文件中设置shrinkResources true</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">release &#123;</span><br><span class="line">        shrinkResources true</span><br><span class="line">        proguardFiles getDefaultProguardFile(&quot;proguard-android.txt&quot;), &quot;proguard-rules.pro&quot;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>则会在Gradle打包release apk时，自动忽略未使用的资源文件，包括：图片、xml</p>
+<p>但要注意此时也会忽略隐式调用的资源文件，如通过反射调用，或者react-native中在js调用drawable木土图片，<br>在这两种场景时，都会被忽略。<br>针对这种场景，可以通过keep文件，保持这些资源文件不会被忽略。</p>
+<p>在res目录下新建xml目录，在xml目录下新建文件keep.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources</span><br><span class="line">xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">tools:keep=&quot;@layout/l_used*_c,@layout/l_used_a,@layout/l_used_b*&quot;</span><br><span class="line">tools:discard=&quot;@layout/unused2&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>其中tools:keep是强制不忽略，tools:discard是强制忽略</p>
+<p>上面讲述的是去除无用资源，还有我们可以去除无用的代码，如未被调用的函数，未被使用的变量</p>
+<p>minifyEnabled设置为true，设置在与shrinkResources一起的地方。<br>注意shrinkResources需要与minifyEnabled一起使用才会生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">release &#123;</span><br><span class="line">        shrinkResources true</span><br><span class="line">        minifyEnabled true</span><br><span class="line">        proguardFiles getDefaultProguardFile(&quot;proguard-android.txt&quot;), &quot;proguard-rules.pro&quot;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="针对架构-so优化"><a href="#针对架构-so优化" class="headerlink" title="针对架构.so优化"></a>针对架构.so优化</h3><p>在大型项目，特别时继承第三方过多时，此时.so文件才是占用最多的部分。</p>
+<h2 id="异常捕获"><a href="#异常捕获" class="headerlink" title="异常捕获"></a>异常捕获</h2><p>开发时怕的不是出现问题，而是问题无法重现。<br>因为android碎片化严重 生产上的问题肯定要比开发时问题多。而且很多都是在开发端未必能重现的。<br>此时需要我们记录发生在用户手机上的异常。</p>
+<p>针对异常可以分类，java异常、native异常。<br>native异常即是native函数c++代码异常</p>
+<h3 id="java异常捕获"><a href="#java异常捕获" class="headerlink" title="java异常捕获"></a>java异常捕获</h3><p>在andorid app中捕获java异常，只需要实现Thread.UncaughtExceptionHandler</p>
+<h3 id="native异常"><a href="#native异常" class="headerlink" title="native异常"></a>native异常</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/10/线程与进程.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/10/线程与进程.html" itemprop="url">线程与进程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-29T10:35:27+08:00">
+                2020-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/10/线程与进程.html" class="leancloud_visitors" data-flag-title="线程与进程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>进程是操作系统资源分配的基本单位，</p>
+<p>线程是处理器（CPU）任务调度和执行的基本单位<br>线程依赖于进程，一个进程可能对应多个线程。</p>
+<p>并发与并行</p>
+<p>1、并发（Concurrent）：指两个或多个事件在同一时间间隔内发生，即交替做不同事的能力，多线程是并发的一种形式。例如垃圾回收时，用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。</p>
+<p>2、并行（Parallel）：指两个或者多个事件在同一时刻发生，即同时做不同事的能力。例如垃圾回收时，多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</p>
+<p>同时能处理的最大线程数取决于CPU内核数量，<br>有些机器还有逻辑处理器，</p>
+<p>能同时处理任务的线程最大数量为CPU内核与逻辑处理器的较大值。</p>
+<p>如内核：4，逻辑处理器：8<br>那么CPU正在能同时处理的任务数量为8。</p>
+<p>但为何我们写代码的时候，设置多线程运行时为何感觉可以同时设置很多个线程数量呢。</p>
+<p>这个就跟CPU的时间轮转片调度算法有关了</p>
+<p>在早期的时间片轮转法中,系统将所有的就绪进程按先来先服务的原则,排成一个队列,每次调度时,把CPU分配给队首进程,并令其执行一个时间片.时间片的大小从几ms到几百ms.当执行的时间片用完时,由一个计时器发出时钟中断请求,调度程序便据此信号来停止该进程的执行,并将它送往就绪队列的末尾;然后,再把处理机分配给就绪队列中新的队首进程,同时也让它执行一个时间片.这样就可以保证就绪队列中的所有进程,在一给定的时间内,均能获得一时间片的处理机执行时间.</p>
+<p>所以我们在多线程运行时，超过内核数量的线程任务在执行时，其实是在切换运行的。<br>只是因为CPU的时间片粒度很小，所以在切换时，很多都是无感的</p>
+<p>java中的程序天生的多线程的，启动线程有两种方式。</p>
+<ul>
+<li><p>继承Thread类</p>
+</li>
+<li><p>实现Runnable接口 </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[]args) &#123;</span><br><span class="line">        MyThread thread = new MyThread();</span><br><span class="line">        thread.start();</span><br><span class="line">        MyThread2 thread2 = new MyThread2();</span><br><span class="line">        new Thread(thread2).start();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    static class MyThread extends Thread &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            System.out.println(&quot;extends Thread&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    static class MyThread2 implements Runnable &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            System.out.println(&quot;implements Runnable&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/10/android-8-0屏幕朝向.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/10/android-8-0屏幕朝向.html" itemprop="url">android 8.0屏幕朝向</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-28T15:08:43+08:00">
+                2020-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/10/android-8-0屏幕朝向.html" class="leancloud_visitors" data-flag-title="android 8.0屏幕朝向">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在android8.0设备发现一个问题，在androidManifest.xml中已配置了固定的屏幕方向，<br>但是在应用中，点击设备menu键，选择应用时，此时应用仍然可以旋转。</p>
+<p>在MainActivity中通过代码设置 setRequestedOrientation时会报错：Only fullscreen activities can request orientation</p>
+<p>原因是在android8.0 的Activity.java 的代码中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">       if (DEBUG_LIFECYCLE) Slog.v(TAG, &quot;onCreate &quot; + this + &quot;: &quot; + savedInstanceState);</span><br><span class="line">       if (DEBUG_LIFECYCLE) Slog.v(TAG, &quot;onCreate &quot; + this + &quot;: &quot; + savedInstanceState);</span><br><span class="line"></span><br><span class="line">       if (getApplicationInfo().targetSdkVersion &gt;= O &amp;&amp; mActivityInfo.isFixedOrientation()) &#123;</span><br><span class="line">           final TypedArray ta = obtainStyledAttributes(com.android.internal.R.styleable.Window);</span><br><span class="line">           final boolean isTranslucentOrFloating = ActivityInfo.isTranslucentOrFloating(ta);</span><br><span class="line">           ta.recycle();</span><br><span class="line"></span><br><span class="line">           if (isTranslucentOrFloating) &#123;</span><br><span class="line">               throw new IllegalStateException(</span><br><span class="line">                       &quot;Only fullscreen opaque activities can request orientation&quot;);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果sdk版本&gt;O &amp;&amp; 当前Activity的屏幕方向固定时，<br>判断当前主题样式，如果包含透明样式，则会抛出该异常。</p>
+<p>很明显这段代码存在问题，sdk&gt;=O其实就是android8.0(26)及以上。<br>而后面两个要求，固定屏幕方向在特定应用时很常见的，而透明样式页比较常见，<br>我们常用透明背景做一个简单的启动优化，避免其他样式导致的闪屏现象。</p>
+<p>而这段代码也在8.0之后的版本修复，但是现在市面存在的手机在andorid8.0的时候基本都存在该问题。</p>
+<p>修复方式时只能去除透明背景，但为了修复26存在的问题，修改应用整个的表现有些得不偿失。</p>
+<p>所以我们可以针对特定版本修改资源。</p>
+<p>首先去掉AndroidManifest.xml中的 android:screenOrientation 配置，</p>
+<p>在res新增values-v26文件夹，这样在sdk26的手机就会在这个文件夹下寻找对应的资源，如果没有才会有主目录values中去找。</p>
+<p>在values-v26中修改styles.xml，去掉此处的透明背景。</p>
+<p>再在代码中调用setRequestedOrientation来固定屏幕</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line"></span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时则不会再报错，<br>也不存在之前所说的点击menu键，回到应用会旋转问题。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/10/android内存优化.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/10/android内存优化.html" itemprop="url">android内存优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-21T10:08:26+08:00">
+                2020-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/10/android内存优化.html" class="leancloud_visitors" data-flag-title="android内存优化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h1><p>内存检测工具 MAT<br>android studio profile</p>
+<p>内存抖动<br>内存泄漏<br>内存溢出</p>
+<p>JMM 内存结果模型</p>
+<p>GC算法</p>
+<p>对象的生命周期：内存分配初始化、不可见、不可达、收集、终结、内存重新分配</p>
+<p>四种引用类型</p>
+<p>incomegoing: 持有该对象的对象<br>outgoing: 该对象持有的对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">    C c = new C()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class B &#123;</span><br><span class="line">    C c = new C()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class C &#123;</span><br><span class="line">    public C() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    C instance = new C()</span><br><span class="line">    public C getInstance() &#123;</span><br><span class="line">        return c</span><br><span class="line">    &#125;</span><br><span class="line">    D d = new D()</span><br><span class="line">    E e = new E()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C 的incomegoing为 A、B、C<br>C 的outgoing为 C、D、E</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/10/ContentProvider.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/10/ContentProvider.html" itemprop="url">ContentProvider</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-16T09:44:40+08:00">
+                2020-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/10/ContentProvider.html" class="leancloud_visitors" data-flag-title="ContentProvider">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h1><p>ContentProvider 内容提供者 是android四大组件之一，为不同应用、进程之间数据共享，制定统一的接口</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/10/Service、IntentService.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/10/Service、IntentService.html" itemprop="url">Service、IntentService</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-09T15:06:04+08:00">
+                2020-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/10/Service、IntentService.html" class="leancloud_visitors" data-flag-title="Service、IntentService">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Service、IntentService"><a href="#Service、IntentService" class="headerlink" title="Service、IntentService"></a>Service、IntentService</h1><p>Service是android中四大组件之一，用于处理后台任务，不能处理耗时任务，否则会造成ANR<br>而IntentService继承自Service，但是可以处理耗时任务，因为在内部开启了一个子线程。</p>
+<h2 id="Service生命周期"><a href="#Service生命周期" class="headerlink" title="Service生命周期"></a>Service生命周期</h2><p>Service的生命周期分为两种情形，一种是通过startService启动，另一种是通过bindService启动。<br>在这两种情况下时，Service的生命周期是有差异的。</p>
+<h3 id="startService"><a href="#startService" class="headerlink" title="startService"></a>startService</h3><p>通过startService去启动一个Service，<br>如果该Service未被创建，则会走onCreate、onStartCommand、onStart生命周期<br>如果该Service已被创建，则不会执行onCreate，只会执行onStartCommand、onStart</p>
+<p>onStart为正常运行时的生命周期</p>
+<p>而且startService可以被多次调用<br>被重复调用后会执行下面的生命周期</p>
+<p>通过startService启动的Service存活不依赖与Activity，即使启动该Service的Activity已经被销毁，但该Service仍然可以存活。<br>通过startService启动的Service需要调用stopService来销毁该Service,此时会执行onDestroy周期函数</p>
+<h3 id="bindService"><a href="#bindService" class="headerlink" title="bindService"></a>bindService</h3><p>bindService时，Service是依赖Activity的，当当前Activity被销毁、或者调用unBindService时，Service都会被销毁。</p>
+<p>所以每一次调用bindService时，Service都会被重新创建<br>所以通过bindService去启动一个Service，<br>会走onCreate、onBind生命周期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class ServiceConnect() : ServiceConnection &#123;</span><br><span class="line">    override fun onServiceDisconnected(name: ComponentName?) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onServiceDisconnected: &quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    override fun onServiceConnected(name: ComponentName?, service: IBinder?) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onServiceConnected: &quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">btn_bindService.setOnClickListener &#123;</span><br><span class="line">    var conn = ServiceConnect()</span><br><span class="line">    bindService(Intent(this, MyService::class.java), conn, Context.BIND_AUTO_CREATE)</span><br><span class="line">    hasBind = true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当执行到onBind时，还会执行onServiceConnected</p>
+<p>在Service中，不能执行耗时操作，超过5秒，则会造成程序不响应ANR<br>当我们需要执行耗时操作时，则必须开启子线程，或者使用IntentService</p>
+<h2 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h2><p>IntentService有与Service一样的生命周期，<br>只是在内部开启了一个子线程，暴露onHandleIntent来执行耗时任务，<br>当子线程执行完就会终止当前Service</p>
+<p>IntentService中的部分源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private final class ServiceHandler extends Handler &#123;</span><br><span class="line">    public ServiceHandler(Looper looper) &#123;</span><br><span class="line">        super(looper);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void handleMessage(Message msg) &#123;</span><br><span class="line">        onHandleIntent((Intent)msg.obj);</span><br><span class="line">        stopSelf(msg.arg1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void onCreate() &#123;</span><br><span class="line">    super.onCreate();</span><br><span class="line">    HandlerThread thread = new HandlerThread(&quot;IntentService[&quot; + mName + &quot;]&quot;);</span><br><span class="line">    thread.start();</span><br><span class="line"></span><br><span class="line">    mServiceLooper = thread.getLooper();</span><br><span class="line">    mServiceHandler = new ServiceHandler(mServiceLooper);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void onStart(@Nullable Intent intent, int startId) &#123;</span><br><span class="line">    Message msg = mServiceHandler.obtainMessage();</span><br><span class="line">    msg.arg1 = startId;</span><br><span class="line">    msg.obj = intent;</span><br><span class="line">    mServiceHandler.sendMessage(msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Servicehandler是IntentService的一个内部类，当收到消息时调用onHandleIntent,当执行完，则调用stopSelf，终止当前服务</p>
+<p>在OnCreate中，新建了一个HandleThread，并运行。<br>创建一个Servicehandler，而该ServiceHandler的Looper对象为HandleThread线程中创建的，</p>
+<p>当执行到onStart生命周期时，<br>handler发送一条消息，此时就会走到ServiceHandler中的handlerMessage中，也就会执行onHandleIntent中。<br>因为mServiceLooper = thread.getLooper();<br>所以onHandleIntent是运行在HandlerThread中的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/Fragment的懒加载实现，参数传递与保存.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -375,7 +1597,8 @@
         
           
             <h1 id="Fragment懒加载"><a href="#Fragment懒加载" class="headerlink" title="Fragment懒加载"></a>Fragment懒加载</h1><p>关于Fragment的懒加载，针对ViewPager、ViewPager2又有不同，</p>
-<h2 id="ViewPager"><a href="#ViewPager" class="headerlink" title="ViewPager"></a>ViewPager</h2><p>针对ViewPager，其实是使用Fragment中的setUserVisibleHint函数，通过getUserVisibleHint()获取当前的Fragment是否可见，<br>当不可见时，则不加载，当可见时再创建视图并缓存。<br>这样可以只加载一次，大致原理就是如此。</p>
+<h2 id="ViewPager"><a href="#ViewPager" class="headerlink" title="ViewPager"></a>ViewPager</h2><p>针对ViewPager，其实是使用Fragment中的setUserVisibleHint函数以及onHiddenChanged函数，通过getUserVisibleHint()获取当前的Fragment是否可见，<br>当不可见时，则不加载，当可见时再创建视图并缓存。<br>这样可以只加载一次，大致原理就是如此。</p>
+<h2 id="ViewPager2"><a href="#ViewPager2" class="headerlink" title="ViewPager2"></a>ViewPager2</h2><p>ViewPager是androidX下的包，之前使用的setUserVisibleHint、getUserVisibleHint等都已被申明遗弃，<br>而在ViewPager2时通过FragmentTransaction.setMaxLifecycle() 来实现懒加载</p>
 
           
         
@@ -1281,8 +2504,16 @@
       
         
           
-            <h1 id="在android项目中引入kotlin"><a href="#在android项目中引入kotlin" class="headerlink" title="在android项目中引入kotlin"></a>在android项目中引入kotlin</h1><p>修改项目的build.gradle 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line"></span><br><span class="line">    ext &#123;</span><br><span class="line">        kotlin_version = &quot;1.3.10&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="在android项目中引入kotlin"><a href="#在android项目中引入kotlin" class="headerlink" title="在android项目中引入kotlin"></a>在android项目中引入kotlin</h1><p>修改项目的build.gradle 文件中</p>
+<p>buildscript {</p>
+<pre><code>ext {
+    kotlin_version = &quot;1.3.10&quot;
+}
+
+dependencies {
+    classpath &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version&quot;
+}
+</code></pre><p>}</p>
 <p>在app/build.gradle中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &quot;com.android.application&quot;</span><br><span class="line">// 在顶行下添加</span><br><span class="line">apply plugin: &apos;kotlin-android&apos;</span><br><span class="line">apply plugin: &apos;kotlin-android-extensions&apos;</span><br></pre></td></tr></table></figure>
 <p>然后同步一下即可</p>
@@ -1568,6 +2799,8 @@
 <p>git merge A 将A分支合并到当前分支</p>
 <p>git rebase A 将A分支合并并且将A分支节点置于当前分支之后</p>
 <p>git mv <filename> <filename> 修改文件名，因为git默认忽略文件大小写，<br>如修改文件名 File.js 到 file.js此时是无法检测到更改，需要使用命令：<br>git mv File.js file.js</filename></filename></p>
+<h1 id="update"><a href="#update" class="headerlink" title="update"></a>update</h1><p>在github中已修改默认分支为main 而不再是master</p>
+<p>此时针对命令为<br>git init<br>git remote add origin <remoteurl> // 链接远端仓库 <remoteurl>为远端仓库地址<br>git branch -M main<br>git push -u origin main</remoteurl></remoteurl></p>
 
           
         
@@ -1993,1103 +3226,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/java-设计模式.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/java-设计模式.html" itemprop="url">java 设计模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:13:47+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/java-设计模式.html" class="leancloud_visitors" data-flag-title="java 设计模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/java-IO.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/java-IO.html" itemprop="url">java IO</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:13:19+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/java-IO.html" class="leancloud_visitors" data-flag-title="java IO">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/动态代理.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/动态代理.html" itemprop="url">动态代理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:13:07+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/动态代理.html" class="leancloud_visitors" data-flag-title="动态代理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/注解.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/注解.html" itemprop="url">注解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:12:37+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/注解.html" class="leancloud_visitors" data-flag-title="注解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/数据传输与序列化.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/数据传输与序列化.html" itemprop="url">数据传输与序列化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:11:44+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/数据传输与序列化.html" class="leancloud_visitors" data-flag-title="数据传输与序列化">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="序列化方式"><a href="#序列化方式" class="headerlink" title="序列化方式"></a>序列化方式</h2><ul>
-<li>Serializable java自带</li>
-<li>Parcelable android中</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/Callback-Future.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/Callback-Future.html" itemprop="url">Callback Future</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:08:01+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/Callback-Future.html" class="leancloud_visitors" data-flag-title="Callback Future">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h1><p><strong> Future代表一个异步计算的结果，并且它提供一些方法来让调用者检测异步过程是否完成，或者取得异步计算的结果，或者取消正在执行的异步任务。 </strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    private static ExecutorService executorService = Executors.newSingleThreadExecutor();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void main(String[]args)&#123;</span><br><span class="line">        System.out.println(&quot;hello world&quot;);</span><br><span class="line"></span><br><span class="line">        Future&lt;Integer&gt;future = calcute(9);</span><br><span class="line">        while (!future.isDone())&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(100);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                System.out.println(&quot;正在执行&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        try &#123;</span><br><span class="line">            int result = future.get();</span><br><span class="line">            System.out.println(&quot;result = &quot; + result);</span><br><span class="line">        &#125; catch (ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static Future&lt;Integer&gt;calcute(Integer i) &#123;</span><br><span class="line">        return executorService.submit(() -&gt; &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">            System.out.println(&quot;return future for &quot; + i);</span><br><span class="line">            return i *i;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一个简单Future使用用例写完，使用线程池+Callback+Future，完成了一个简单的计算操作。</p>
-<p>Future是一个接口，先看一下内部方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interface Future&lt;V&gt; &#123;</span><br><span class="line">    boolean cancel(boolean var1);</span><br><span class="line"></span><br><span class="line">    boolean isCancelled();</span><br><span class="line"></span><br><span class="line">    boolean isDone();</span><br><span class="line"></span><br><span class="line">    V get() throws ExecutionException, InterruptedException;</span><br><span class="line"></span><br><span class="line">    V get(long var1, TimeUnit var3) throws ExecutionException, InterruptedException, TimeoutException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>get()函数是返回计算结果，注意get会同步操作，每天返回结果前，会阻塞线程。<br>get还有一个重载函数get(long var1, TimeUnit var3)，第一个参数是时长，第二个是单位。<br>表示在多少时长内获取结果，如果仍未返回，则抛出异常TimeoutException。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">    int result2 = future2.get(1000, TimeUnit.MILLISECONDS);</span><br><span class="line">&#125; catch(TimeoutException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>cancel(boolean) 表示是否取消该future，</p>
-<p>不能在调用cancel(true)/cancel(false)后，调用get()函数，否则会抛出异常CancellationException</p>
-<p>isCancelled()函数是判断该future是否已取消</p>
-<p>isDone()函数是判断该future是否已完成</p>
-<p>isDone()函数是实时状态读取，不会阻塞线程。</p>
-<h2 id="Callback"><a href="#Callback" class="headerlink" title="Callback"></a>Callback</h2><p>Callback 是一个接口，内部只有一个函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@FunctionalInterface</span><br><span class="line">public interface Callable&lt;V&gt; &#123;</span><br><span class="line">    V call() throws Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Callback 可以理解为一个执行任务，如上面例子中的计算</p>
-<h2 id="FutureTask介绍"><a href="#FutureTask介绍" class="headerlink" title="FutureTask介绍"></a>FutureTask介绍</h2><p>Future是一个接口，<br>RunnableFuture也是一个接口，继承Future、Runnable两个接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public interface RunnableFuture&lt;V&gt; extends Runnable, Future&lt;V&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * Sets this Future to the result of its computation</span><br><span class="line">     * unless it has been cancelled.</span><br><span class="line">     */</span><br><span class="line">    void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>而FutureTask是对RunnableFuture的基本实现</p>
-<p>FutureTask 有一个状态值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">* 状态值存在如下几种变化：</span><br><span class="line">* Possible state transitions:</span><br><span class="line">* NEW -&gt; COMPLETING -&gt; NORMAL</span><br><span class="line">* NEW -&gt; COMPLETING -&gt; EXCEPTIONAL</span><br><span class="line">* NEW -&gt; CANCELLED</span><br><span class="line">* NEW -&gt; INTERRUPTING -&gt; INTERRUPTED</span><br><span class="line">*/</span><br><span class="line">private volatile int state;</span><br><span class="line">private static final int NEW          = 0;</span><br><span class="line">private static final int COMPLETING   = 1;</span><br><span class="line">private static final int NORMAL       = 2;</span><br><span class="line">private static final int EXCEPTIONAL  = 3;</span><br><span class="line">private static final int CANCELLED    = 4;</span><br><span class="line">private static final int INTERRUPTING = 5;</span><br><span class="line">private static final int INTERRUPTED  = 6;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/android-AsyncTask.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/android-AsyncTask.html" itemprop="url">android AsyncTask</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:04:59+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/android-AsyncTask.html" class="leancloud_visitors" data-flag-title="android AsyncTask">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/线程池.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/线程池.html" itemprop="url">线程池</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:04:37+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/线程池.html" class="leancloud_visitors" data-flag-title="线程池">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="java-线程池"><a href="#java-线程池" class="headerlink" title="java 线程池"></a>java 线程池</h1><p>线程池是用来管理以及调度线程的容器。</p>
-<h2 id="线程池的优势"><a href="#线程池的优势" class="headerlink" title="线程池的优势"></a>线程池的优势</h2><ul>
-<li>复用线程，避免大量线程重复创建、销毁，降低消耗</li>
-<li>提升效率，当线程池内未饱和时，无需等待线程的重新创建和初始化，便能立即执行</li>
-<li>方便线程并发管理，避免线程无限制的创建，可能造成的OOM、cpu过高等问题，规定了最大并发数</li>
-<li>延时定时执行任务</li>
-</ul>
-<h2 id="线程池参数"><a href="#线程池参数" class="headerlink" title="线程池参数"></a>线程池参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue) &#123;</span><br><span class="line">    this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</span><br><span class="line">         Executors.defaultThreadFactory(), defaultHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>corePoolSize: 核心线程数量，当向线程池提交一个任务时，如果线程数小于核心线程数，不管是否有线程处于空闲状态，都会创建一个新的线程来执行该任务，<br>直到线程池中的线程数大于等于核心线程数量</li>
-<li><p>maximumPoolSize: 最大线程数，线程池中线程数量最大值，当向线程池提交任务，核心线程都已创建完毕，且核心线程都处于工作状态，此时会先将该任务提交到阻塞队列，如果阻塞队列已满， 并线程池中线程数量小于最大线程数时，此时会新创建一个线程执行该任务。如果阻塞队列已满，且线程数也达到最大值，此时会执行线程饱和策略。</p>
-</li>
-<li><p>keepAliveTime：非核心线程可空闲时长，非核心线程处于空闲时，且空闲时长超过keepAliveTime，则该线程会被回收，但不会回收核心线程</p>
-</li>
-<li><p>unit： keepAliveTime的时长单位</p>
-</li>
-<li><p>workQueue： 阻塞队列，用于保存和运输待执行任务的阻塞队列</p>
-</li>
-<li><p>threadFactory：线程工厂，用于创建工作线程，threadFactory也是采用new Thread()形式创建一个新线程，但命名线程名称，格式为：pool-m-thread-n（m为线程池的编号，n为线程池内的线程编号）。</p>
-</li>
-<li><p>defaultHandler： 线程饱和策略，当线程池和阻塞队列都满了，再添加任务时，会执行此策略</p>
-</li>
-</ul>
-<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><p><img src="../images/threadPool.png" alt="提交任务流程">;</p>
-<p>当提交一个任务时，</p>
-<p>1、查询核心线程是否已满，如果未满则新创建核心线程执行该任务</p>
-<p>2、当核心线程已满，判断阻塞队列是否已满，如果阻塞队列未满则将该任务加入到阻塞队列中</p>
-<p>3、当阻塞队列已满时，判断线程池是否已满，如果未满，则新创建线程执行该任务</p>
-<p>4、当线程池已满时，则执行饱和策略</p>
-<h2 id="线程池为何需要使用阻塞队列"><a href="#线程池为何需要使用阻塞队列" class="headerlink" title="线程池为何需要使用阻塞队列"></a>线程池为何需要使用阻塞队列</h2><p>1、因为线程池是管理并调度线程、以完成任务，肯定不可能无限制的创建线程，</p>
-<p>2、提高核心线程的使用效率</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -3135,7 +3276,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
