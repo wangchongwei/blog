@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>hexo/blog/2020/12/Activity%E4%B8%80%E9%94%AE%E6%8D%A2%E8%82%A4.html</loc>
+    
+    <lastmod>2020-12-11T09:59:44.348Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/12/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1.html</loc>
+    
+    <lastmod>2020-12-11T08:26:06.828Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2019/12/android-%E8%87%AA%E5%AE%9A%E4%B9%89View-%E7%BB%A7%E6%89%BFViewGroup.html</loc>
+    
+    <lastmod>2020-12-10T06:01:09.172Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/12/%E6%B3%A8%E8%A7%A3.html</loc>
+    
+    <lastmod>2020-12-03T01:14:21.474Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>hexo/blog/2020/05/kotlin.html</loc>
     
     <lastmod>2020-12-01T06:00:42.741Z</lastmod>
@@ -460,13 +488,6 @@
     <loc>hexo/blog/2019/12/android-%E8%87%AA%E5%AE%9A%E4%B9%89View-%E7%BB%A7%E6%89%BFEditText.html</loc>
     
     <lastmod>2019-12-30T10:08:03.595Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2019/12/android-%E8%87%AA%E5%AE%9A%E4%B9%89View-%E7%BB%A7%E6%89%BFViewGroup.html</loc>
-    
-    <lastmod>2019-12-19T10:02:04.746Z</lastmod>
     
   </url>
   

@@ -292,6 +292,433 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/12/网络通信.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/12/网络通信.html" itemprop="url">网络通信</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-09T14:32:30+08:00">
+                2020-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/12/网络通信.html" class="leancloud_visitors" data-flag-title="网络通信">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="网络通信"><a href="#网络通信" class="headerlink" title="网络通信"></a>网络通信</h1><h2 id="计算机网络发展概史"><a href="#计算机网络发展概史" class="headerlink" title="计算机网络发展概史"></a>计算机网络发展概史</h2><p>计算机的发展大致分为以下四个阶段<br>1、诞生阶段，单个计算机为中心的远程联机系统<br>2、ARPANET，多个主机通过通信线路互联起来<br>3、开放性的标准化体系结构，OSI诞生<br>4、Internet互联网</p>
+<p>OSI模型分为7层，tcp/ip模型分为4层，并存在对应关系<br>osi：物理层、链路层、 网络层、 传输层、  会话层、表示层、应用层<br>tcp/ip：链路层、     网络层、 传输层、         应用层</p>
+<p>像我们日常中所说的4G、5G网络，是作用在链路层</p>
+<p>TCP协议的基本特性：<br>面向链接、可靠性、RTT和RTO、数据排序、流量控制、全双工</p>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p>TCP协议中，Client与Server端建立链接会经历三次握手过程</p>
+<p>1、Client 向 Server端发送报文，<br>    含有SYN = 1； seq(序列号)=1234(系统决定，1234是举例)，Client端进入SYN_SENT状态<br>2、Server 接收到 Client端报文，向Client端发送一个确认报文，<br>    含有 SYN = 1；ACK = 1; ack=1235(1234 + 1);seq(序列号)=2637(系统决定，2637是举例)<br>    Server端进入SYN_SYN_RCND状态<br>3、Client端接收到Server的确认报文，向Server端也发送一次确认报文，<br>    含有 ACK = 1；ack=2638(2637+1);<br>    Client与Server端都进入ESTABLISHED状态，通信建立，开始会话</p>
+<p>以上就是三次握手的过程</p>
+<p>问题：<br>为何tcp协议需要三次握手，而不是两次</p>
+<p>因为三次是保证连接可靠、效率最高的次数。<br>第一次：客户端询问服务端能否建立通信<br>第二次：服务端向客户端确认可以通信<br>第三次：客户端向服务端确认可以通信<br>然后建立通信。</p>
+<h3 id="洪泛攻击"><a href="#洪泛攻击" class="headerlink" title="洪泛攻击"></a>洪泛攻击</h3><p>黑客伪造大量虚假ip向服务端发送第一次握手报文，使server端大量通信进入SYN_SYN_RCND状态，消耗server资源，<br>使服务端无法响应其他的请求，甚至宕机。</p>
+<p>处理方案：防火墙、</p>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p>当要断开连接时，客户端与服务端之间将进行四次挥手，来确保数据传输都完毕，确保连接断开。</p>
+<p>1、client向server端发送FIN报文，<br>    含有FIN = 1，seq(序列号)=J(系统决定，J是举例)，Client进入FIN_WAITING<br>2、server收到客户端发送的报文，同时向Server发送一个FIN ACK 确认报文<br>    含有ACK = 1； ack = J + 1; Server进入CLOSE_WAITING<br>3、server向client发送一个FIN报文，<br>    含有FIN = 1； seq = K；Server进入 CLOSE状态<br>4、client收到上述两个server端报文，Client进入TIME_WAITING状态,同时client向server发送一个ACK报文，<br>    含有FIN = 1； ACK = 1； ack = K + 1;<br>    server接收到此报文后，进入CLOSED状态，<br>    而client，在经过2 * MSL的时间段后，client进入CLOSED状态。</p>
+<p>注意：四次挥手设计到四次报文的传输，但在实际中，可能会存在报文合并的现象，就是报文发送的次数可能只有3次甚至两次。<br>MSL理论上是2分钟，可实际一般会被重写为30s，所以最后等待时间为1min-4min。</p>
+<h3 id="为什么需要四次挥手"><a href="#为什么需要四次挥手" class="headerlink" title="为什么需要四次挥手"></a>为什么需要四次挥手</h3><p>因为tcp是全双工(即客户端和服务器端可以相互发送和接收请求)，所以需要双方都确认关闭连接。</p>
+<h3 id="为什么需要TIME-WAIT状态？"><a href="#为什么需要TIME-WAIT状态？" class="headerlink" title="为什么需要TIME-WAIT状态？"></a>为什么需要TIME-WAIT状态？</h3><p>在第三次报文发送，client接收到时，client会进入TIME_WAIT状态，而且是需要经过经过2 * MSL，才会进入CLOSED状态，<br>为何这么设计呢，因为要考虑最后一个报文的接收，要考虑到Server未接收到时，需要重新发送，还要考虑，如果Client即时进入CLOSED，连接断开，端口可能会有一个新的程序使用，可能存在报文被发送到这个新启动的程序。</p>
+<h2 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a>wireshark</h2><p>使用wireshark可以抓包，查看到连接过程中的每一次数据包的传递</p>
+<p>使用过滤器查看</p>
+<p>tcp udp 可以指定协议</p>
+<p>tcp.port==80 端口</p>
+<p>ip.src==192.168.101.130 ip<br>连接符使用and</p>
+<p>tcp and tcp.port==3306 and ip.src==192.168.101.130</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/12/Activity一键换肤.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/12/Activity一键换肤.html" itemprop="url">Activity一键换肤</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-07T15:51:39+08:00">
+                2020-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/12/Activity一键换肤.html" class="leancloud_visitors" data-flag-title="Activity一键换肤">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Activity一键换肤"><a href="#Activity一键换肤" class="headerlink" title="Activity一键换肤"></a>Activity一键换肤</h1><h2 id="Activity绘制过程"><a href="#Activity绘制过程" class="headerlink" title="Activity绘制过程"></a>Activity绘制过程</h2><h3 id="ActivityThread"><a href="#ActivityThread" class="headerlink" title="ActivityThread"></a>ActivityThread</h3><p>查看ActivityThread代码源码，<br>performLaunchActivity函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Activity activity = null;</span><br><span class="line">try &#123;</span><br><span class="line">        java.lang.ClassLoader cl = appContext.getClassLoader();</span><br><span class="line">        activity = mInstrumentation.newActivity(</span><br><span class="line">                cl, component.getClassName(), r.intent);</span><br><span class="line">        StrictMode.incrementExpectedActivityCount(activity.getClass());</span><br><span class="line">        r.intent.setExtrasClassLoader(cl);</span><br><span class="line">        r.intent.prepareToEnterProcess();</span><br><span class="line">        if (r.state != null) &#123;</span><br><span class="line">            r.state.setClassLoader(cl);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">        if (!mInstrumentation.onException(activity, e)) &#123;</span><br><span class="line">            throw new RuntimeException(</span><br><span class="line">                &quot;Unable to instantiate activity &quot; + component</span><br><span class="line">                + &quot;: &quot; + e.toString(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">......</span><br><span class="line">activity.attach(appContext, this, getInstrumentation(), r.token,</span><br><span class="line">    r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">    r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">    r.referrer, r.voiceInteractor, window, r.configCallback,</span><br><span class="line">    r.assistToken);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h3><p>我们在看Activity类中的attach函数中的部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mWindow = new PhoneWindow(this, window, activityConfigCallback);</span><br><span class="line">mWindow.setWindowControllerCallback(this);</span><br><span class="line">mWindow.setCallback(this);</span><br><span class="line">mWindow.setOnWindowDismissedCallback(this);</span><br><span class="line">mWindow.getLayoutInflater().setPrivateFactory(this);</span><br></pre></td></tr></table></figure></p>
+<p>再看我们在Activity中设置布局的setContentView函数在Activity中的实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void setContentView(@LayoutRes int layoutResID) &#123;</span><br><span class="line">    getWindow().setContentView(layoutResID);</span><br><span class="line">    initWindowDecorActionBar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里可以看出我们传入的layout布局是设置到window对象上的，继续往里看<br>Window类中的setContentView是一个抽象方法，而getWindow()返回的是我们上面的PhoneWindow对象，我们看PhoneWindow中的setContentView方法</p>
+<h3 id="PhoneWindow"><a href="#PhoneWindow" class="headerlink" title="PhoneWindow"></a>PhoneWindow</h3><p>PhoneWindow.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void setContentView(int layoutResID) &#123;</span><br><span class="line">    // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window</span><br><span class="line">    // decor, when theme attributes and the like are crystalized. Do not check the feature</span><br><span class="line">    // before this happens.</span><br><span class="line">    if (mContentParent == null) &#123;</span><br><span class="line">        installDecor();</span><br><span class="line">    &#125; else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">        mContentParent.removeAllViews();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">        final Scene newScene = Scene.getSceneForLayout(mContentParent, layoutResID,</span><br><span class="line">                getContext());</span><br><span class="line">        transitionTo(newScene);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        mLayoutInflater.inflate(layoutResID, mContentParent);</span><br><span class="line">    &#125;</span><br><span class="line">    mContentParent.requestApplyInsets();</span><br><span class="line">    final Callback cb = getCallback();</span><br><span class="line">    if (cb != null &amp;&amp; !isDestroyed()) &#123;</span><br><span class="line">        cb.onContentChanged();</span><br><span class="line">    &#125;</span><br><span class="line">    mContentParentExplicitlySet = true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void setContentView(View view) &#123;</span><br><span class="line">    setContentView(view, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void setContentView(View view, ViewGroup.LayoutParams params) &#123;</span><br><span class="line">    // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window</span><br><span class="line">    // decor, when theme attributes and the like are crystalized. Do not check the feature</span><br><span class="line">    // before this happens.</span><br><span class="line">    if (mContentParent == null) &#123;</span><br><span class="line">        installDecor();</span><br><span class="line">    &#125; else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">        mContentParent.removeAllViews();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">        view.setLayoutParams(params);</span><br><span class="line">        final Scene newScene = new Scene(mContentParent, view);</span><br><span class="line">        transitionTo(newScene);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        mContentParent.addView(view, params);</span><br><span class="line">    &#125;</span><br><span class="line">    mContentParent.requestApplyInsets();</span><br><span class="line">    final Callback cb = getCallback();</span><br><span class="line">    if (cb != null &amp;&amp; !isDestroyed()) &#123;</span><br><span class="line">        cb.onContentChanged();</span><br><span class="line">    &#125;</span><br><span class="line">    mContentParentExplicitlySet = true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当初次运行时，肯定会走到installDecor 函数，在此函数中，又会新建一个DecorView绑定到window上。</p>
+<p>也就是说我们的window上还有挂载一个DecorView</p>
+<p>而在installDecor中，会对mContentParent判断，当为空时，会初始化<br>mContentParent = (DecorContentParent) mDecor.findViewById(R.id.decor_content_parent);</p>
+<p>所以其实我们的view的层级其实是：<br>Window -&gt; DecorView -&gt; mContentParent + 我们自己的布局<br>而我们自己的View最后都是调用到LayoutInflater.inflate来加载的。</p>
+<h3 id="LayoutInflater"><a href="#LayoutInflater" class="headerlink" title="LayoutInflater"></a>LayoutInflater</h3><p>最后所有View的加载会走到tryCreateView函数<br>LayoutInflater 中的 tryCreateView函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage(trackingBug = 122360734)</span><br><span class="line">@Nullable</span><br><span class="line">public final View tryCreateView(@Nullable View parent, @NonNull String name,</span><br><span class="line">    @NonNull Context context,</span><br><span class="line">    @NonNull AttributeSet attrs) &#123;</span><br><span class="line">    if (name.equals(TAG_1995)) &#123;</span><br><span class="line">        // Let&apos;s party like it&apos;s 1995!</span><br><span class="line">        return new BlinkLayout(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    View view;</span><br><span class="line">    if (mFactory2 != null) &#123;</span><br><span class="line">        view = mFactory2.onCreateView(parent, name, context, attrs);</span><br><span class="line">    &#125; else if (mFactory != null) &#123;</span><br><span class="line">        view = mFactory.onCreateView(name, context, attrs);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        view = null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (view == null &amp;&amp; mPrivateFactory != null) &#123;</span><br><span class="line">        view = mPrivateFactory.onCreateView(parent, name, context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return view;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看得出先判断mFactory2是否存在，存在的话，会通过mFactory2.onCreateView来创建View<br>再判断mFactory是否存在，存在的话，会通过mFactory.onCreateView来创建View<br>如果上面两个都不存在，则会调用mPrivateFactory来创建</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>根据上面的描述，我们知道所有的View创建都会走到LayoutInflater.tryCreateView函数，<br>而且这里有一个工厂类mFactory2，如果我们能创建一个mFactory2对象，并设置上去，那所有的view创建就都会走到我们自己的代码，<br>则我们可以获取到所有的view</p>
+<p>换肤：是替换所有可以替换的颜色、背景，包括背景颜色、背景图片，因为我们替换了背景颜色，所以文本颜色也是需要替换。<br>我们明确了换肤的目标，原理呢就是：<br>换肤插件module中具有的资源名与宿主app的资源名都一致，只是资源值不同，<br>如在宿主app中res/value/colors.xml中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--宿主app--&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimary&quot;&gt;#3F51B5&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimaryDark&quot;&gt;#303F9F&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorAccent&quot;&gt;#FF4081&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;tabSelectedTextColor&quot;&gt;#ffce3d3a&lt;/color&gt;</span><br><span class="line">&lt;/resources&gt;</span><br><span class="line">&lt;!--插件module--&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimary&quot;&gt;#1F1F1F&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimaryDark&quot;&gt;#373935&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorAccent&quot;&gt;#ffffff&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;tabSelectedTextColor&quot;&gt;#FFA500&lt;/color&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如上所示，所有的资源名称都是一致，只是资源内容不同，图片也是如此。<br>当需要换肤时，通过获取宿主app的资源名称，到插件module中获取该名称的对应资源，然后替换</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/12/注解.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/12/注解.html" itemprop="url"> 注解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-03T09:13:53+08:00">
+                2020-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2020/12/注解.html" class="leancloud_visitors" data-flag-title=" 注解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2020/11/android消息机制.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2836,396 +3263,6 @@ dependencies {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/Java内存模型-JMM.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/Java内存模型-JMM.html" itemprop="url">Java内存模型 JMM</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-08T09:41:19+08:00">
-                2020-09-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/Java内存模型-JMM.html" class="leancloud_visitors" data-flag-title="Java内存模型 JMM">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/Lock详解.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/Lock详解.html" itemprop="url">Lock详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:26:40+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/Lock详解.html" class="leancloud_visitors" data-flag-title="Lock详解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hexo/blog/2020/09/Synchronized详解.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="justin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Happy To Try">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2020/09/Synchronized详解.html" itemprop="url">Synchronized详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-03T15:26:31+08:00">
-                2020-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/2020/09/Synchronized详解.html" class="leancloud_visitors" data-flag-title="Synchronized详解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3276,7 +3313,7 @@ dependencies {
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

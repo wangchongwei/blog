@@ -107,18 +107,20 @@
 
 
 
-<meta name="description" content="android 自定义View 继承ViewGroup">
+<meta name="description" content="android 自定义View 继承ViewGroup自定义ViewGroup与自定义View不同.自定义View主要侧重于实现如何绘制，而自定义ViewGroup主要侧重于如何布局。所以自定义ViewGroup时，必须重写onMeasure、onLayout函数。onMeasure测量每个子View的大小，最后得出容器的大小onLayout上根据测量的每个子View，来对每个子View进行布局">
 <meta name="keywords" content="android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android-自定义View 继承ViewGroup">
 <meta property="og:url" content="hexo/blog/2019/12/android-自定义View-继承ViewGroup.html">
 <meta property="og:site_name" content="Happy To Try">
-<meta property="og:description" content="android 自定义View 继承ViewGroup">
+<meta property="og:description" content="android 自定义View 继承ViewGroup自定义ViewGroup与自定义View不同.自定义View主要侧重于实现如何绘制，而自定义ViewGroup主要侧重于如何布局。所以自定义ViewGroup时，必须重写onMeasure、onLayout函数。onMeasure测量每个子View的大小，最后得出容器的大小onLayout上根据测量的每个子View，来对每个子View进行布局">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-19T10:02:04.746Z">
+<meta property="og:image" content="hexo/images/flowlayout.jpeg">
+<meta property="og:updated_time" content="2020-12-10T06:01:09.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android-自定义View 继承ViewGroup">
-<meta name="twitter:description" content="android 自定义View 继承ViewGroup">
+<meta name="twitter:description" content="android 自定义View 继承ViewGroup自定义ViewGroup与自定义View不同.自定义View主要侧重于实现如何绘制，而自定义ViewGroup主要侧重于如何布局。所以自定义ViewGroup时，必须重写onMeasure、onLayout函数。onMeasure测量每个子View的大小，最后得出容器的大小onLayout上根据测量的每个子View，来对每个子View进行布局">
+<meta name="twitter:image" content="hexo/images/flowlayout.jpeg">
 
 
 
@@ -371,7 +373,61 @@
       
 
       
-        <h1 id="android-自定义View-继承ViewGroup"><a href="#android-自定义View-继承ViewGroup" class="headerlink" title="android 自定义View 继承ViewGroup"></a>android 自定义View 继承ViewGroup</h1>
+        <h1 id="android-自定义View-继承ViewGroup"><a href="#android-自定义View-继承ViewGroup" class="headerlink" title="android 自定义View 继承ViewGroup"></a>android 自定义View 继承ViewGroup</h1><p>自定义ViewGroup与自定义View不同.<br>自定义View主要侧重于实现如何绘制，而自定义ViewGroup主要侧重于如何布局。<br>所以自定义ViewGroup时，必须重写onMeasure、onLayout函数。<br>onMeasure测量每个子View的大小，最后得出容器的大小<br>onLayout上根据测量的每个子View，来对每个子View进行布局</p>
+<h2 id="自定义FlowLayout"><a href="#自定义FlowLayout" class="headerlink" title="自定义FlowLayout"></a>自定义FlowLayout</h2><p>这里我们自定义一个自动换行的流式布局。<br>效果图：<br><img src="../../../images/flowlayout.jpeg" style="zoom:20%"></p>
+<h3 id="设计思路："><a href="#设计思路：" class="headerlink" title="设计思路："></a>设计思路：</h3><p>1、默认横向布局、当横向布局宽度要超出容器宽度时，则自动换行，<br>2、将整个视图分割成多少行，而每行又能分割成多个视图<br>3、使用两个数组，一个记录单行视图，一个记录所有行（也就是前一个数组）<br>4、每次需要换行时，记录这行的高度，当前所有视图的高度，当所有子视图计算完毕，就能知道所有子视图一起需要的宽度与高度<br>5、根据ViewGroup使用时的SpecMode来得出最后实际的宽高,并将宽高设置上去，此处onMeasure函数完成<br>6、处理onLayout，遍历所有行，遍历每一行，得到每个View的left、top、right、bottom，调用View.layout函数，将每个View相对于父容器的位置设置上去，此时就完成了布局，整个FlowLayout的设计基本完成</p>
+<p>关于第5点，与自定义View中是一样的</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EXACTLY</th>
+<th>AT_MOST</th>
+<th>UNSPECIFIED</th>
+<th>&lt;-MeasureSpec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wrap_parnet</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>match_parent</td>
+<td>EXACTLY</td>
+<td>AT_MOST</td>
+<td>AT_MOST</td>
+<td></td>
+</tr>
+<tr>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td>50dp</td>
+<td></td>
+</tr>
+<tr>
+<td>^LayoutParams</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h3><p>所以onMeasure函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        recyle();</span><br><span class="line">        // 获取各个偏距</span><br><span class="line">        int paddingLeft = getPaddingLeft();</span><br><span class="line">        int paddingRight = getPaddingRight();</span><br><span class="line">        int paddingTop = getPaddingTop();</span><br><span class="line"></span><br><span class="line">        // 先获取父容器能给的尺寸大小</span><br><span class="line">        int selfWidth = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">        int selfHeight = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        // 获取子视图的数量</span><br><span class="line">        int childViewCount = getChildCount();</span><br><span class="line">        // 记录每行中的子view</span><br><span class="line">        List&lt;View&gt;lineViews = new ArrayList&lt;&gt;();</span><br><span class="line">        int lineWidthUsed = 0; // 每行已用宽度</span><br><span class="line">        int lineHeight = 0; // 行高</span><br><span class="line"></span><br><span class="line">        int parentNeededWidth = 0;  // measure过程中，子View要求的父ViewGroup的宽</span><br><span class="line">        int parentNeededHeight = 0; // measure过程中，子View要求的父ViewGroup的高</span><br><span class="line"></span><br><span class="line">        // 遍历所有的子View</span><br><span class="line">        for (int i = 0 ; i &lt; childViewCount; i ++) &#123;</span><br><span class="line">            View childView = getChildAt(i);</span><br><span class="line">            // 获取子视图的宽、高</span><br><span class="line">            LayoutParams lp = childView.getLayoutParams();</span><br><span class="line">            // 如果View存在 因为GONE的视图不占位置</span><br><span class="line">            if(childView.getVisibility() != GONE) &#123;</span><br><span class="line">                // 获取子视图的测量规格</span><br><span class="line">                int childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec,</span><br><span class="line">                        paddingLeft + paddingRight,</span><br><span class="line">                        lp.width);</span><br><span class="line">                int childHeightMeasureSpec = getChildMeasureSpec(heightMeasureSpec,</span><br><span class="line">                        paddingTop+paddingTop,</span><br><span class="line">                        lp.height);</span><br><span class="line">                // 设置子View的尺寸</span><br><span class="line">                childView.measure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line"></span><br><span class="line">                // 当执行完measure函数后，即可获取到该子view的尺寸</span><br><span class="line">                int childViewWidth = childView.getMeasuredWidth();</span><br><span class="line">                int childVieeHeight = childView.getMeasuredHeight();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                // 当所用宽度 + 宽度间隔 + 当前子视图宽度 &gt; 容器View的宽度，则需要换行</span><br><span class="line">                if(lineWidthUsed + mHorizontalSpacing + childViewWidth &gt; selfWidth) &#123;</span><br><span class="line">                    // 记录当前行的视图、高度</span><br><span class="line">                    allView.add(lineViews);</span><br><span class="line">                    lineHeights.add(lineHeight);</span><br><span class="line">                    // 父容器需要的宽、高</span><br><span class="line">                    parentNeededHeight = parentNeededHeight + lineHeight + mVerticalSpacing;</span><br><span class="line">                    parentNeededWidth = Math.max(parentNeededWidth, lineWidthUsed + mHorizontalSpacing);</span><br><span class="line"></span><br><span class="line">                    // 执行换行、清空当前行数据</span><br><span class="line">                    lineViews = new ArrayList&lt;&gt;();</span><br><span class="line">                    lineHeight = 0;</span><br><span class="line">                    lineWidthUsed = 0;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    lineViews.add(childView);</span><br><span class="line">                    lineHeight = Math.max(lineHeight, childVieeHeight);</span><br><span class="line">                    lineWidthUsed = lineWidthUsed + childViewWidth + mHorizontalSpacing;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                //处理最后一行数据 因为最后一行肯定不会触发上面的换行</span><br><span class="line">                if (i == childViewCount - 1) &#123;</span><br><span class="line">                    allView.add(lineViews);</span><br><span class="line">                    lineHeights.add(lineHeight);</span><br><span class="line">                    parentNeededHeight = parentNeededHeight + lineHeight + mVerticalSpacing;</span><br><span class="line">                    parentNeededWidth = Math.max(parentNeededWidth, lineWidthUsed + mHorizontalSpacing);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 通过子View的计算得出了需要的最小具体值 再根据spec一起得出最后应该的值 此处需要参考上面提到的第5点</span><br><span class="line">        // 根据mode以及lp获取实际值</span><br><span class="line">        int widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line">        int heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line">        int realWidth = widthMode == MeasureSpec.EXACTLY ? selfWidth : parentNeededWidth;</span><br><span class="line">        int realHeight = heightMode == MeasureSpec.EXACTLY ? selfHeight : parentNeededHeight;</span><br><span class="line">        // 设置实际尺寸</span><br><span class="line">        setMeasuredDimension(realWidth, realHeight);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们就完成了整个ViewGroup的尺寸测量，ViewGroup的onMeasure过程其实就是遍历子View，测量各个子View的过程。<br>measure方法会调用到onMeasure函数，而在onMeasure中会测量到具体尺寸。</p>
+<p>注意一下在onMeasure执行时，我们调用了一个recyle函数，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> private void recyle() &#123;</span><br><span class="line">    allView.clear();</span><br><span class="line">    lineHeights.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个函数作用就是将记录的每行view、行高信息清空。因为onMeasure函数会被调用多次，<br>上面说了，容器的测量就会遍历子View测量，因为上层View视图中，至少存在两层ViewGroup，所以最少会被执行两次。<br>所以每次执行此函数时，我们需要清空一下上一次的数据。</p>
+<p>测量函数执行完毕，现在我们知道了每个view的大小，接下来我们就按照记录的View的排列、行高等信息，<br>来对每个子View做布局处理</p>
+<h3 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h3><p>在上面的话，我们已经获取到了每个view的行数排列，我们只需再遍历到所有行的View，<br>获取到每个view针对父容器的左偏距、上偏距就能够对view定位，再获取该view的宽高时，就能获取到右偏距、下偏距了。<br>注意在onMeasure执行完毕后，就能调用getMeasuredWidth，获取尺寸信息<br>而在onLayout执行完毕后，就能调用getWidth获取尺寸信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onLayout(boolean changed, int l, int t, int r, int b) &#123;</span><br><span class="line">    // 获取容器的左、上偏距</span><br><span class="line">    int left = getPaddingLeft();</span><br><span class="line">    int top = getPaddingTop();</span><br><span class="line"></span><br><span class="line">    Log.e(TAG, &quot;onLayout: top : &quot; + top);</span><br><span class="line"></span><br><span class="line">    for(int i = 0; i &lt; allView.size(); i ++) &#123;</span><br><span class="line">        List&lt;View&gt; lineView = allView.get(i);</span><br><span class="line">        int lineHeight = lineHeights.get(i); // 该行的高度</span><br><span class="line">        for(int j = 0; j &lt; lineView.size(); j ++) &#123;</span><br><span class="line">            View childView = lineView.get(j);</span><br><span class="line">            // 右偏距等于左偏距加上自身宽度</span><br><span class="line">            int right = left + childView.getMeasuredWidth();</span><br><span class="line">            // 下偏距等于上偏距加上自身高度</span><br><span class="line">            int bottom = top + childView.getMeasuredHeight();</span><br><span class="line">            Log.d(TAG, &quot;onLayout: left = &quot; + left + &quot;  top = &quot; + top + &quot;  bottom = &quot; + bottom);</span><br><span class="line">            // 设置该view</span><br><span class="line">            childView.layout(left, top, right, bottom);</span><br><span class="line"></span><br><span class="line">            // 为下一个view准备</span><br><span class="line">            left = right + mHorizontalSpacing;</span><br><span class="line">        &#125;</span><br><span class="line">        // 为下一行准备</span><br><span class="line">        top = lineHeight + mVerticalSpacing + top;</span><br><span class="line">        left = getPaddingLeft();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们自定义一个ViewGroup就完成了，实现了一个自动换行的ViewGroup</p>
+<p>项目源码地址：<a href="https://github.com/wangchongwei/customView/blob/master/app/src/main/java/com/justin/customview/customview/FlowLayout.java" target="_blank" rel="noopener">https://github.com/wangchongwei/customView/blob/master/app/src/main/java/com/justin/customview/customview/FlowLayout.java</a></p>
+
       
     </div>
     
@@ -490,7 +546,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#android-自定义View-继承ViewGroup"><span class="nav-number">1.</span> <span class="nav-text">android 自定义View 继承ViewGroup</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#android-自定义View-继承ViewGroup"><span class="nav-number">1.</span> <span class="nav-text">android 自定义View 继承ViewGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义FlowLayout"><span class="nav-number">1.1.</span> <span class="nav-text">自定义FlowLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路："><span class="nav-number">1.1.1.</span> <span class="nav-text">设计思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onMeasure"><span class="nav-number">1.1.2.</span> <span class="nav-text">onMeasure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onLayout"><span class="nav-number">1.1.3.</span> <span class="nav-text">onLayout</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
