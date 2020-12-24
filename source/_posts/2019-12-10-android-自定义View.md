@@ -96,7 +96,46 @@ onDraw是在容器的draw方法时调用的。
 
 onDraw 有一个参数(Canvas cancas),
 canvas 就是画布，画布的范围就是onLayout布局后确定的区域
+Paint 画笔
 
+
+### Paint的常用配置
+```
+Paint mPaint = new Paint();
+```
+#### Style
+画笔的样式分三种类型 Style是个枚举类
+```
+public enum Style {
+    /**
+        * Geometry and text drawn with this style will be filled, ignoring all
+        * stroke-related settings in the paint.
+        */
+    FILL            (0),
+    /**
+        * Geometry and text drawn with this style will be stroked, respecting
+        * the stroke-related fields on the paint.
+        */
+    STROKE          (1),
+    /**
+        * Geometry and text drawn with this style will be both filled and
+        * stroked at the same time, respecting the stroke-related fields on
+        * the paint. This mode can give unexpected results if the geometry
+        * is oriented counter-clockwise. This restriction does not apply to
+        * either FILL or STROKE.
+        */
+    FILL_AND_STROKE (2);
+
+    Style(int nativeInt) {
+        this.nativeInt = nativeInt;
+    }
+    final int nativeInt;
+}
+```
+
+
+
+### canvas的常用函数
 
 
 
