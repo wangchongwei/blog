@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="进程是操作系统资源分配的基本单位， 线程是处理器（CPU）任务调度和执行的基本单位线程依赖于进程，一个进程可能对应多个线程。 并发与并行 1、并发（Concurrent）：指两个或多个事件在同一时间间隔内发生，即交替做不同事的能力，多线程是并发的一种形式。例如垃圾回收时，用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。 2">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-29T03:16:36.830Z">
+<meta property="og:updated_time" content="2021-01-20T01:27:03.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程与进程">
 <meta name="twitter:description" content="进程是操作系统资源分配的基本单位， 线程是处理器（CPU）任务调度和执行的基本单位线程依赖于进程，一个进程可能对应多个线程。 并发与并行 1、并发（Concurrent）：指两个或多个事件在同一时间间隔内发生，即交替做不同事的能力，多线程是并发的一种形式。例如垃圾回收时，用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。 2">
@@ -383,7 +383,7 @@
 <p>这个就跟CPU的时间轮转片调度算法有关了</p>
 <p>在早期的时间片轮转法中,系统将所有的就绪进程按先来先服务的原则,排成一个队列,每次调度时,把CPU分配给队首进程,并令其执行一个时间片.时间片的大小从几ms到几百ms.当执行的时间片用完时,由一个计时器发出时钟中断请求,调度程序便据此信号来停止该进程的执行,并将它送往就绪队列的末尾;然后,再把处理机分配给就绪队列中新的队首进程,同时也让它执行一个时间片.这样就可以保证就绪队列中的所有进程,在一给定的时间内,均能获得一时间片的处理机执行时间.</p>
 <p>所以我们在多线程运行时，超过内核数量的线程任务在执行时，其实是在切换运行的。<br>只是因为CPU的时间片粒度很小，所以在切换时，很多都是无感的</p>
-<p>java中的程序天生的多线程的，启动线程有两种方式。</p>
+<h2 id="线程的启动"><a href="#线程的启动" class="headerlink" title="线程的启动"></a>线程的启动</h2><p>java中的程序天生的多线程的，启动线程有两种方式。</p>
 <ul>
 <li><p>继承Thread类</p>
 </li>
@@ -391,6 +391,22 @@
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[]args) &#123;</span><br><span class="line">        MyThread thread = new MyThread();</span><br><span class="line">        thread.start();</span><br><span class="line">        MyThread2 thread2 = new MyThread2();</span><br><span class="line">        new Thread(thread2).start();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    static class MyThread extends Thread &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            System.out.println(&quot;extends Thread&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    static class MyThread2 implements Runnable &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            System.out.println(&quot;implements Runnable&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程的终止"><a href="#线程的终止" class="headerlink" title="线程的终止"></a>线程的终止</h2><p>线程启动了，如何终止呢？<br>Thread类中提供了stop、suspend、resume等函数，但都是已经遗弃的，不提倡使用，<br>在API29时，调用内部就是直接抛出异常UnsupportedOperationException。</p>
+<p>为何遗弃，因为suspend函数，只会终止当前线程，而不会释放线程已经占有的资源(比如锁)，而是占有资源进入睡眠状态，这样容易引发死锁问题。<br>而stop函数也是同理，在终止线程时，不会保证线程资源能够正常释放<br>所以这些函数都已经被遗弃，不提倡使用。</p>
+<p>正确的中断线程的方法，是调用Thread中的interrupt().<br>interrupt()函数不会强制中断线程，而只是改变了一个线程的标志位，线程通过检测自身的标志位是否被置为true来判断是否需要继续执行。</p>
+<p>可以调用isInterrupted()来获取该标志位，判断线程任务是否应该中断，<br>还可以调用Thread中的静态函数interrupted()来判断，但是interrupted()函数调用时，会将标志位重新置于false。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        MyThread thread = new MyThread();</span><br><span class="line">        thread.start();</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(300);</span><br><span class="line">            thread.interrupt();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static class MyThread extends Thread &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            while (!currentThread().isInterrupted()) &#123;</span><br><span class="line">                System.out.println(&quot;线程正常运行&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">//            while (!Thread.interrupted()) &#123;</span><br><span class="line">//                System.out.println(&quot;线程正常运行&quot;);</span><br><span class="line">//            &#125;</span><br><span class="line">            System.out.println(&quot;线程已经被终止   flag ---&quot; + currentThread().isInterrupted());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印结果可以看得出isInterrupted()与interrupted()的区别。</p>
+<h2 id="run-start"><a href="#run-start" class="headerlink" title="run() start()"></a>run() start()</h2><p>我们new一个Thread实例对象，只是创建了一个对象，并没有与操作系统的真正的线程挂钩，<br>只有在执行start函数时，才是真正启动了一个线程，执行了其中的run方法</p>
+<p>start()的调用，让线程进入就绪队列等待分配cpu，分到cpu后执行run()方法，start方法不能重复调用，否则抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void start() &#123;</span><br><span class="line">        /**</span><br><span class="line">         * This method is not invoked for the main method thread or &quot;system&quot;</span><br><span class="line">         * group threads created/set up by the VM. Any new functionality added</span><br><span class="line">         * to this method in the future may have to also be added to the VM.</span><br><span class="line">         *</span><br><span class="line">         * A zero status value corresponds to state &quot;NEW&quot;.</span><br><span class="line">         */</span><br><span class="line">        // Android-changed: Replace unused threadStatus field with started field.</span><br><span class="line">        // The threadStatus field is unused on Android.</span><br><span class="line">        if (started)</span><br><span class="line">            throw new IllegalThreadStateException();</span><br><span class="line"></span><br><span class="line">        /* Notify the group that this thread is about to be started</span><br><span class="line">         * so that it can be added to the group&apos;s list of threads</span><br><span class="line">         * and the group&apos;s unstarted count can be decremented. */</span><br><span class="line">        group.add(this);</span><br><span class="line"></span><br><span class="line">        // Android-changed: Use field instead of local variable.</span><br><span class="line">        // It is necessary to remember the state of this across calls to this method so that it</span><br><span class="line">        // can throw an IllegalThreadStateException if this method is called on an already</span><br><span class="line">        // started thread.</span><br><span class="line">        started = false;</span><br><span class="line">        try &#123;</span><br><span class="line">            // Android-changed: Use Android specific nativeCreate() method to create/start thread.</span><br><span class="line">            // start0();</span><br><span class="line">            nativeCreate(this, stackSize, daemon);</span><br><span class="line">            started = true;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                if (!started) &#123;</span><br><span class="line">                    group.threadStartFailed(this);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (Throwable ignore) &#123;</span><br><span class="line">                /* do nothing. If start0 threw a Throwable then</span><br><span class="line">                  it will be passed up the call stack */</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>主要逻辑在这个native函数中nativeCreate()</p>
+<h2 id="Thread中其他函数"><a href="#Thread中其他函数" class="headerlink" title="Thread中其他函数"></a>Thread中其他函数</h2><h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>yield(): 使当前让出cpu占有权，但让出时间不可限定，也不会让出锁资源，而且执行yield()的线程也不一定持有锁，我们可以在释放锁后执行这个方法。<br>执行yield()后让出cpu，但也可能在下一个时间片重新获取cpu。</p>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p>join() ：将指定线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行，比如在线程B中执行了A线程的join函数，<br>直到A线程执行完毕，才会执行B线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Thread a = new Thread() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                super.run();</span><br><span class="line">                System.out.println(&quot;这是a线程在执行&quot;);</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(100);</span><br><span class="line">                    System.out.println(&quot;这是a线程在休眠结束&quot;);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Thread b = new Thread()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                super.run();</span><br><span class="line">                try &#123;</span><br><span class="line">                    a.join();</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(&quot;这是b线程在执行&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程的同步"><a href="#线程的同步" class="headerlink" title="线程的同步"></a>线程的同步</h2><h3 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h3><p>锁，内置锁，具体详情可以查看：</p>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>只保证可见性，不能保证原子性</p>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>在每个线程存在副本，各个线程数据互不干扰。<br>具体详情可以查看：</p>
 
       
     </div>
@@ -485,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -501,7 +526,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,6 +579,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的启动"><span class="nav-number">1.</span> <span class="nav-text">线程的启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的终止"><span class="nav-number">2.</span> <span class="nav-text">线程的终止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-start"><span class="nav-number">3.</span> <span class="nav-text">run() start()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread中其他函数"><span class="nav-number">4.</span> <span class="nav-text">Thread中其他函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yield"><span class="nav-number">4.1.</span> <span class="nav-text">yield</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join"><span class="nav-number">4.2.</span> <span class="nav-text">join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的同步"><span class="nav-number">5.</span> <span class="nav-text">线程的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized"><span class="nav-number">5.1.</span> <span class="nav-text">synchronized</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile"><span class="nav-number">5.2.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">5.3.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -567,7 +608,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

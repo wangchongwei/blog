@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Devops, Microservice">
+  <meta name="keywords" content="java,">
 
 
 
@@ -107,17 +107,18 @@
 
 
 
-<meta name="description" content="Please description">
+<meta name="description" content="Synchronized详解Synchronized是内置锁，锁的是对象，Synchronized 有几个使用方式，但其实都是作用于对象。  1、作用于方法块 2、作用于obj 3、作用于this 4、作用于class  1234567891011121314151617181920212223public synchronized void lockFun() &amp;#123;    try &amp;#1">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Synchronized详解">
 <meta property="og:url" content="hexo/blog/2020/09/Synchronized详解.html">
 <meta property="og:site_name" content="Happy To Try">
-<meta property="og:description" content="Please description">
+<meta property="og:description" content="Synchronized详解Synchronized是内置锁，锁的是对象，Synchronized 有几个使用方式，但其实都是作用于对象。  1、作用于方法块 2、作用于obj 3、作用于this 4、作用于class  1234567891011121314151617181920212223public synchronized void lockFun() &amp;#123;    try &amp;#1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-03T07:26:31.918Z">
+<meta property="og:updated_time" content="2021-01-18T06:27:17.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Synchronized详解">
-<meta name="twitter:description" content="Please description">
+<meta name="twitter:description" content="Synchronized详解Synchronized是内置锁，锁的是对象，Synchronized 有几个使用方式，但其实都是作用于对象。  1、作用于方法块 2、作用于obj 3、作用于this 4、作用于class  1234567891011121314151617181920212223public synchronized void lockFun() &amp;#123;    try &amp;#1">
 
 
 
@@ -370,7 +371,20 @@
       
 
       
-        
+        <h1 id="Synchronized详解"><a href="#Synchronized详解" class="headerlink" title="Synchronized详解"></a>Synchronized详解</h1><p>Synchronized是内置锁，锁的是对象，<br>Synchronized 有几个使用方式，但其实都是作用于对象。</p>
+<ul>
+<li>1、作用于方法块</li>
+<li>2、作用于obj</li>
+<li>3、作用于this</li>
+<li>4、作用于class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void lockFun() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        Thread.sleep(10);</span><br><span class="line">        System.out.println(&quot;当前线程Name: &quot; + Thread.currentThread().getName());</span><br><span class="line">        Thread.sleep(10);</span><br><span class="line">        System.out.println(&quot;当前线程Name: &quot; + Thread.currentThread().getName() + &quot;结束&quot;);</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void lockThis() &#123;</span><br><span class="line">    synchronized (this) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(10);</span><br><span class="line">            System.out.println(&quot;当前线程Name: &quot; + Thread.currentThread().getName());</span><br><span class="line">            Thread.sleep(10);</span><br><span class="line">            System.out.println(&quot;当前线程Name: &quot; + Thread.currentThread().getName() + &quot;结束&quot;);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的示例代码中，lockFun是作用于方法块，lockThis是作用于this，但实际上这两个函数都是作用于当前的类的实例对象上的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void lockClass() &#123;</span><br><span class="line">    synchronized (Test.class) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static synchronized void lockStatic() &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而在lockClass与lockStatic中，lockStatic作用与static静态函数，lockClass作用与Test.class对象，但实际都是作用与Test的所有实例对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void lockObj(Object o) &#123;</span><br><span class="line">    synchronized (o)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>lockObj就是直接作用于Object对象。</p>
+
       
     </div>
     
@@ -384,6 +398,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
       
 
       
@@ -458,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -474,7 +503,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -527,6 +556,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronized详解"><span class="nav-number">1.</span> <span class="nav-text">Synchronized详解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -540,7 +585,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

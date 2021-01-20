@@ -292,6 +292,1127 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/10/canvas-中的方法.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/10/canvas-中的方法.html" itemprop="url">canvas 中的方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-22T16:09:46+08:00">
+                2019-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/10/canvas-中的方法.html" class="leancloud_visitors" data-flag-title="canvas 中的方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="canvas-中的一些方法"><a href="#canvas-中的一些方法" class="headerlink" title="canvas 中的一些方法"></a>canvas 中的一些方法</h1><p>在canvas中一般使用的方法为<br>drawXXX(): 绘制的方法<br>clipXXX(): 裁剪的方法</p>
+<h3 id="clipRect"><a href="#clipRect" class="headerlink" title="clipRect"></a>clipRect</h3><p>裁剪画布，clipRect(int left, top, right, bottom);<br>clipRectF(float left, top, right, bottom)</p>
+<p>当执行了该方法，如clipRect(0,0,500,500);<br>则后面都只能在(0,0,500,500)区域绘制</p>
+<h3 id="用Rect实现多区域裁剪"><a href="#用Rect实现多区域裁剪" class="headerlink" title="用Rect实现多区域裁剪"></a>用Rect实现多区域裁剪</h3><h4 id="intersect-交集】"><a href="#intersect-交集】" class="headerlink" title="intersect 交集】"></a>intersect 交集】</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Rect rect = new Rect(0, 0, 500, 500);  </span><br><span class="line">          </span><br><span class="line">rect.intersect(250, 250, 750, 750); </span><br><span class="line">        </span><br><span class="line">canvas.clipRect(rect);</span><br><span class="line"></span><br><span class="line">// 取到区域(250, 250, 500, 500)</span><br></pre></td></tr></table></figure>
+<p>绘制多个区域相交的区域</p>
+<h4 id="union-合集"><a href="#union-合集" class="headerlink" title="union 合集"></a>union 合集</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Rect rect = new Rect(0, 0, 500, 500);  </span><br><span class="line">      </span><br><span class="line">rect.union(250, 250, 750, 750);  </span><br><span class="line">    </span><br><span class="line">canvas.clipRect(rect);</span><br><span class="line"></span><br><span class="line">// 取到的区域为(0, 0, 750, 750)</span><br></pre></td></tr></table></figure>
+<p>绘制多个区域之和</p>
+<h3 id="clipPath-取出某个区域"><a href="#clipPath-取出某个区域" class="headerlink" title="clipPath 取出某个区域"></a>clipPath 取出某个区域</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 实例化路径</span><br><span class="line">mPath = new Path();</span><br><span class="line">// 移动起点至[50,50]</span><br><span class="line">mPath.moveTo(50, 50);  </span><br><span class="line">mPath.lineTo(75, 23);  </span><br><span class="line">mPath.lineTo(150, 100);  </span><br><span class="line">mPath.lineTo(80, 110);  </span><br><span class="line">// 闭合路径</span><br><span class="line">mPath.close();</span><br><span class="line"></span><br><span class="line">// 按照路径进行裁剪</span><br><span class="line">canvas.clipPath(mPath);</span><br></pre></td></tr></table></figure>
+<p>即是将path区域裁剪出来<br>同样后面在能在该path区域绘制图形</p>
+<h3 id="Region-Op"><a href="#Region-Op" class="headerlink" title="Region.Op"></a>Region.Op</h3><p>canvas.drawRect</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/09/hashMap解析.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/09/hashMap解析.html" itemprop="url">hashMap解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-03T14:01:51+08:00">
+                2019-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/09/hashMap解析.html" class="leancloud_visitors" data-flag-title="hashMap解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="HashMap源码分析"><a href="#HashMap源码分析" class="headerlink" title="HashMap源码分析"></a>HashMap源码分析</h1><h3 id="Hash内部类Node："><a href="#Hash内部类Node：" class="headerlink" title="Hash内部类Node："></a>Hash内部类Node：</h3><p>Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。<br>链表数据结构，每一个节点都记录下一个节点的地址。<br>在Node的构造函数中，直接包含了下一个节点，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        final int hash;</span><br><span class="line">        final K key;</span><br><span class="line">        V value;</span><br><span class="line">        Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">        // 将下一个节点作为入参放入构造函数中</span><br><span class="line">        Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            this.hash = hash;</span><br><span class="line">            this.key = key;</span><br><span class="line">            this.value = value;</span><br><span class="line">            this.next = next;</span><br><span class="line">        &#125;</span><br><span class="line">    ....</span><br></pre></td></tr></table></figure></p>
+<p>获取某个节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> public V get(Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab;</span><br><span class="line">        Node&lt;K,V&gt; first, e;</span><br><span class="line">        int n;</span><br><span class="line">        K k;</span><br><span class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line">            if (first.hash == hash &amp;&amp; // always check first node</span><br><span class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                return first;</span><br><span class="line">            if ((e = first.next) != null) &#123;</span><br><span class="line">                // 当为树结构的时候</span><br><span class="line">                if (first instanceof TreeNode)</span><br><span class="line">                // 获取树形结构中某个节点</span><br><span class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                // 遍历链表结构    </span><br><span class="line">                do &#123;</span><br><span class="line">                    if (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                        return e;</span><br><span class="line">                &#125; while ((e = e.next) != null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>HashMap底部是数组，数组中存放链表，当链表长度大于6时，转为红黑树</p>
+<p>put：初始化table[],使用时再初始化，避免内存。</p>
+<p>根据k获取hash，hash &amp; length 获取 index，放入数组指定下标的链表，头插法, 链表超长6时，转为红黑树</p>
+<p>jdk1.7及以前采用的头插法，在jdk1.8及以后，为避免死锁，采用尾插法。</p>
+<p>hash &amp; length 使用位运算符，因为位运算符快，cpu指令就是基于位运算符，</p>
+<p>扩容：hashmap的初识容量是16，每次扩容 * 2， 为何容量取 2的次方，因为这样在位运算时，让每一位都能使用到，效率最高，而且这样保证位运算结果与取模结果一致。</p>
+<p>加载因子：默认0.75，因为大量测试表面。0。6-0.75最佳，0.75保证在该范围内存使用率最高。<br>加载因子过大时，会让hash碰撞概率增加，降低hashmap使用效率。</p>
+<p>hashmap使用缺点：内存使用率最高也只有75%， hash碰撞，极端情况退化为单链表。用空间换时间。</p>
+<p>可以使用其他数据类型替代：<br>SparseArray： 双数组结构，key，value分别使用数组存储， 但SparseArray的key只能为int，<br>有序，通过二分查找来定位元素。<br>用时间换空间。<br>缺点： key值只能是int类型</p>
+<p>ArrayMap：sdk 19引入，双数组结果，key值可以为任何类型，根据key获取hash，就和SparseArray类型一致了。<br>Bundle内部就是使用ArrayMap</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/08/升级rn版本适配android64.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/08/升级rn版本适配android64.html" itemprop="url">升级rn版本适配android64</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-21T09:31:14+08:00">
+                2019-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/08/升级rn版本适配android64.html" class="leancloud_visitors" data-flag-title="升级rn版本适配android64">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>google play在2019/08/01起实施强制支持64位手机的措施。</p>
+<p>因为之前的version为0.55.4,到0.59.1版本更新太多，<br>采取的方案是：新建一个项目version为0.59.1，然后将之前的代码直接移入到新项目</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html" itemprop="url">Rxjava + Retrofit 实现BaseResult</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T11:24:56+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Rxjava-Retrofit-实现BaseResult.html" class="leancloud_visitors" data-flag-title="Rxjava + Retrofit 实现BaseResult">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Rxjava-Retrofit-实现BaseResult"><a href="#Rxjava-Retrofit-实现BaseResult" class="headerlink" title="Rxjava + Retrofit 实现BaseResult"></a>Rxjava + Retrofit 实现BaseResult</h1><p>最近在学习Rxjava、Retrofit的使用，同时想到想一般项目中接口返回都是由特定格式，如java后端的Resultful风格，那我们能不能在请求时写一个基础的返回类，并统一对code判断，再来处理。<br>答案肯定是可以的。本文只讲使用。</p>
+<h4 id="依赖："><a href="#依赖：" class="headerlink" title="依赖："></a>依赖：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.squareup.retrofit2:retrofit:2.3.0&apos;</span><br><span class="line">implementation &apos;com.squareup.retrofit2:converter-gson:2.3.0&apos;</span><br><span class="line">implementation &apos;io.reactivex.rxjava2:rxandroid:2.0.2&apos;</span><br><span class="line">implementation &apos;io.reactivex.rxjava2:rxjava:2.x.y&apos;</span><br><span class="line">implementation &apos;com.squareup.retrofit2:adapter-rxjava2:2.3.0&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="普通使用案例"><a href="#普通使用案例" class="headerlink" title="普通使用案例"></a>普通使用案例</h4><p>首先创建实体数据类Test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG = &quot;=====TEST&quot;;</span><br><span class="line"></span><br><span class="line">    String key = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    String test = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    public void log() &#123;</span><br><span class="line">        Log.d(TAG,&quot;key=&quot;  + key);</span><br><span class="line">        Log.d(TAG, &quot;test=&quot; + test);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在写一个接口TestServer，申明请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface TestService &#123;</span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Test&gt;getObJson();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">private void testService() &#123;</span><br><span class="line">      // 实例化一个Retrofit 对象</span><br><span class="line">        Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">                .baseUrl(&quot;http://192.168.1.42:8080/&quot;)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        TestServer service = retrofit.create(TestService.class);</span><br><span class="line">         service.getObJson()</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .subscribe(new Observer&lt;Test&gt;() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onSubscribe(Disposable d) &#123;</span><br><span class="line">                        </span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onNext(Test test) &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onError(Throwable e) &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void onComplete() &#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="开发考虑"><a href="#开发考虑" class="headerlink" title="开发考虑"></a>开发考虑</h3><p>我们不可能每个请求都重新创建一个Retrofit对象，<br>而且要基于项目后端数据，例如resultful风格，不可能在每个请求都对code判断。<br>所以我们要将返回的Call 对象封装，对code判断，并返回具体的数据结构。</p>
+<h5 id="1、写一个result实体类"><a href="#1、写一个result实体类" class="headerlink" title="1、写一个result实体类"></a>1、写一个result实体类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// 因为每一个接口返回的数据结构都不同，肯定要用泛型。</span><br><span class="line">public class Result&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final String TAG = &quot;Result ====&quot;;</span><br><span class="line"></span><br><span class="line">    private String msg;</span><br><span class="line"></span><br><span class="line">    private String code = &quot;0&quot;;</span><br><span class="line"></span><br><span class="line">    private T data;</span><br><span class="line"></span><br><span class="line">    public void logCode() &#123;</span><br><span class="line">        Log.d(TAG, code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getLongCode() &#123;</span><br><span class="line">        long resultCode = 0;</span><br><span class="line">        if(code != null &amp;&amp; !code.equals(&quot;&quot;)) &#123;</span><br><span class="line">            resultCode = Long.parseLong(code);</span><br><span class="line">        &#125;</span><br><span class="line">        return resultCode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void log() &#123;</span><br><span class="line">        Log.d(TAG, &quot;msg:&quot; +msg + &quot;\n code:&quot; + code + &quot;\n data:&quot; + data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public T getResultData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意，此处的get数据的方法不能直接用getCode，会报空指针异常，后续讨论</strong></p>
+<p>然后需要写一个BaseObserver观察者基类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 这里还是因为接口返回数据格式问题，使用泛型。</span><br><span class="line">public abstract class BaseObserver&lt;T&gt; implements Observer&lt;Result&lt;T&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final String TAG = &quot;====BaseObserver===&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 请求成功</span><br><span class="line">     * @param t</span><br><span class="line">     */</span><br><span class="line">    public abstract void onSuccess(T t);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 当返回的code值错误时的默认方法</span><br><span class="line">     * @param code</span><br><span class="line">     */</span><br><span class="line">    public void onResultCodeErr(long code) &#123;</span><br><span class="line">        Log.d(TAG, &quot;状态码错误,错误码为：&quot; + code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onSubscribe(Disposable d) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onSubscribe&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onNext(Result result) &#123;</span><br><span class="line">        if(result.getLongCode() != 200) &#123;</span><br><span class="line">            onResultCodeErr(result.getLongCode());</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            onSuccess((T)result.getResultData());</span><br><span class="line">        &#125;</span><br><span class="line">        result.log();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        Log.d(TAG, &quot;onError&quot;);</span><br><span class="line">        Log.d(TAG, e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onComplete() &#123;</span><br><span class="line">        Log.d(TAG, &quot;onComplete&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们的Server类就变成了如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public interface TestService &#123;</span><br><span class="line"></span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Result&lt;Test&gt;&gt; getTestRxjavaJson();</span><br><span class="line"></span><br><span class="line">    @GET(&quot;test.json&quot;)</span><br><span class="line">    Observable&lt;Test&gt;getObJson();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用就变成了这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">BaseObserver observer = new BaseObserver&lt;Test&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onSuccess(Test test) &#123;</span><br><span class="line">            Log.d(&quot;======&quot;, &quot;onSuccess&quot;);</span><br><span class="line">            test.log();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    /** Retrofit + Rxjav */</span><br><span class="line">    private void testRxjavaService() &#123;</span><br><span class="line">        Retrofit retrofit = RetrofitUtil.getRetrofit();</span><br><span class="line">        TestService ts = retrofit.create(TestService.class);</span><br><span class="line">        ts.getTestRxjavaJson()</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .subscribe(observer);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>写的还比较粗糙，单个接口调用时可能效果还不明显。但大致思路是这样的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（三）布局组件.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（三）布局组件.html" itemprop="url">Flutter入门（三）布局组件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T11:00:09+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（三）布局组件.html" class="leancloud_visitors" data-flag-title="Flutter入门（三）布局组件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（三）布局组件"><a href="#Flutter入门（三）布局组件" class="headerlink" title="Flutter入门（三）布局组件"></a>Flutter入门（三）布局组件</h1><p>之前吐槽过flutter中文网文档写的不好，后来发现维护者更新的好快，而且也从各种开发的角度来介绍flutter，很skr，点赞！</p>
+<p><img src="../images/flutter1.png" alt="fluttercn.png"></p>
+<p>查看这些可以从这些角度去理解flutter开发，学起来也会事半功倍</p>
+<h3 id="ui组件"><a href="#ui组件" class="headerlink" title="ui组件"></a>ui组件</h3><p>学一个新的开发框架，当hello world运行起来后，接下来肯定是了解并使用一些基本的ui组件。</p>
+<h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Text(</span><br><span class="line">    &apos;要显示的文本&apos;, </span><br><span class="line">    &#123;</span><br><span class="line">        textAlign: TextAlign.center, // 文本横向对齐方式 居中</span><br><span class="line">        overflow: TextOverflow.ellipsis, // 文本溢出处理方式</span><br><span class="line">        textDirection: TextDirection.ltr, // 文本方向 ltr(left to right) rtl(right to left)</span><br><span class="line">        softWrap: true, // 是否自动换行</span><br><span class="line">        textScaleFactor: 2.0, // 字体显示倍率</span><br><span class="line">        maxLines: 1, // 文本最大行数</span><br><span class="line">        style: new TextStyle(</span><br><span class="line">            color: Colors.purple,</span><br><span class="line">            fontSize: 20.0,</span><br><span class="line">        ), // 文本样式</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter入门-vscode调试及查看日志.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/flutter入门-vscode调试及查看日志.html" itemprop="url">flutter入门  vscode调试及查看日志</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:55:36+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/flutter入门-vscode调试及查看日志.html" class="leancloud_visitors" data-flag-title="flutter入门  vscode调试及查看日志">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="flutter入门-vscode调试及查看日志"><a href="#flutter入门-vscode调试及查看日志" class="headerlink" title="flutter入门  vscode调试及查看日志"></a>flutter入门  vscode调试及查看日志</h1><p>开发肯定需要调试应用，以及查看日志。</p>
+<p>在flutter中有logger包，调用未找到Log里的函数，只有Logger.root.info(‘’)等函数，运行时也不起作用。</p>
+<p>还有一个print()函数，最终发现这个是可以的。</p>
+<h4 id="情景再现"><a href="#情景再现" class="headerlink" title="情景再现"></a>情景再现</h4><p>a、通过 flutter run方法启动应用，通过flutter logs查看日志，发现并没有日志输出。</p>
+<p>b、通过flutter run方法启动应用，在 调试控制台 也没看到日志输出</p>
+<p>c、通过vscode 自带的调试台启动启用，flutter logs，也没有日志输出</p>
+<h4 id="正确方法"><a href="#正确方法" class="headerlink" title="正确方法"></a>正确方法</h4><p>print()日志输出函数<br>通过vscode 自带的调试台启动应用， 查看调试控制台，有日志输出</p>
+<p>ps: 我重启应用后发现，在终端cmd 通过flutter 也能看到日志输出了。</p>
+<h4 id="用vscode调试flutetr"><a href="#用vscode调试flutetr" class="headerlink" title="用vscode调试flutetr"></a>用vscode调试flutetr</h4><p><img src="../images/log1.png" alt="fluttervscode.png"><br>一个正常的flutter项目用vscode应该是这样的。<br>之前有说过可以用flutter run命令运行，还有android studio运行。在vscode中也有按钮运行调试。</p>
+<p>点击调试按钮/启动调试按钮，就相当于flutter run运行该flutter项目<br><img src="../images/log2.png" alt="run.png"></p>
+<p>我打了一个断点，当项目运行起来，如下图。<br><img src="../images/log3.png" alt="debugger.png"></p>
+<p>当我点击按钮，进入断点。如下图<br>可以看到左上角的操作按钮，其实跟android studio调试原生代码，以及浏览器调试rn一样。<br><img src="../images/log4.png" alt="indebugger.png"></p>
+<p>添加断点点击代码左侧的红框区域即可（下图）。<br><img src="../images/log5.png" alt="adddebugger.png"></p>
+<p>在左上角的调试/新建断点 也可以。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html" itemprop="url">Flutter入门（二） 使用vscode编写第一个Flutter应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:51:37+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（二）-使用vscode编写第一个Flutter应用.html" class="leancloud_visitors" data-flag-title="Flutter入门（二） 使用vscode编写第一个Flutter应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（二）-使用vscode编写第一个Flutter应用"><a href="#Flutter入门（二）-使用vscode编写第一个Flutter应用" class="headerlink" title="Flutter入门（二） 使用vscode编写第一个Flutter应用"></a>Flutter入门（二） 使用vscode编写第一个Flutter应用</h1><p>在上一篇中我们利用android studio运行了一个hello word项目。<br>作为我个人而言最喜欢的编辑器是vscode，肯定要能在vscode中写代码并运行flutter项目才行。</p>
+<p>###1、配置插件<br>需要在vscode中下载插件<br><img src="../images/dart1.png" alt="dartPlugin.png"><br><img src="../images/dart2.png" alt="flutterPlugin.png"><br>找到这两个插件下载好并重新加载vscode就可以了。</p>
+<p>###2、运行<br>flutter项目的运行命令是 flutter run<br>但是flutter和react-native不同的是，flutter run之后会检测是否连接设备，如果没有已连接的设备会不往下运行。<br>你可以通 flutter devices, 当然你配置了android的环境的话，也可以用dab命令， adb devices。</p>
+<p>在项目运行起来后，在下方的终端会有一些输出信息，编译耗时、打debug包、安装等。<br>还有有一些提示信息<br><img src="../images/dart3.png" alt="tips.png"></p>
+<p>当你需要热加载的时候按 r，需要重启应用按R。<br>所以当我们每一次写好代码保存后，只要再按一下r，就可以看到最新的效果，而且flutter的热加载比rn的更快。</p>
+<p>###3、写第一个flutter应用。<br>按照flutter中文网（<a href="https://flutterchina.club/get-started/codelab/）" target="_blank" rel="noopener">https://flutterchina.club/get-started/codelab/）</a><br>写我们第一个flutter应用。<br>其中我个人碰到一个问题。<br>就是在第2步、使用外部package中，<br><img src="../images/dart4.png" alt="package.png"></p>
+<p>在pubspec.yaml文件中申明了插件依赖，保存之后自动下载了，然后在main.dart文件中引用该插件，发现没有自动补全提示，我手写全部路径，提示找不到。<br>然后重新打开vscode才好，应该是vscode对这个以来的读取问题。</p>
+<p>然后是接着照着中文的代码写。flutter的也有state，据说是根据react中的state来的想法加入的。</p>
+<p>###个人体会</p>
+<p><strong>flutter项目比rn流畅，编译快，热加载快，应用运行也更流畅，但dart语法是真蛋疼</strong></p>
+<p>fluuter中文网写的文档感觉也不是很友好，很多关键的东西写的不够具体、甚至没写。<br>没有对state这个做解释、没有state的使用说明，然后那个路由也是。</p>
+<p>##待续</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/Flutter入门（一）环境配置.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="justin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Happy To Try">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/07/Flutter入门（一）环境配置.html" itemprop="url">Flutter入门（一）环境配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T10:41:53+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/2019/07/Flutter入门（一）环境配置.html" class="leancloud_visitors" data-flag-title="Flutter入门（一）环境配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Flutter入门（一）环境配置"><a href="#Flutter入门（一）环境配置" class="headerlink" title="Flutter入门（一）环境配置"></a>Flutter入门（一）环境配置</h1><p>在/flutter/bin目录下执行 flutter doctor命令。</p>
+<h3 id="3、android-studio插件"><a href="#3、android-studio插件" class="headerlink" title="3、android studio插件"></a>3、android studio插件</h3><p>下载android studio就不说了，打开android studio/file/setting/plugin/<br><img src="../images/image.png" alt="plugin.png"><br>输入 flutter查找并install。<br>第一次可能下不下来。我的电脑第一次就没下下来，是回家后打开电脑重新下载才下下来的，猜测可能是下载完flutter sdk、或者配置flutter环境变量后需要重启电脑。</p>
+<p>在安装完插件并重新启动android studio就可以在 file/new/中看到一个新选项 New Flutter Project<br><img src="../images/image0.png" alt="flutter.png"></p>
+<h2 id="hello-word"><a href="#hello-word" class="headerlink" title="hello word"></a>hello word</h2><p>按照惯例，接下来我们跑一个hello world。</p>
+<p>照上面的new/new Flutter Project 然后 next、next、next一个新项目就建好了。</p>
+<h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><p><img src="../images/image1.png" alt="flutterRun.png"></p>
+<p>项目目录和rn目录类似，android、ios原生工程。lib放混合开发的dart文件，<br>pubspec.yaml项目的配置文件，类似于rn、react中的package.json，声明项目版本、依赖等。<br>在运行后如android，会在项目根目录的build（和android同目录）下生成构建之后的文件，这一点和rn以及之前的android项目很不一样，之前的androidbuild都是在/app/build/目录下。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>点击上面截图右上角绿三角run，第一次运行会比较慢。main.dart是主入口的混合文件。我们可以修改截图中间的文本内容，再运行</p>
+<p><img src="../images/image2.png" alt="hello.png"></p>
+<p>第一次运行结束，后面就需要熟悉dart语法，查看原生里的源码看实现原理。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hexo/blog/2019/07/flutter数据持久化.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1489,7 +2610,13 @@
       
         
           
-            <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1>
+            <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1><p>添加依赖，在app/build.gradle中添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.squareup.okhttp3:okhttp:3.10.0&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="get"><a href="#get" class="headerlink" title="get"></a>get</h2><p>一个普通的get请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private void get() &#123;</span><br><span class="line">    OkHttpClient client = new  OkHttpClient.Builder().build();</span><br><span class="line"></span><br><span class="line">    Request request = new Request.Builder()</span><br><span class="line">            .addHeader(&quot;header_key&quot;, &quot;header_value&quot;)</span><br><span class="line">            .url(&quot;https://www.baidu.com&quot;)</span><br><span class="line">            .get()</span><br><span class="line">            .build();</span><br><span class="line">    try &#123;</span><br><span class="line">        // 同步执行</span><br><span class="line">        client.newCall(request).execute();</span><br><span class="line">        // 异步执行</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line">                Log.d(TAG, &quot;onFailure: &quot; + e.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                Log.d(TAG, &quot;onResponse: &quot; + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">private void post() &#123;</span><br><span class="line">    OkHttpClient client = new  OkHttpClient.Builder().build();</span><br><span class="line"></span><br><span class="line">    RequestBody body = new FormBody.Builder()</span><br><span class="line">            .add(&quot;content&quot;, &quot;content&quot;)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    Request request = new Request.Builder()</span><br><span class="line">            .addHeader(&quot;header_key&quot;, &quot;header_value&quot;)</span><br><span class="line">            .post(body)</span><br><span class="line">            .url(&quot;https://www.baidu.com&quot;)</span><br><span class="line">            .build();</span><br><span class="line">    try &#123;</span><br><span class="line">        // 同步执行</span><br><span class="line">        client.newCall(request).execute();</span><br><span class="line">        // 异步执行</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                Log.d(TAG, &quot;onResponse: &quot; + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面就是一个简单的post与get请求，区别就是post会多一个RequestBody</p>
+<p>而关于okhttp的使用还有很多其他的用户，如自定义分发器Dispatch、拦截器、缓存</p>
+
           
         
       
@@ -1731,7 +2858,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1797,7 +2924,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

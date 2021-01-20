@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-03T07:25:57.923Z">
+<meta property="og:updated_time" content="2021-01-18T01:12:32.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 锁">
 <meta name="twitter:description" content="java中使用锁，主要是用于解决多线程并发问题多个线程对某个对象进行操作，就存在并发问题。 java内存规定了，所有变量都储存在主内存中，每个线程又有自己的工作内存 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。 不同的线程之间也无">
@@ -376,6 +376,7 @@
 <p>线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存</p>
 <p>线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。</p>
 <p>不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。</p>
+<p>注意：锁作用的都是对象，在对象的内存空间中，有标志位标记是有有锁。</p>
 <h2 id="并发三要素"><a href="#并发三要素" class="headerlink" title="并发三要素"></a>并发三要素</h2><p>原子性：在一个操作中，CPU 不可以在中途暂停然后再调度，即不被中断操作，要么执行完成，要么就不执行。</p>
 <p>可见性：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
 <p>有序性：程序执行的顺序按照代码的先后顺序执行。</p>
@@ -532,7 +533,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -614,7 +615,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

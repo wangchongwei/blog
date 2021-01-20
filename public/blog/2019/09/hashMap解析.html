@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="HashMap源码分析Hash内部类Node：Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。链表数据结构，每一个节点都记录下一个节点的地址。在Node的构造函数中，直接包含了下一个节点，1234567891011121314static class Node&amp;lt;K,V&amp;gt; implements Map.Entry&amp;lt;K,V&amp;gt; &amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-21T06:59:16.043Z">
+<meta property="og:updated_time" content="2021-01-19T10:07:45.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hashMap解析">
 <meta name="twitter:description" content="HashMap源码分析Hash内部类Node：Node(节点)，链表中的节点，当HashMap数据少于6条时，为链表结构，Node为其中的节点。链表数据结构，每一个节点都记录下一个节点的地址。在Node的构造函数中，直接包含了下一个节点，1234567891011121314static class Node&amp;lt;K,V&amp;gt; implements Map.Entry&amp;lt;K,V&amp;gt; &amp;">
@@ -376,6 +376,7 @@
 <p>HashMap底部是数组，数组中存放链表，当链表长度大于6时，转为红黑树</p>
 <p>put：初始化table[],使用时再初始化，避免内存。</p>
 <p>根据k获取hash，hash &amp; length 获取 index，放入数组指定下标的链表，头插法, 链表超长6时，转为红黑树</p>
+<p>jdk1.7及以前采用的头插法，在jdk1.8及以后，为避免死锁，采用尾插法。</p>
 <p>hash &amp; length 使用位运算符，因为位运算符快，cpu指令就是基于位运算符，</p>
 <p>扩容：hashmap的初识容量是16，每次扩容 * 2， 为何容量取 2的次方，因为这样在位运算时，让每一位都能使用到，效率最高，而且这样保证位运算结果与取模结果一致。</p>
 <p>加载因子：默认0.75，因为大量测试表面。0。6-0.75最佳，0.75保证在该范围内存使用率最高。<br>加载因子过大时，会让hash碰撞概率增加，降低hashmap使用效率。</p>
@@ -501,7 +502,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -583,7 +584,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Happy To Try">
 <meta property="og:description" content="Android 自定义View自定义View主要用于：需要一些不规则的图形、事件冲突、特定的视图群组、扩展某些组件的功能。 首页android自定义View有三种类型，1、继承View，多用于实现一些不规则的图形。 2、继承特定的组件，如TextView， 3、继承ViewGroup，用于视图组 在自定义View中有三个关键的方法：onMeasure、onLayout、onDraw onMeasu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-10T10:07:35.452Z">
+<meta property="og:updated_time" content="2020-12-22T02:10:44.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android 自定义View">
 <meta name="twitter:description" content="Android 自定义View自定义View主要用于：需要一些不规则的图形、事件冲突、特定的视图群组、扩展某些组件的功能。 首页android自定义View有三种类型，1、继承View，多用于实现一些不规则的图形。 2、继承特定的组件，如TextView， 3、继承ViewGroup，用于视图组 在自定义View中有三个关键的方法：onMeasure、onLayout、onDraw onMeasu">
@@ -434,8 +434,10 @@
 <h2 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h2><p>布局方法</p>
 <p>在调用onLayout时，onMeasure已经完成，<br>子容器的onLyout是在父容器执行onLayout时调用，而自身的onLyout也会触发内部子容器的遍历onLayout。这样就完成了整个视图的布局过程。<br>在onLayout中，会计算该视图的 左上右下 四个顶点的坐标，就完成了该视图的布局。</p>
 <h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><p>绘制的方法<br>onDraw是在容器的draw方法时调用的。<br>而绘制的顺序为：<br>1.绘制背景<br>2.如果有必要，保存画布的图层，以准备失效<br>3.绘制视图的内容<br>4.绘制子控件<br>5.如果必要，绘制衰落边缘和恢复层<br>6.绘制装饰（比如滚动条）</p>
-<p>onDraw 有一个参数(Canvas cancas),<br>canvas 就是画布，画布的范围就是onLayout布局后确定的区域</p>
-
+<p>onDraw 有一个参数(Canvas cancas),<br>canvas 就是画布，画布的范围就是onLayout布局后确定的区域<br>Paint 画笔</p>
+<h3 id="Paint的常用配置"><a href="#Paint的常用配置" class="headerlink" title="Paint的常用配置"></a>Paint的常用配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Paint mPaint = new Paint();</span><br></pre></td></tr></table></figure>
+<h4 id="Style"><a href="#Style" class="headerlink" title="Style"></a>Style</h4><p>画笔的样式分三种类型 Style是个枚举类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public enum Style &#123;</span><br><span class="line">    /**</span><br><span class="line">        * Geometry and text drawn with this style will be filled, ignoring all</span><br><span class="line">        * stroke-related settings in the paint.</span><br><span class="line">        */</span><br><span class="line">    FILL            (0),</span><br><span class="line">    /**</span><br><span class="line">        * Geometry and text drawn with this style will be stroked, respecting</span><br><span class="line">        * the stroke-related fields on the paint.</span><br><span class="line">        */</span><br><span class="line">    STROKE          (1),</span><br><span class="line">    /**</span><br><span class="line">        * Geometry and text drawn with this style will be both filled and</span><br><span class="line">        * stroked at the same time, respecting the stroke-related fields on</span><br><span class="line">        * the paint. This mode can give unexpected results if the geometry</span><br><span class="line">        * is oriented counter-clockwise. This restriction does not apply to</span><br><span class="line">        * either FILL or STROKE.</span><br><span class="line">        */</span><br><span class="line">    FILL_AND_STROKE (2);</span><br><span class="line"></span><br><span class="line">    Style(int nativeInt) &#123;</span><br><span class="line">        this.nativeInt = nativeInt;</span><br><span class="line">    &#125;</span><br><span class="line">    final int nativeInt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="canvas的常用函数"><a href="#canvas的常用函数" class="headerlink" title="canvas的常用函数"></a>canvas的常用函数</h3>
       
     </div>
     
@@ -554,7 +556,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -616,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-自定义View"><span class="nav-number">1.</span> <span class="nav-text">Android 自定义View</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#onMeasure"><span class="nav-number">1.1.</span> <span class="nav-text">onMeasure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutParams"><span class="nav-number">1.1.1.</span> <span class="nav-text">LayoutParams</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MeasureSpec"><span class="nav-number">1.1.2.</span> <span class="nav-text">MeasureSpec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onLayout"><span class="nav-number">1.2.</span> <span class="nav-text">onLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw"><span class="nav-number">1.3.</span> <span class="nav-text">onDraw</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-自定义View"><span class="nav-number">1.</span> <span class="nav-text">Android 自定义View</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#onMeasure"><span class="nav-number">1.1.</span> <span class="nav-text">onMeasure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutParams"><span class="nav-number">1.1.1.</span> <span class="nav-text">LayoutParams</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MeasureSpec"><span class="nav-number">1.1.2.</span> <span class="nav-text">MeasureSpec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onLayout"><span class="nav-number">1.2.</span> <span class="nav-text">onLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw"><span class="nav-number">1.3.</span> <span class="nav-text">onDraw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Paint的常用配置"><span class="nav-number">1.3.1.</span> <span class="nav-text">Paint的常用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Style"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Style</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#canvas的常用函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">canvas的常用函数</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -636,7 +638,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

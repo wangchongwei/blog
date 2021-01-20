@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="OkHttp3使用">
+<meta name="description" content="OkHttp3使用添加依赖，在app/build.gradle中添加依赖1implementation &amp;apos;com.squareup.okhttp3:okhttp:3.10.0&amp;apos; get一个普通的get请求 1234567891011121314151617181920212223242526private void get() &amp;#123;    OkHttpClient cl">
 <meta name="keywords" content="android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android okHttp3">
 <meta property="og:url" content="hexo/blog/2019/06/android-okHttp3.html">
 <meta property="og:site_name" content="Happy To Try">
-<meta property="og:description" content="OkHttp3使用">
+<meta property="og:description" content="OkHttp3使用添加依赖，在app/build.gradle中添加依赖1implementation &amp;apos;com.squareup.okhttp3:okhttp:3.10.0&amp;apos; get一个普通的get请求 1234567891011121314151617181920212223242526private void get() &amp;#123;    OkHttpClient cl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-05T09:34:01.205Z">
+<meta property="og:updated_time" content="2021-01-12T06:33:22.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android okHttp3">
-<meta name="twitter:description" content="OkHttp3使用">
+<meta name="twitter:description" content="OkHttp3使用添加依赖，在app/build.gradle中添加依赖1implementation &amp;apos;com.squareup.okhttp3:okhttp:3.10.0&amp;apos; get一个普通的get请求 1234567891011121314151617181920212223242526private void get() &amp;#123;    OkHttpClient cl">
 
 
 
@@ -371,7 +371,13 @@
       
 
       
-        <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1>
+        <h1 id="OkHttp3使用"><a href="#OkHttp3使用" class="headerlink" title="OkHttp3使用"></a>OkHttp3使用</h1><p>添加依赖，在app/build.gradle中添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.squareup.okhttp3:okhttp:3.10.0&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="get"><a href="#get" class="headerlink" title="get"></a>get</h2><p>一个普通的get请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private void get() &#123;</span><br><span class="line">    OkHttpClient client = new  OkHttpClient.Builder().build();</span><br><span class="line"></span><br><span class="line">    Request request = new Request.Builder()</span><br><span class="line">            .addHeader(&quot;header_key&quot;, &quot;header_value&quot;)</span><br><span class="line">            .url(&quot;https://www.baidu.com&quot;)</span><br><span class="line">            .get()</span><br><span class="line">            .build();</span><br><span class="line">    try &#123;</span><br><span class="line">        // 同步执行</span><br><span class="line">        client.newCall(request).execute();</span><br><span class="line">        // 异步执行</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line">                Log.d(TAG, &quot;onFailure: &quot; + e.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                Log.d(TAG, &quot;onResponse: &quot; + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">private void post() &#123;</span><br><span class="line">    OkHttpClient client = new  OkHttpClient.Builder().build();</span><br><span class="line"></span><br><span class="line">    RequestBody body = new FormBody.Builder()</span><br><span class="line">            .add(&quot;content&quot;, &quot;content&quot;)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    Request request = new Request.Builder()</span><br><span class="line">            .addHeader(&quot;header_key&quot;, &quot;header_value&quot;)</span><br><span class="line">            .post(body)</span><br><span class="line">            .url(&quot;https://www.baidu.com&quot;)</span><br><span class="line">            .build();</span><br><span class="line">    try &#123;</span><br><span class="line">        // 同步执行</span><br><span class="line">        client.newCall(request).execute();</span><br><span class="line">        // 异步执行</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                Log.d(TAG, &quot;onResponse: &quot; + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面就是一个简单的post与get请求，区别就是post会多一个RequestBody</p>
+<p>而关于okhttp的使用还有很多其他的用户，如自定义分发器Dispatch、拦截器、缓存</p>
+
       
     </div>
     
@@ -490,7 +496,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OkHttp3使用"><span class="nav-number">1.</span> <span class="nav-text">OkHttp3使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OkHttp3使用"><span class="nav-number">1.</span> <span class="nav-text">OkHttp3使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">1.1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">1.2.</span> <span class="nav-text">post</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -572,7 +578,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
