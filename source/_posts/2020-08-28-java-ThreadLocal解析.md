@@ -248,14 +248,90 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 }
 ```
 
-Entry继承WeakReference，说明ThreadLocal内部存储的类型都是采取弱引用累心存储，当GC时，则会被回收。
-这样保证当线程执行完时，当前线程中存储在ThreadLocalMap中的对象会被回收，不会在此处出现内存泄漏
-
-
 value是调用ThreadLocal保存的值，
 
 
 
+
+## ThreadLocal 内存泄漏
+
+Entry虽然是继承自弱引用，但是存储的value是强引用，
+所以在ThreadLocal仍然存在内存泄漏可能，
+即使在set时会调用 replaceStaleEntry 来清理数据
+
+最好是在确定线程中不再使用ThreadLocal中线程副本时，调用remove函数，清除线程副本
+
+
+## ThreadLocal线程不安全
+
+
+```
+class TestThreadLocal {
+    private static Person person = new Person(20);
+    private static ThreadLocal<Person> threadLocal = new ThreadLocal<>();
+
+    public static void main(String[] args) {
+        person.setAge(person.age + 1);
+        threadLocal.set(person);
+        System.out.println("age = " + threadLocal.get().getAge());
+        for (int i = 0; i < 5; i ++) {
+            new MyThread().start();
+        }
+    }
+
+    static class MyThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            person.setAge(person.age + 1);
+            threadLocal.set(person);
+//            try {
+//                sleep(1);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            System.out.println("age = " + threadLocal.get().getAge());
+        }
+    }
+    static class Person {
+        int age;
+        public Person(int age) {
+            this.age = age;
+        }
+        public int getAge() {
+            return age;
+        }
+        public void setAge(int age) {
+            this.age = age;
+        }
+    }
+}
+
+
+````
+
+打印结果如下：
+age = 21
+age = 22
+age = 23
+age = 24
+age = 25
+age = 26
+
+如果将注释的 sleep 代码放开，打印结果：
+age = 21
+age = 26
+age = 26
+age = 26
+age = 26
+age = 26
+
+
+我们在主线程与5个子线程中改变了person的age值，使加1，并打印了person的age值
+ThreadLocal在每个线程存有一个线程副本，按照理解打印结果应该都是21才对，因为每个线程副本取age应该都是20，加1就是21
+但从我们执行的情况来看，线程与线程之间的变量值在相互干扰。导致age值在不同线程之间也在累加。
+
+这是因为我们在ThreadLocal中存有的person对象是静态对象的引用，而静态对象全局唯一，导致在不同线程之间的引用，指向了同一个对象。
 
 
 
