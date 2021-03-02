@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Happy To Try
+title: Watch And Learn
 subtitle: Plan
-description: Please description
+description: blog
 author: justin 
 language: zh-Hans
 # language: zh-CN
@@ -64,9 +64,9 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-# theme: BlueLake
+theme: BlueLake
 # theme: Anisina
-theme: next
+# theme: next
 
 #since: 2014
 # Deployment

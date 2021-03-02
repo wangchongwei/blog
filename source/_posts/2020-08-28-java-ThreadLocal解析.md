@@ -255,6 +255,15 @@ value是调用ThreadLocal保存的值，
 
 ## ThreadLocal 内存泄漏
 
+首先要知道ThreadLocal的结构：
+
+Thread 持有 ThreadLocalMap 
+ThreadLocalMap 持有 Entry数组
+Entry 持有 ThreadLocal 和 value 
+
+Enry是弱引用，但是 value data是强引用，而这就是内存泄漏的点
+
+
 Entry虽然是继承自弱引用，但是存储的value是强引用，
 所以在ThreadLocal仍然存在内存泄漏可能，
 即使在set时会调用 replaceStaleEntry 来清理数据
