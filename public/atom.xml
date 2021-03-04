@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="hexo/"/>
-  <updated>2021-03-02T03:36:55.999Z</updated>
+  <updated>2021-03-04T09:34:02.230Z</updated>
   <id>hexo/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JMM java内存模型</title>
+    <link href="hexo/blog/2021/03/JMM-java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.html"/>
+    <id>hexo/blog/2021/03/JMM-java内存模型.html</id>
+    <published>2021-03-03T06:55:28.000Z</published>
+    <updated>2021-03-04T09:34:02.230Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、现代计算机内存模型"><a href="#一、现代计算机内存模型" class="headerlink" title="一、现代计算机内存模型"></a>一、现代计算机内存模型</h2><p>早期的计算机中由于CPU和内存的速度是差不多的，所以CPU是直接访问内存地址的。<br>而在现代计算机中，CPU指令的运行速度远远超过了内存数据的读写速度，为了降低这两者间这高达几个数量级的差距，所以在CPU与主内存之间加入了CPU高速缓存。</p><p>高速缓存可以很好地解决CPU与主内存之间的速度差距，但CPU缓存并不是所有CPU共享的，因此产生了一个新的问题：数据一致性问题。</p><p><img src="../../../images/memory.png" style="zoom:70%"></p><h2 id="二、缓存一致性协议（MESI）"><a href="#二、缓存一致性协议（MESI）" class="headerlink" title="二、缓存一致性协议（MESI）"></a>二、缓存一致性协议（MESI）</h2><h3 id="MESI四种状态"><a href="#MESI四种状态" class="headerlink" title="MESI四种状态"></a>MESI四种状态</h3><p>因为存在多个cpu，也就存在多个cpu缓存，CPU缓存的一致性问题会导致并发处理的不同步。<br>所以引入一种解决办法：缓存一致性协议（MESI）</p><p>MESI 这个名称本身是由：Modified（修改）、Exclusive（独享）、Shared（共享）、Invalid（无效）。<br>这个四个单词也代表了缓存协议中对缓存行（即Cache Line，缓存存储数据的单元）声明的四种状态，用2 bit表示，它们所代表的含义如下所示</p><p>状态 ｜ 描述 ｜ 监听任务<br>Modified（修改 ｜ 这行数据有效，数据被修改了，和内存种的数据不一致，数据只存在于本Cache中 ｜ 缓存行必须时刻监听所有试图读该缓存行相对就主存的操作，这种操作必须在缓存将该缓存行写回主存并将状态变成S（共享）状态之前被延迟执行。<br>Exclusive（独享）｜ 这行数据有效，数据和内存中的数据一致，数据只存在于本Cache中 ｜ 缓存行也必须监听其它缓存读主存中该缓存行的操作，一旦有这种操作，该缓存行需要变成S（共享）状态。<br>S共享（Shared ｜ 这行数据有效，数据和内存中的数据一致，数据存在于很多Cache中 ｜ 缓存行也必须监听其它缓存使该缓存行无效或者独享该缓存行的请求，并将该缓存行变成无效（Invalid）。<br>I无效（Invalid） ｜ 这行数据无效 ｜ 无</p><p>理解： 某数据如果多个缓存读取，则处于S共享状态，如果只是单个则处于E独享状态。<br>    某个CPU2对CPU2缓存中某数据作出修改，则CPU2缓存该数据处于Modified状态，如果该数据是S共享状态，则其他缓存该行数据变成I无效状态。</p><h3 id="如何保证缓存一致性"><a href="#如何保证缓存一致性" class="headerlink" title="如何保证缓存一致性"></a>如何保证缓存一致性</h3><pre><code>在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存中的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。</code></pre><h2 id="三、JMM-java-内存模型"><a href="#三、JMM-java-内存模型" class="headerlink" title="三、JMM java 内存模型"></a>三、JMM java 内存模型</h2><p><img src="../../../images/jmm.png" style="zoom:70%"></p><p>线程之间的共享变量存储在主内存（Main Memory）中，每个线程都有一个私有的本地工作内存（Local Memory），工作内存中存储了线程以读/写共享变量的副本。<br>（本地工作内存是 JMM 的一个抽象概念，并不真实存在，线程中所谓工作内存其实还是存在于主内存中的。）</p><h3 id="Java内存模型与现代计算机内存模型区分"><a href="#Java内存模型与现代计算机内存模型区分" class="headerlink" title="Java内存模型与现代计算机内存模型区分"></a>Java内存模型与现代计算机内存模型区分</h3><p>Java内存模型和现代计算机内存模型都需要解决一致性问题，但是这个一致性问题在现代计算机内存模型中指代的是缓存一致性问题，MESI协议所设计的目的也是为了解决这个问题。而在Java内存模型中，这个一致性问题则是指代内存一致性问题。两者之间有一定区别。</p><p>缓存一致性</p><p>计算机数据需要经过内存、计算机缓存再到寄存器，计算机缓存一致性是指硬件层面的问题，指的是由于多核计算机中有多套缓存，各个缓存之间的数据不一致问题。缓存一致性协议（如MESI）就是用来解决多个缓存副本之间的数据一致性问题。</p><p>内存一致性</p><p>线程的数据则是放在内存中，共享副本也是，内存一致性保证的是多线程程序并发时的数据一致性问题。我们常见的volatile、synchronized关键字就是用来解决内存一致性问题。这里屏蔽了计算机硬件问题，<br>主要解决原子性、可见性和有序性问题。</p><p>至于内存一致性与缓存一致性问题之间的关系，就是实现内存一致性时需要利用到底层的缓存一致性（之后的volatile关键字会涉及）。</p><h2 id="四、并发编程的特性"><a href="#四、并发编程的特性" class="headerlink" title="四、并发编程的特性"></a>四、并发编程的特性</h2><p>首先我们要先了解并发编程的三大特性：原子性，可见性，有序性；</p><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>原子性是指一个操作是不可间断的，即使是多个线程同时执行，该操作也不会被其他线程所干扰。<br>既操作的连续性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int x = 10; // 具有原子性，赋值</span><br></pre></td></tr></table></figure></p><p>i++;<br>不具备原子性<br><code>因为i++juyou多部操作1、读取 i 的值到内存空间2、i + 13、刷新结果到内存</code></p><p>多个具备原子性操作放在一起并不具备原子性<br>y=x</p><p>先读取x的值到内存空间 x = 10； 这一步具备原子性<br>在给y赋值 y = 10; 也一步也具备原子性<br>但y=x不具备原子性</p><h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>内存可见性（Memory visibility）是指当某个线程正在使用对象状态而同时另一个线程正在修改该状态，此时需要确保当一个线程修改了对象状态后，其他线程能够看到发生的状态变化。</p><p>每个线程都有一个私有的本地工作内存并存储了线程间读/写的共享副本。</p><p>如果某个线程对这个副本中值进行修改，却没有对主内存进行同步，则会导致其他线程访问过时的数据。</p><p>使用volatile关键字就可以保证数据在不同线程副本的可见性，当有线程在副本中进行修改，就会强制修改主内存中值，同步到其他线程的副本中。<br>保证所有线程访问到值都为最新值</p><h3 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h3><p>有序性即程序按照我们代码所书写的那样，按其先后顺序执行。第一次接触这个特性可能会有所疑惑，所以在了解有序性之前我们需要来了解执行重排序以及相关概念。</p><h3 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h3><p>为了提高性能，编译器和处理器会对程序的指令做重排序操作，重排序分为3种类型：</p><ul><li>编译器优化的重排序：属于编译器重排序，编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序；</li><li>指令级并行的重排序：属于处理器重排序，现代处理器采用指令级并行技术来将多条指令重叠执行。如果不存在数据依赖，处理器可以改变语句对应机器指令的执行顺序；</li><li>内存系统的重排序：处于处理器重排序由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行</li></ul><p>指令重排序对于程序执行有利有弊，我们并不是要去完全禁止它。<br>对于编译器重排序，JMM的编译器重排序规则会禁止特定类型的编译器重排序。<br>对于处理器重排序，JMM的处理器重排序规则会要求Java编译器在生成指令序列时，插入特定类型个的内存屏障指令，通过内存屏障指令来禁止特定的处理器重排序。</p><h3 id="as-if-serial"><a href="#as-if-serial" class="headerlink" title="as-if-serial"></a>as-if-serial</h3><p>不管如何重排序，要保证程序运行的结果保持不变，编译器、runtime和处理器都必须遵循as-if-serial语义。</p><p>为了遵守as-if-serial语义，编译器和处理器不会对存在数据依赖关系的操作做重排序。</p><p>例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int x = 10; // 1</span><br><span class="line">int y = 20; // 2</span><br><span class="line">int a = x + y; // 3</span><br></pre></td></tr></table></figure></p><p>明显第3行依赖于第2行、第1行，所以第三行不会重排序，而第1行、第2行可能会被重排序。</p><h3 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h3><p>如果说 as-if-serial 是 JMM 提供用来解决单线程间的内存可见性问题的话，那么 happens-before 就是JMM向程序员提供的可跨越线程的内存可见性保证。<br>具体表现为：如果线程A的写操作a与线程B的读操作b之间具有 happens-before 关系，那么JMM将保证这个操作a对操作b可见。<br>此外，happens-before 还有传递关系，表现为：a happens-before b，b happens-before c，那么a happens-before c。</p><p>注意：两个操作之间存在happens-before关系，并不意味着一个操作必须要在后一个操作之前执行，只要求前一个操作执行的结果对后一个操作可见。<br>如果重排序之后的执行结果，与按happens-before关系来执行的结果一致，那么这种重排序并不违法（也就是说，JMM允许这种重排序）。</p><p><code>比对 happens-before 与 as-if-serial。</code></p><ul><li><p>1、as-if-serial语义保证单线程内程序的执行结果不被改变，happens-before关系保证正确同步的多线程程序的执行结果不被改变。</p></li><li><p>2、as-if-serial语义给编写单线程程序的程序员创造了一个幻境：单线程程序是按程序的顺序来执行的。happens-before关系给编写正确同步的多线程程序的程序员创造了一个幻境：正确同步的多线程程序是按 happens-before 指定的顺序来执行的。</p></li><li><p>3、as-if-serial 语义和 happens-before 这么做的目的，都是为了在不改变程序执行结果的前提下，尽可能地提高程序执行的并行度。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;一、现代计算机内存模型&quot;&gt;&lt;a href=&quot;#一、现代计算机内存模型&quot; class=&quot;headerlink&quot; title=&quot;一、现代计算机内存模型&quot;&gt;&lt;/a&gt;一、现代计算机内存模型&lt;/h2&gt;&lt;p&gt;早期的计算机中由于CPU和内存的速度是差不多的，所以CPU是直接访问
+      
+    
+    </summary>
+    
+    
+      <category term="java" scheme="hexo/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>NDK c语言基础 (一)</title>
@@ -160,15 +183,16 @@
     <link href="hexo/blog/2021/02/%E5%B9%B6%E5%8F%91.html"/>
     <id>hexo/blog/2021/02/并发.html</id>
     <published>2021-02-01T10:01:22.000Z</published>
-    <updated>2021-02-02T01:16:24.781Z</updated>
+    <updated>2021-03-02T07:30:59.706Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h3><h3 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h3><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h2 id="原子类"><a href="#原子类" class="headerlink" title="原子类"></a>原子类</h2><h3 id="CAS问题"><a href="#CAS问题" class="headerlink" title="CAS问题"></a>CAS问题</h3><ul><li><p>ABA问题</p></li><li><p>开销问题</p></li><li><p>只能保证一个共享变量的原子操作</p></li></ul><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><h2 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h2>]]></content>
+    <content type="html"><![CDATA[<h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><p>并发指单位时间的访问量<br>并行指同一时刻的访问量</p><h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h3><h3 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h3><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h2 id="原子类"><a href="#原子类" class="headerlink" title="原子类"></a>原子类</h2><h3 id="CAS问题"><a href="#CAS问题" class="headerlink" title="CAS问题"></a>CAS问题</h3><ul><li><p>ABA问题</p></li><li><p>开销问题</p></li><li><p>只能保证一个共享变量的原子操作</p></li></ul><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><h2 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h2>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;并发&quot;&gt;&lt;a href=&quot;#并发&quot; class=&quot;headerlink&quot; title=&quot;并发&quot;&gt;&lt;/a&gt;并发&lt;/h1&gt;&lt;h2 id=&quot;线程池&quot;&gt;&lt;a href=&quot;#线程池&quot; class=&quot;headerlink&quot; title=&quot;线程池&quot;&gt;&lt;/a&gt;线程池&lt;/h2&gt;&lt;h
+        &lt;h1 id=&quot;并发&quot;&gt;&lt;a href=&quot;#并发&quot; class=&quot;headerlink&quot; title=&quot;并发&quot;&gt;&lt;/a&gt;并发&lt;/h1&gt;&lt;p&gt;并发指单位时间的访问量&lt;br&gt;并行指同一时刻的访问量&lt;/p&gt;
+&lt;h2 id=&quot;线程池&quot;&gt;&lt;a href=&quot;#线程池&quot; class=&quot;head
       
     
     </summary>
@@ -427,29 +451,6 @@
       
         &lt;h1 id=&quot;View的事件分发&quot;&gt;&lt;a href=&quot;#View的事件分发&quot; class=&quot;headerlink&quot; title=&quot;View的事件分发&quot;&gt;&lt;/a&gt;View的事件分发&lt;/h1&gt;&lt;p&gt;首先用户的交互事件都是先交给Actiivty，然后再来向下分发事件&lt;/p&gt;
 &lt;h2 
-      
-    
-    </summary>
-    
-    
-      <category term="android" scheme="hexo/tags/android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网络通信</title>
-    <link href="hexo/blog/2020/12/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1.html"/>
-    <id>hexo/blog/2020/12/网络通信.html</id>
-    <published>2020-12-09T06:32:30.000Z</published>
-    <updated>2021-01-27T07:16:37.933Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="网络通信"><a href="#网络通信" class="headerlink" title="网络通信"></a>网络通信</h1><h2 id="计算机网络发展概史"><a href="#计算机网络发展概史" class="headerlink" title="计算机网络发展概史"></a>计算机网络发展概史</h2><p>计算机的发展大致分为以下四个阶段<br>1、诞生阶段，单个计算机为中心的远程联机系统<br>2、ARPANET，多个主机通过通信线路互联起来<br>3、开放性的标准化体系结构，OSI诞生<br>4、Internet互联网</p><p>OSI模型分为7层，tcp/ip模型分为4层，并存在对应关系<br>osi：物理层、链路层、 网络层、 传输层、  会话层、表示层、应用层<br>tcp/ip：链路层、     网络层、 传输层、         应用层</p><p>ip -&gt; 网络层  tcp｜udp -&gt; 传输层 http | https -&gt; 应用层</p><p>像我们日常中所说的4G、5G网络，是作用在链路层</p><p>TCP协议的基本特性：<br>面向链接、可靠性、RTT和RTO、数据排序、流量控制、全双工</p><h2 id="数据流通"><a href="#数据流通" class="headerlink" title="数据流通"></a>数据流通</h2><p>在构造一个请求包时，从上往下，依次添加各个层级信息<br>在解析一个请求包时，从下往上，依次解析出各个层级的信息</p><h2 id="Tcp协议"><a href="#Tcp协议" class="headerlink" title="Tcp协议"></a>Tcp协议</h2><ul><li>优势：<br>  面向连接<br>  可靠性<br>  RTT和RTO<br>  数据排序<br>  流量控制<br>  全双工</li></ul><p>tcp协议位于传输层</p><h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p>TCP协议中，Client与Server端建立链接会经历三次握手过程</p><p>1、Client 向 Server端发送报文，<br>    含有SYN = 1； seq(序列号)=1234(系统决定，1234是举例)，Client端进入SYN_SENT状态<br>2、Server 接收到 Client端报文，向Client端发送一个确认报文，<br>    含有 SYN = 1；ACK = 1; ack=1235(1234 + 1);seq(序列号)=2637(系统决定，2637是举例)<br>    Server端进入SYN_SYN_RCND状态<br>3、Client端接收到Server的确认报文，向Server端也发送一次确认报文，<br>    含有 ACK = 1；ack=2638(2637+1);<br>    Client与Server端都进入ESTABLISHED状态，通信建立，开始会话</p><p>以上就是三次握手的过程</p><p>问题：<br>为何tcp协议需要三次握手，而不是两次</p><p>因为三次是保证连接可靠、效率最高的次数。<br>第一次：客户端询问服务端能否建立通信<br>第二次：服务端向客户端确认可以通信<br>第三次：客户端向服务端确认可以通信<br>然后建立通信。</p><h3 id="洪泛攻击"><a href="#洪泛攻击" class="headerlink" title="洪泛攻击"></a>洪泛攻击</h3><p>黑客伪造大量虚假ip向服务端发送第一次握手报文，使server端大量通信进入SYN_SYN_RCND状态，消耗server资源，<br>使服务端无法响应其他的请求，甚至宕机。</p><p>处理方案：防火墙、</p><h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p>当要断开连接时，客户端与服务端之间将进行四次挥手，来确保数据传输都完毕，确保连接断开。</p><p>1、client向server端发送FIN报文，<br>    含有FIN = 1，seq(序列号)=J(系统决定，J是举例)，Client进入FIN_WAITING<br>2、server收到客户端发送的报文，同时向Server发送一个FIN ACK 确认报文<br>    含有ACK = 1； ack = J + 1; Server进入CLOSE_WAITING<br>3、server向client发送一个FIN报文，<br>    含有FIN = 1； seq = K；Server进入 CLOSE状态<br>4、client收到上述两个server端报文，Client进入TIME_WAITING状态,同时client向server发送一个ACK报文，<br>    含有FIN = 1； ACK = 1； ack = K + 1;<br>    server接收到此报文后，进入CLOSED状态，<br>    而client，在经过2 * MSL的时间段后，client进入CLOSED状态。</p><p>注意：四次挥手设计到四次报文的传输，但在实际中，可能会存在报文合并的现象，就是报文发送的次数可能只有3次甚至两次。<br>MSL理论上是2分钟，可实际一般会被重写为30s，所以最后等待时间为1min-4min。</p><h3 id="为什么需要四次挥手"><a href="#为什么需要四次挥手" class="headerlink" title="为什么需要四次挥手"></a>为什么需要四次挥手</h3><p>因为tcp是全双工(即客户端和服务器端可以相互发送和接收请求)，所以需要双方都确认关闭连接。</p><h3 id="为什么需要TIME-WAIT状态？"><a href="#为什么需要TIME-WAIT状态？" class="headerlink" title="为什么需要TIME-WAIT状态？"></a>为什么需要TIME-WAIT状态？</h3><p>在第三次报文发送，client接收到时，client会进入TIME_WAIT状态，而且是需要经过经过2 * MSL，才会进入CLOSED状态，<br>为何这么设计呢，因为要考虑最后一个报文的接收，要考虑到Server未接收到时，需要重新发送，还要考虑，如果Client即时进入CLOSED，连接断开，端口可能会有一个新的程序使用，可能存在报文被发送到这个新启动的程序。</p><h2 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a>wireshark</h2><p>使用wireshark可以抓包，查看到连接过程中的每一次数据包的传递</p><p>使用过滤器查看</p><p>tcp udp 可以指定协议</p><p>tcp.port==80 端口</p><p>ip.src==192.168.101.130 ip<br>连接符使用and</p><p>tcp and tcp.port==3306 and ip.src==192.168.101.130</p><h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><p>Http（Hyper Text Transfer Protocol）超文本传输协议</p><p>服务器传输超文本到本地浏览器的传送协议</p><h3 id="一次完整的Http请求过程"><a href="#一次完整的Http请求过程" class="headerlink" title="一次完整的Http请求过程"></a>一次完整的Http请求过程</h3><p>1、首先进行DNS域名解析（本地缓存、操作系统缓存或DNS服务器）<br>2、三次握手建立TCP连接<br>3、客户端发起Http请求<br>4、服务端响应Http请求<br>5、客户端解析http代码，并请求http代码中的资源<br>6、客户端渲染展示内容<br>7、四次挥手关闭tcp连接</p><h3 id="questtion"><a href="#questtion" class="headerlink" title="questtion"></a>questtion</h3><p>1、DNS 劫持</p><p>2、http劫持</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;网络通信&quot;&gt;&lt;a href=&quot;#网络通信&quot; class=&quot;headerlink&quot; title=&quot;网络通信&quot;&gt;&lt;/a&gt;网络通信&lt;/h1&gt;&lt;h2 id=&quot;计算机网络发展概史&quot;&gt;&lt;a href=&quot;#计算机网络发展概史&quot; class=&quot;headerlink&quot; title=
       
     
     </summary>
