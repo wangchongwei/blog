@@ -11,7 +11,7 @@ AIDL: Android Interface Definition Language （android接口定义语言）
 
 主要流程是在项目中新建一个aidl文件，此时会自动在src目录下生成aidl目录，并创建包名路径，并在路径下生成命名的aidl文件。
 
-```
+```java
 package com.justin.ipc.application;
 
 // Declare any non-default types here with import statements
@@ -35,7 +35,7 @@ interface IMyAidlInterface {
 
 会生成大量代码，首先是接口基本代码：
 
-```
+```java
 public interface IMyAidlInterface extends android.os.IInterface
 {
   /** Default implementation for IMyAidlInterface. */
@@ -78,7 +78,7 @@ public interface IMyAidlInterface extends android.os.IInterface
 而 android.os.Binder 又实现于 IBinder 接口
 介于 Binder 对象在系统底层的支持下，Stub 对象就具有了远程传输数据的能力，在生成 Stub 对象的时候会调用 asInterface 方法。
 
-```
+```java
 public static com.justin.ipc.application.IMyAidlInterface asInterface(android.os.IBinder obj)
 {
     if ((obj==null)) {
@@ -100,7 +100,7 @@ Binder 为什么具有远程通信的能力，因为如上面所说 Stub 继承�
 这里我们知道 Binder 实现了 IBinder 接口，也就是说 Binder 具备了远程通信的能力，当不同进程之间（远程）之间通信时，显然使用的是 Stub 的代理对象 Proxy ，
 而在 Proxy 中的具体函数中，只是将数据序列号，然后在系统跨进程支持下最终调用 onTransact() 方法
 
-```
+```java
 @Override public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException
 {
     java.lang.String descriptor = DESCRIPTOR;
@@ -163,7 +163,7 @@ Binder 为什么具有远程通信的能力，因为如上面所说 Stub 继承�
 
 Proxy 是 Stub 中的一个 静态内部类，实现 IMyAidlInterface 接口
 
-```
+```java
 private static class Proxy implements com.justin.ipc.application.IMyAidlInterface
 {
     private android.os.IBinder mRemote;
@@ -257,7 +257,7 @@ mRemote 在 Proxy 的构造函数内被赋值，而 Proxy 是在 Stub 中的 asI
 
 #### Service 
 创建一个Service，并运行在其他进程，模拟跨进程调用Service
-``` 
+```java
 public class MyTestAIDLService extends Service {
     public MyTestAIDLService() {
     }
@@ -269,7 +269,7 @@ public class MyTestAIDLService extends Service {
 }
 ```
 在AndroidManifest.xml文件中，配置Service
-```
+```xml
 <service
     android:name=".MyTestAIDLService"
     android:enabled="true"
@@ -284,7 +284,7 @@ public class MyTestAIDLService extends Service {
 #### MainActivity
 
 写三个按钮，一个绑定服务，一个解绑服务，一个调用服务中的Binder获取数据
-```
+```java
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = MainActivity.class.getName() + "MYTEST：";
@@ -377,7 +377,7 @@ getInfo: name
 对比发现，输出的 interfaces 对象不同
 原因是在 Stub中 asInterface 函数中 
 
-```
+```java
 public static com.justin.ipc.application.IMyAidlInterface asInterface(android.os.IBinder obj)
 {
     if ((obj==null)) {

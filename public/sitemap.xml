@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>hexo/blog/2021/04/c-%E5%9F%BA%E7%A1%80-%E4%BA%94.html</loc>
+    
+    <lastmod>2021-04-26T10:00:08.152Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/03/android-aidl.html</loc>
+    
+    <lastmod>2021-04-26T09:33:11.159Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/04/NDK-C-%E5%9F%BA%E7%A1%80-%E5%9B%9B.html</loc>
+    
+    <lastmod>2021-04-26T09:25:49.727Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/03/NDK-c-%E5%9F%BA%E7%A1%80-%E4%B8%89.html</loc>
+    
+    <lastmod>2021-04-26T08:56:35.935Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>hexo/blog/2021/03/andorid-MVC.html</loc>
     
     <lastmod>2021-03-11T10:11:47.334Z</lastmod>
@@ -12,13 +40,6 @@
     <loc>hexo/blog/2020/07/android-%E5%8A%A8%E7%94%BB.html</loc>
     
     <lastmod>2021-03-11T08:16:11.633Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2021/03/NDK-c-%E5%9F%BA%E7%A1%80-%E4%B8%89.html</loc>
-    
-    <lastmod>2021-03-11T06:49:27.857Z</lastmod>
     
   </url>
   
@@ -555,14 +576,14 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2020/05/java-%E6%B3%9B%E5%9E%8B.html</loc>
+    <loc>hexo/blog/2020/05/java-%E6%9E%9A%E4%B8%BE.html</loc>
     
     <lastmod>2020-06-01T02:22:37.499Z</lastmod>
     
   </url>
   
   <url>
-    <loc>hexo/blog/2020/05/java-%E6%9E%9A%E4%B8%BE.html</loc>
+    <loc>hexo/blog/2020/05/java-%E6%B3%9B%E5%9E%8B.html</loc>
     
     <lastmod>2020-06-01T02:22:37.499Z</lastmod>
     
