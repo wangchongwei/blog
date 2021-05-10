@@ -61,7 +61,7 @@ export default rootReducer;
 test是一个测试的reducer。
 
 在入口处，绑定store，在入口文件中：
-```
+```js
 AppRegistry.registerComponent('projectName', () => Root);
 // 指向了root.js，在root.js中：
 
