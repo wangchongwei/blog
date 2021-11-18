@@ -63,7 +63,7 @@ useEffect 是一个副作用函数，默认在每次渲染之后都会执行。
 useEffect提供清除操作，当我们需要在React组件清除时，执行某一些操作，可以在useEffect中，返回清除函数。
 当React清除时，会执行useEffect中的返回函数。
 
-```
+```js
 useEffect(() => {
     ...
 
@@ -83,7 +83,7 @@ React 何时清除 effect？ React 会在组件卸载的时候执行清除操作
 还可以对useEffect进行优化，useEffect接受两个参数，第二个参数为比较值，当这个值发生了变化，才会执行useEffect。
 
 
-```
+```js
 const [count, setCount] = useState(0)
 useEffect(() => {
     ...
@@ -100,7 +100,7 @@ useEffect(() => {
 
 所以，当我们需要执行一些只需执行一次的逻辑时，可以传入一个定值，一般使用空数组[]
 
-```
+```js
 useEffect(() => {
     ...
 
