@@ -349,3 +349,9 @@ ThreadLocalMap 中有一个 Enter 数组 table，用于存放我们放进区的�
 每次 resize 的长度时上一次的两倍。
 resize 时会遍历旧数组，如果 Enter 不为 null 但 key 为 null，代表弱引用被回收，此时直接将 value 置为 null，便于 GC。
 使用 key 的 hash 对新数组长度取余，hash 碰撞则后移，与上面的一致。
+
+threadLocal 获取数据 get 时，会调用 threadLocalMap 的 getEntry 函数，先计算下标，获取到的 e 不为 null，而且 key 相同，则返回 e
+否则调用 getEntryAfterMiss ，getEntryAfterMiss 会尝试再次获取 e，包括会尝试后移下标来匹配 key 是否相等。
+如果下标 key 为 null，会将该处 value 置为 null，便于 gc
+
+ThreadLocal 调用 remove 函数时，会调用到 ThreadLocalMap 的 remove 函数，会遍历 table，先回收弱引用 key，在调用 expungeStaleEntry 将 value 置空
