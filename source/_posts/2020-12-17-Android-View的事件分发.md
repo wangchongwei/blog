@@ -11,7 +11,7 @@ tags: android
 ## Activity
 我们可以查看Activity的dispatchTouchEvent
 
-```
+```java
 public boolean dispatchTouchEvent(MotionEvent ev) {
     if (ev.getAction() == MotionEvent.ACTION_DOWN) {
         onUserInteraction();
@@ -30,7 +30,7 @@ public boolean dispatchTouchEvent(MotionEvent ev) {
 
 ## PhoneWindow
 
-```
+```java
 @Override
 public boolean superDispatchTouchEvent(MotionEvent event) {
     return mDecor.superDispatchTouchEvent(event);
@@ -41,7 +41,7 @@ public boolean superDispatchTouchEvent(MotionEvent event) {
 ## DecorView
 
 DecorView继承自FrameLayout，FrameLayout继承自ViewGroup
-```
+```java
 public boolean superDispatchTouchEvent(MotionEvent event) {
         return super.dispatchTouchEvent(event);
     }
@@ -55,7 +55,7 @@ DecorView中的superDispatchTouchEvent直接调用父类的dispatchTouchEvent，
 
 在ViewGroup的dispatchTouchEvent函数中，代码太长，先将部分代码收缩起来
 
-```
+```java
  @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // mInputEventConsistencyVerifier是View中的一个变量，这里是对事件的一些校验
@@ -87,7 +87,7 @@ DecorView中的superDispatchTouchEvent直接调用父类的dispatchTouchEvent，
 
 其实主要逻辑还是在 if (onFilterTouchEventForSecurity(ev)) { 这个代码区域里
 
-```
+```java
 public boolean onFilterTouchEventForSecurity(MotionEvent event) {
     //noinspection RedundantIfStatement
     if ((mViewFlags & FILTER_TOUCHES_WHEN_OBSCURED) != 0
@@ -119,7 +119,7 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 ### 判断事件是否拦截
 
-```
+```java
 // Check for interception.
 final boolean intercepted;
 if (actionMasked == MotionEvent.ACTION_DOWN
@@ -144,7 +144,7 @@ disallowIntercept： 是否允许拦截，此处是一个外部拦截，在子�
 disallowIntercept为true时，代表子视图不允许父容器拦截，则intercepted = false;
 
 
-```
+```java
  if (intercepted || mFirstTouchTarget != null) {
     ev.setTargetAccessibilityFocus(false);
 }
@@ -163,7 +163,7 @@ boolean alreadyDispatchedToNewTouchTarget = false;
 初始化一个变量alreadyDispatchedToNewTouchTarget=false, 是否已经将事件绑定到一个targetView
 
 
-```
+```java
 if (!canceled && !intercepted) {
     // 当不是取消、没有被拦截时
     // If the event is targeting accessibility focus we give it to the
@@ -182,7 +182,7 @@ if (!canceled && !intercepted) {
 注意这里有一个函数调用 dispatchTransformedTouchEvent
 
 当遍历找到需要处理这个事件的View或者确定不存在该View时，即执行这个函数，对这个事件进行重新分发
-```
+```java
 private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
             View child, int desiredPointerIdBits) {
     final boolean handled;
@@ -268,7 +268,7 @@ super.dispatchTouchEvent，因为ViewGroup继承自View，此时会调用到View
 
 ## View
 
-```
+```java
 public boolean dispatchTouchEvent(MotionEvent event) {
     // If the event should be handled by accessibility focus first.
     if (event.isTargetAccessibilityFocus()) {
@@ -332,7 +332,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
 再看一下onTouchEvent事件，onTouchEvent是对事件的处理
 
 
-```
+```java
 if ((viewFlags & ENABLED_MASK) == DISABLED) {
     if (action == MotionEvent.ACTION_UP && (mPrivateFlags & PFLAG_PRESSED) != 0) {
         setPressed(false);

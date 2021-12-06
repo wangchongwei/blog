@@ -7,7 +7,7 @@ tags: android
 
 # ListView解析
 首先是简单使用
-```
+```java
 class ListViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
