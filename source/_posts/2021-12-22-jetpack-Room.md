@@ -37,3 +37,27 @@ dependencies {
     implementation "androidx.room:room-paging:2.4.0-rc01"
 }
 ```
+
+## 异常情况记录
+
+- Room AppDatabase_Impl does not exist
+
+使用了 kotlin 构建了项目,并且使用 kotlin 编写 room 创建数据库,在 build.gradle 文件里做如下修改
+
+```
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+//略...
+dependencies {
+    api"android.arch.persistence.room:runtime:$rootProject.room_version"
+    kapt"android.arch.persistence.room:compiler:$rootProject.room_version"
+}
+```
+
+将 annotationProcessor 替换成 kapt,请注意需要导入 id 'kotlin-kapt' 才能使用 kapt
+
+参考地址：https://www.cnblogs.com/guanxinjing/p/14990401.html

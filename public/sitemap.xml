@@ -2,9 +2,177 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>hexo/blog/2022/02/jetpack-ViewModel.html</loc>
+    
+    <lastmod>2022-02-18T02:44:38.623Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/jetpack-Room.html</loc>
+    
+    <lastmod>2022-02-08T07:07:21.500Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2022/02/ViewPager2.html</loc>
+    
+    <lastmod>2022-02-07T09:29:32.770Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2022/02/jetpack-Navigation.html</loc>
+    
+    <lastmod>2022-02-07T07:57:55.570Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/jetpack-DataSource.html</loc>
+    
+    <lastmod>2021-12-22T10:31:01.001Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/jetpack-lifecycle.html</loc>
+    
+    <lastmod>2021-12-22T03:46:23.456Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/kotlin%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97%E4%B8%80.html</loc>
+    
+    <lastmod>2021-12-22T00:56:49.471Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/03/android-%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.html</loc>
+    
+    <lastmod>2021-12-14T10:28:25.561Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/11/android%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6.html</loc>
+    
+    <lastmod>2021-12-14T06:24:27.306Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java-%E6%B3%9B%E5%9E%8B.html</loc>
+    
+    <lastmod>2021-12-08T08:24:43.426Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>hexo/blog/2021/10/android-%E5%A4%8D%E4%B9%A0%E5%AF%BC%E8%88%AA.html</loc>
     
-    <lastmod>2021-10-18T07:05:15.926Z</lastmod>
+    <lastmod>2021-12-08T08:20:29.789Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0.html</loc>
+    
+    <lastmod>2021-12-08T08:17:36.450Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95.html</loc>
+    
+    <lastmod>2021-12-08T08:16:22.991Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/java%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%B1%87%E6%80%BB.html</loc>
+    
+    <lastmod>2021-12-08T08:16:22.990Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/12/NDK-C-%E5%9F%BA%E7%A1%80-%E5%9B%9B.html</loc>
+    
+    <lastmod>2021-12-08T08:16:22.989Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/09/Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F.html</loc>
+    
+    <lastmod>2021-12-08T08:16:22.988Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/09/android%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html</loc>
+    
+    <lastmod>2021-12-08T08:16:22.985Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/08/java-ThreadLocal%E8%A7%A3%E6%9E%90.html</loc>
+    
+    <lastmod>2021-11-25T10:02:31.218Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/java%E8%8C%83%E5%9E%8B.html</loc>
+    
+    <lastmod>2021-11-23T02:14:02.355Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2019/09/hashMap%E8%A7%A3%E6%9E%90.html</loc>
+    
+    <lastmod>2021-11-16T06:41:36.499Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/01/react-Hook.html</loc>
+    
+    <lastmod>2021-11-16T06:36:33.852Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/11/java-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.html</loc>
+    
+    <lastmod>2021-11-03T10:16:55.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/05/android-%E5%BA%8F%E5%88%97%E5%8C%96.html</loc>
+    
+    <lastmod>2021-11-03T05:55:25.584Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2020/09/java-%E5%8F%8D%E5%B0%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8Eclass.html</loc>
+    
+    <lastmod>2021-11-01T10:12:43.060Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>hexo/blog/2021/10/%E5%8F%8D%E5%B0%84.html</loc>
+    
+    <lastmod>2021-11-01T10:12:40.847Z</lastmod>
     
   </url>
   
@@ -44,13 +212,6 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2020/05/android-%E5%BA%8F%E5%88%97%E5%8C%96.html</loc>
-    
-    <lastmod>2021-05-07T10:13:56.756Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2019/12/react-redux.html</loc>
     
     <lastmod>2021-05-07T10:13:44.966Z</lastmod>
@@ -72,13 +233,6 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2021/01/react-Hook.html</loc>
-    
-    <lastmod>2021-05-07T10:12:54.612Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2021/01/android-ListView%E8%A7%A3%E6%9E%90.html</loc>
     
     <lastmod>2021-05-07T10:12:48.621Z</lastmod>
@@ -89,13 +243,6 @@
     <loc>hexo/blog/2020/12/Android-View%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.html</loc>
     
     <lastmod>2021-05-07T10:12:43.988Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/11/android%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6.html</loc>
-    
-    <lastmod>2021-05-07T10:10:39.314Z</lastmod>
     
   </url>
   
@@ -145,13 +292,6 @@
     <loc>hexo/blog/2021/03/android-SharedPreferences.html</loc>
     
     <lastmod>2021-03-10T03:38:59.395Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2021/03/android-%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.html</loc>
-    
-    <lastmod>2021-03-09T05:48:02.584Z</lastmod>
     
   </url>
   
@@ -247,13 +387,6 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2019/09/hashMap%E8%A7%A3%E6%9E%90.html</loc>
-    
-    <lastmod>2021-02-20T10:00:22.280Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2020/10/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B.html</loc>
     
     <lastmod>2021-02-02T07:04:27.172Z</lastmod>
@@ -264,20 +397,6 @@
     <loc>hexo/blog/2021/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%90%88%E9%9B%86.html</loc>
     
     <lastmod>2021-02-02T06:57:54.100Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/08/java-ThreadLocal%E8%A7%A3%E6%9E%90.html</loc>
-    
-    <lastmod>2021-02-02T05:36:28.943Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0.html</loc>
-    
-    <lastmod>2021-02-02T01:42:40.324Z</lastmod>
     
   </url>
   
@@ -464,23 +583,9 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2020/09/android%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html</loc>
-    
-    <lastmod>2020-09-28T08:02:40.768Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2020/09/Application%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html</loc>
     
     <lastmod>2020-09-28T07:57:42.613Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/09/Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F.html</loc>
-    
-    <lastmod>2020-09-28T06:32:10.651Z</lastmod>
     
   </url>
   
@@ -502,13 +607,6 @@
     <loc>hexo/blog/2020/09/%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E5%BA%8F%E5%88%97%E5%8C%96.html</loc>
     
     <lastmod>2020-09-11T10:37:25.207Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/09/java-%E5%8F%8D%E5%B0%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8Eclass.html</loc>
-    
-    <lastmod>2020-09-10T03:51:39.694Z</lastmod>
     
   </url>
   
@@ -639,13 +737,6 @@
   </url>
   
   <url>
-    <loc>hexo/blog/2020/05/java-%E6%B3%9B%E5%9E%8B.html</loc>
-    
-    <lastmod>2020-06-01T02:22:37.499Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>hexo/blog/2020/05/java-%E9%9B%86%E5%90%88.html</loc>
     
     <lastmod>2020-06-01T02:22:37.498Z</lastmod>
@@ -712,13 +803,6 @@
     <loc>hexo/blog/2020/05/java%E6%B5%81.html</loc>
     
     <lastmod>2020-05-13T07:55:32.490Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>hexo/blog/2020/05/java%E8%8C%83%E5%9E%8B.html</loc>
-    
-    <lastmod>2020-05-13T07:55:07.530Z</lastmod>
     
   </url>
   
@@ -863,14 +947,14 @@
   </url>
   
   <url>
-    <loc>hexo/categories/index.html</loc>
+    <loc>hexo/tags/index.html</loc>
     
     <lastmod>2019-04-19T02:04:38.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>hexo/tags/index.html</loc>
+    <loc>hexo/categories/index.html</loc>
     
     <lastmod>2019-04-19T02:04:38.000Z</lastmod>
     
