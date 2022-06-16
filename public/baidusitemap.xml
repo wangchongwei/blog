@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>hexo/blog/2022/02/jetpack-ViewModel.html</loc>
+    <loc>hexo/blog/2021/12/jetpack-Room.html</loc>
+    <lastmod>2022-06-09</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2022/03/CameraX.html</loc>
+    <lastmod>2022-03-28</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2021/11/java-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.html</loc>
+    <lastmod>2022-02-21</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2021/10/%E5%8F%8D%E5%B0%84.html</loc>
     <lastmod>2022-02-18</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2021/12/jetpack-Room.html</loc>
-    <lastmod>2022-02-08</lastmod>
+    <loc>hexo/blog/2022/02/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95.html</loc>
+    <lastmod>2022-02-18</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2022/02/jetpack-ViewModel.html</loc>
+    <lastmod>2022-02-18</lastmod>
   </url>  <url>
     <loc>hexo/blog/2022/02/ViewPager2.html</loc>
     <lastmod>2022-02-07</lastmod>
@@ -37,19 +49,16 @@
     <loc>hexo/blog/2020/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0.html</loc>
     <lastmod>2021-12-08</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2021/12/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95.html</loc>
+    <loc>hexo/blog/2021/12/java%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%B1%87%E6%80%BB.html</loc>
     <lastmod>2021-12-08</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2021/12/java%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%B1%87%E6%80%BB.html</loc>
+    <loc>hexo/blog/2020/09/android%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html</loc>
     <lastmod>2021-12-08</lastmod>
   </url>  <url>
     <loc>hexo/blog/2021/12/NDK-C-%E5%9F%BA%E7%A1%80-%E5%9B%9B.html</loc>
     <lastmod>2021-12-08</lastmod>
   </url>  <url>
     <loc>hexo/blog/2020/09/Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F.html</loc>
-    <lastmod>2021-12-08</lastmod>
-  </url>  <url>
-    <loc>hexo/blog/2020/09/android%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html</loc>
     <lastmod>2021-12-08</lastmod>
   </url>  <url>
     <loc>hexo/blog/2020/08/java-ThreadLocal%E8%A7%A3%E6%9E%90.html</loc>
@@ -64,16 +73,10 @@
     <loc>hexo/blog/2021/01/react-Hook.html</loc>
     <lastmod>2021-11-16</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2021/11/java-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.html</loc>
-    <lastmod>2021-11-03</lastmod>
-  </url>  <url>
     <loc>hexo/blog/2020/05/android-%E5%BA%8F%E5%88%97%E5%8C%96.html</loc>
     <lastmod>2021-11-03</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2020/09/java-%E5%8F%8D%E5%B0%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8Eclass.html</loc>
-    <lastmod>2021-11-01</lastmod>
-  </url>  <url>
-    <loc>hexo/blog/2021/10/%E5%8F%8D%E5%B0%84.html</loc>
+    <loc>hexo/blog/2021/11/java-%E5%8F%8D%E5%B0%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8Eclass.html</loc>
     <lastmod>2021-11-01</lastmod>
   </url>  <url>
     <loc>hexo/blog/2021/08/jvm%E5%86%85%E5%AD%98%E8%AF%B4%E6%98%8E.html</loc>
@@ -118,7 +121,7 @@
     <loc>hexo/blog/2021/03/andorid-MVC.html</loc>
     <lastmod>2021-03-11</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2020/07/android-%E5%8A%A8%E7%94%BB.html</loc>
+    <loc>hexo/blog/2021/03/android-%E5%8A%A8%E7%94%BB.html</loc>
     <lastmod>2021-03-11</lastmod>
   </url>  <url>
     <loc>hexo/blog/2020/09/android-AsyncTask.html</loc>
@@ -307,16 +310,16 @@
     <loc>hexo/blog/2020/05/kotlin.html</loc>
     <lastmod>2020-07-27</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2020/05/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95.html</loc>
-    <lastmod>2020-06-01</lastmod>
-  </url>  <url>
-    <loc>hexo/blog/2020/05/%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6.html</loc>
+    <loc>hexo/blog/2020/05/java-%E9%9B%86%E5%90%88.html</loc>
     <lastmod>2020-06-01</lastmod>
   </url>  <url>
     <loc>hexo/blog/2020/05/java-%E6%9E%9A%E4%B8%BE.html</loc>
     <lastmod>2020-06-01</lastmod>
   </url>  <url>
-    <loc>hexo/blog/2020/05/java-%E9%9B%86%E5%90%88.html</loc>
+    <loc>hexo/blog/2020/05/%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6.html</loc>
+    <lastmod>2020-06-01</lastmod>
+  </url>  <url>
+    <loc>hexo/blog/2020/05/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95.html</loc>
     <lastmod>2020-06-01</lastmod>
   </url>  <url>
     <loc>hexo/blog/2020/05/android-MVP.html</loc>
