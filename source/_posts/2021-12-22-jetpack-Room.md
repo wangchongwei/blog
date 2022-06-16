@@ -44,7 +44,7 @@ dependencies {
 
 使用了 kotlin 构建了项目,并且使用 kotlin 编写 room 创建数据库,在 build.gradle 文件里做如下修改
 
-```
+```groovy
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
