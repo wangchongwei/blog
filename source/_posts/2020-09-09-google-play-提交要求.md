@@ -54,7 +54,9 @@ ex:
 react-native 原本只有armeabi-v7a，在之后的版本0.59.10中就开始内部源码中支持64位含有arm64-v8a下的.so文件
 
 
+## API 31
 
+在2022年10月以前，google play要求提交的应用必须设定 targetSdkVersion 为31 或以上
 
 
 
