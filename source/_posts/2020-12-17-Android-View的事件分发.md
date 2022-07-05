@@ -9,23 +9,27 @@ tags: android
 首先用户的交互事件都是先交给Actiivty，然后再来向下分发事件
 
 ## Activity
-我们可以查看Activity的dispatchTouchEvent
+我们可以查看 Activity 的 dispatchTouchEvent
 
 ```java
 public boolean dispatchTouchEvent(MotionEvent ev) {
+    // 事件的起点时，调用一次 onUserInteraction
     if (ev.getAction() == MotionEvent.ACTION_DOWN) {
         onUserInteraction();
     }
+    // 将事件先分发给 window.superDispatchTouchEvent 如果返回为true 则直接终止
     if (getWindow().superDispatchTouchEvent(ev)) {
         return true;
     }
+    // 当通过事件分发 依然返回为false，代表没有被消费时，则执行 Activity 的 onTouchEvent
     return onTouchEvent(ev);
 }
 ```
 
 首先需要明确一点，ACTION_DOWN是一次完整的交互事件的起点，onUserInteraction是一个空函数可以不要管，
 
-会将事件分发到window的superDispatchTouchEvent，而window指的是PhoneWindow，在andorid源码中，只有一个window的实现类，就是PhoneWindow，如果window的dispatch返回为true则不向下执行，否则会执行到Activity的onTouchEvent，
+会将事件分发到 window 的 superDispatchTouchEvent，而 window 指的是PhoneWindow，在andorid源码中，只有一个window的实现类，就是PhoneWindow，
+如果 window 的 dispatch 返回为 true 则不向下执行，否则会执行到 Activity 的 onTouchEvent，
 
 
 ## PhoneWindow
@@ -40,14 +44,15 @@ public boolean superDispatchTouchEvent(MotionEvent event) {
 
 ## DecorView
 
-DecorView继承自FrameLayout，FrameLayout继承自ViewGroup
+
 ```java
 public boolean superDispatchTouchEvent(MotionEvent event) {
         return super.dispatchTouchEvent(event);
     }
 ```
-DecorView中的superDispatchTouchEvent直接调用父类的dispatchTouchEvent，
-而在FrameLayout中没有重写dispatchTouchEvent函数，所以会直接调用到ViewGroup的dispatchTouchEvent函数
+> DecorView 继承自 FrameLayout，FrameLayout 继承自 ViewGroup
+DecorView中的 superDispatchTouchEvent 直接调用父类的 dispatchTouchEvent，
+而在FrameLayout 中没有重写 dispatchTouchEvent 函数，所以会直接调用到 ViewGroup 的 dispatchTouchEvent 函数
 
 ## ViewGroup
 
@@ -101,7 +106,7 @@ public boolean onFilterTouchEventForSecurity(MotionEvent event) {
 对事件安全过滤的函数，正常情况都能通过。
 接着看dispatchTouchEvent函数
 
-```
+```java
 final int action = ev.getAction();
 final int actionMasked = action & MotionEvent.ACTION_MASK;
 
@@ -124,24 +129,34 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 final boolean intercepted;
 if (actionMasked == MotionEvent.ACTION_DOWN
         || mFirstTouchTarget != null) {
+            // 当是事件的起点，获取此连续事件已经获取到对应的 target时
+            // 先获取子视图中是否设置了 外部拦截，
     final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
+
     if (!disallowIntercept) {
+        // 如果子视图允许外部拦截 即 disallowIntercept = false，默认为false
+        // 进行内部拦截判断，看 viewgroup 的拦截逻辑
         intercepted = onInterceptTouchEvent(ev);
         ev.setAction(action); // restore action in case it was changed
     } else {
+        // 子视图禁止外部拦截，则事件必须尝试向下分发，不能在当前 viewgroup 拦截
         intercepted = false;
     }
 } else {
     // There are no touch targets and this action is not an initial down
     // so this view group continues to intercept touches.
+    // 当 不是连续事件的起点，且 mFirstTouchTarget = null， 说明无视图处理了 ACTION_DOWN 事件，则没必要再向下分发该连续事件，直接拦截
     intercepted = true;
 }
 
 ```
-这里是判断是否开启拦截，注意这里的判断逻辑，intercepted是是否拦截标志位
+这里是判断是否开启拦截，注意这里的判断逻辑，intercepted 是是否拦截标志位
 disallowIntercept： 是否允许拦截，此处是一个外部拦截，在子视图中设置的，子视图设置是否让父容器拦截事件
-如果disallowIntercept = false，再取执行内部拦截，onInterceptTouchEvent，查看ViewGroup是否拦截，为内部拦截
-disallowIntercept为true时，代表子视图不允许父容器拦截，则intercepted = false;
+如果 disallowIntercept = false，再取执行内部拦截, onInterceptTouchEvent ,查看 ViewGroup 是否拦截，为内部拦截
+disallowIntercept 为true时，代表子视图不允许父容器拦截，则 intercepted = false;
+
+> 此处 else 的逻辑， 走到 else 说明： actionMasked 不是 ACTION_DOWN ，说明是一个后续事件，而且 mFirstTouchTarget = null
+> 说明 在这一个连续事件中，没有视图消费 ACTION_DOWN 事件，所以后续的事件也不再向下分发。
 
 
 ```java
@@ -158,9 +173,9 @@ final boolean split = (mGroupFlags & FLAG_SPLIT_MOTION_EVENTS) != 0;
 TouchTarget newTouchTarget = null;
 boolean alreadyDispatchedToNewTouchTarget = false;
 ``` 
-当被拦截时，或者touchTarget不为空时，设置事件的TargetAccessibilityFocus为false
+当被拦截时，或者 touchTarget 不为空时，设置事件的 TargetAccessibilityFocus 为false
 然后判断事件是否是取消事件
-初始化一个变量alreadyDispatchedToNewTouchTarget=false, 是否已经将事件绑定到一个targetView
+初始化一个变量 alreadyDispatchedToNewTouchTarget=false , 是否已经将事件绑定到一个targetView
 
 
 ```java
@@ -178,10 +193,10 @@ if (!canceled && !intercepted) {
     ......
 }
 ```
-在上述代码段中，其实只是执行了一个操作，即遍历子View，获取该事件对应的处理的View。
+在上述代码段中，其实只是执行了一个操作，即遍历子 View ，获取该事件对应的处理的 View 。
 注意这里有一个函数调用 dispatchTransformedTouchEvent
 
-当遍历找到需要处理这个事件的View或者确定不存在该View时，即执行这个函数，对这个事件进行重新分发
+当遍历找到需要处理这个事件的 View 或者 确定不存在该 View 时，即执行这个函数，对这个事件进行重新分发
 ```java
 private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
             View child, int desiredPointerIdBits) {
@@ -258,13 +273,13 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
 }
 
 ```
-上述函数总结其实就是判断childView是否为空，如果为空的话，就再将事件转交给View.dispatchTouchEvent来处理，
-super.dispatchTouchEvent，因为ViewGroup继承自View，此时会调用到View.dispatchTouchEvent
-如果childView存在，则执行childView.dispatchTouchEvent，如果childView还是ViewGroup，还会再次执行这个过程，
+上述函数总结其实就是判断 childView 是否为空，如果为空的话，就再将事件转交给 View.dispatchTouchEvent 来处理，
+super.dispatchTouchEvent，因为 ViewGroup 继承自 View，此时会调用到 View.dispatchTouchEvent
+如果 childView 存在，则执行 childView.dispatchTouchEvent，如果 childView 还是 ViewGroup ，还会再次执行这个过程，
 遍历-找寻子View-分发，注意在分发过程中，如果已经返回为true了，则不会再向下分发。
 
 
-接下来看View的dispatchTouchEvent
+接下来看 View 的 dispatchTouchEvent
 
 ## View
 
