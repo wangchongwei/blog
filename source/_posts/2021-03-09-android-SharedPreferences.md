@@ -448,8 +448,9 @@ private void enqueueDiskWrite(final MemoryCommitResult mcr,
 ```
 
 ### commit、apply差异
-从上面的注释也可以看出， commit会直接在当前线程执行 writeToDiskRunnable.run();
-而 apply 会将 writeToDiskRunnable 加入队列 QueuedWork.queue(writeToDiskRunnable, !isFromSyncCommit);等待线程池执行任务。
+从上面的注释也可以看出:
+* commit会直接在当前线程执行 writeToDiskRunnable.run();
+* 而 apply 会将 writeToDiskRunnable 加入队列 QueuedWork.queue(writeToDiskRunnable, !isFromSyncCommit);等待线程池执行任务。
 
 
 ## 总结

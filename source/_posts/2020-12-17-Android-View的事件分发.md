@@ -344,7 +344,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
 }
 ```
 
-再看一下onTouchEvent事件，onTouchEvent是对事件的处理
+再看一下 onTouchEvent 事件，onTouchEvent是对事件的处理
 
 
 ```java
@@ -358,15 +358,24 @@ if ((viewFlags & ENABLED_MASK) == DISABLED) {
     return clickable;
 }
 ```
-如果View是不可点击的，如：ImageView,直接return false
+* 如果View是不可点击的，如：ImageView,直接return false
 
-View里因为设置了 onClickListener(), 这样就导致 View是 clickable (或者可以直接在xml里加上android:clickable=”true”)，即可点击，那么View.onTouchEvent就会永远返回 True, 代表View consume了该事件。
-注意：只要View consume了该事件，那么该事件既不会往下传(不会传给子view)，也不会往上传(后面Activity/ViewGroup 的 onTouchEvent将不会再调用)。
+* View里因为设置了 onClickListener(), 这样就导致 View是 clickable (或者可以直接在xml里加上android:clickable=”true”)，即可点击，
+* 那么View.onTouchEvent就会永远返回 True, 代表View consume了该事件。
+> 注意：只要View consume了该事件，那么该事件既不会往下传(不会传给子view)，也不会往上传(后面Activity/ViewGroup 的 onTouchEvent将不会再调用)。
+>
+> View中不存在拦截，只有ViewGroup才有拦截
 
-View中不存在拦截，只有ViewGroup才有拦截
 
 
+## 总结：
+* 事件 Event 从 Activity 分发到 PhoneWindow 再到 DecorView 再到自己写的视图中，每一步都会先判断是否拦截，如果拦截，则不继续向下分发，而是执行当前拦截层的 onTouchEvent事件
+* 当事件分发到了自己写的视图中时，因为所有的视图都是View的子集，包括ViewGroup，所有事件其实是在View、ViewGroup中一层一层向下分发。
+* 在 ViewGroup 分发中，会先判断内部子View是否允许外部拦截，默认允许，此时会执行 ViewGroup 的 onTouchEvent 事件
+* 如果ViewGroup未拦截事件，则ViewGroup会遍历子View，继续分发过程，直到找到消费该事件的targetView
+* 如果该事件无子View消费，则该事件又会向上传递，一直到Activity 的 onTouchEvent 事件
 
+* 关于可点击View的click事件与touch事件监听：dispatchTouchEvent>onInterceptTouchEvent(ViewGroup才有)>onTouch>onTouchEvent>onClick。
 
 
 
