@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog"><title>ip地址详解 | Watch And Learn</title><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ip地址详解</h1><a id="logo" href="/.">Watch And Learn</a><p class="description">Plan</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">ip地址详解</h1><div class="post-meta"><a href="/blog/2022/07/ip地址详解.html#comments" class="comment-count"></a><p><span class="date">Jul 11, 2022</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>Schlägt</i></i></span></p></div><div class="post-content"><p>参考地址：<a href="https://blog.csdn.net/qq_42499737/article/details/118859015" target="_blank" rel="noopener">https://blog.csdn.net/qq_42499737/article/details/118859015</a></p>
+<p>IP地址是一个唯一标识，是一段网络编码（二进制），由32位组成的，它为互联网上的每一个网络和每一台主机分配一个逻辑地址</p>
+<ul>
+<li><p>常见的IP地址</p>
+<ul>
+<li>IPv4</li>
+<li>IPv6</li>
+</ul>
+</li>
+<li><p>IP地址的形式： x.x.x.x 每个X的范围：0-255</p>
+</li>
+<li><p>IP地址对应于OSI参考模型的第三层 <strong>网络层</strong>，对应TCP/IP体系结构中第二层<strong>网际层</strong><br>工作在网络层的路由器根据目标IP和源IP来判断是否属于同一网段，如果是不同网段，则转发数据包。</p>
+</li>
+</ul>
+<h2 id="IP地址格式-amp-表示"><a href="#IP地址格式-amp-表示" class="headerlink" title="IP地址格式 &amp; 表示"></a>IP地址格式 &amp; 表示</h2><ul>
+<li><p>在计算机二进制中，1个字节 = 8位 = 8bit（比特）</p>
+</li>
+<li><p>IP地址(IPv4)由32位二进制数组成，分为4段（4个字节），每一段为8位二进制数（1个字节）<br>每一段8位二进制，中间使用英文的标点符号“.”隔开</p>
+</li>
+<li><p>由于二进制数太长，为了便于记忆和识别，把每一段8位二进制数转成十进制，大小为0至255。</p>
+</li>
+<li><p>IP地址表示为：xxx.xxx.xxx.xxx</p>
+</li>
+</ul>
+<blockquote>
+<p>IP地址的这种表示法叫做“点分十进制表示法”。<br>举例： 210.21.196.6就是一个IP地址的表示。</p>
+</blockquote>
+<h2 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h2><ul>
+<li><p>局域网通信规则： 在同一个局域网中所有的IP必须在同一网段中才可以互相通信；</p>
+</li>
+<li><p>IP地址构成： 网络位+主机位（网络位相同的地址才能称为同一个网段）</p>
+</li>
+<li><p>子网掩码： 用来确定主机位，常见的有三种：</p>
+<ul>
+<li>255.0.0.0</li>
+<li>255.255.0.0</li>
+<li>255.255.255.0</li>
+</ul>
+</li>
+</ul>
+<p>例如： </p>
+<ul>
+<li><p>10.1.1.1 255.255.255.0</p>
+<ul>
+<li>这个网段是10.1.1 网段，名字叫.1</li>
+</ul>
+</li>
+<li><p>10.1.1.1 255.0.0.0</p>
+<ul>
+<li>这个的网段是10. 名字叫.1.1.1</li>
+</ul>
+</li>
+</ul>
+<h2 id="IP地址详解"><a href="#IP地址详解" class="headerlink" title="IP地址详解"></a>IP地址详解</h2><ul>
+<li><p>国际标准组织ISO定义地址分类：五大类（以IP地址的第一位来进行区分的，与后三位没有关系）</p>
+<ul>
+<li>A类： 1-126 默认子网掩码 255.0.0.0</li>
+<li>B类： 128-191 默认子网掩码 255.255.0.0</li>
+<li>C类： 192-223 默认子网掩码 255.255.255.0</li>
+<li>D类： 224-239 组播地址</li>
+<li>E类： 240-254 科研使用</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>192.168.1.64 C类  因为第一位为192 处于 192-223 区间，所以是C类 ，网段就是 192.168.1  名字是 1<br>10.1.1.8 A类      因为第一位为10 处于 1-126 区间，所以是A类， 网段是 10. 名字叫 .1.1.8</p>
+</blockquote>
+<h3 id="A类地址："><a href="#A类地址：" class="headerlink" title="A类地址："></a>A类地址：</h3><ul>
+<li><p>A类地址范围：1.0.0.0 - 126.255.255.255，其中0和127作为特殊地址。</p>
+</li>
+<li><p>A类网络默认子网掩码为255.0.0.0，也可写作/8。</p>
+</li>
+<li><p>A类网络最大主机数量是256×256×256-2=166777214（减去1个主机位为0的网络地址和1个广播地址）。</p>
+</li>
+</ul>
+<blockquote>
+<p>在计算机网络中，主机ID全部为0的地址为网络地址，而主机ID全部为1的地址为广播地址，这2个地址是不能分配给主机用的</p>
+</blockquote>
+<h3 id="B类地址："><a href="#B类地址：" class="headerlink" title="B类地址："></a>B类地址：</h3><ul>
+<li>B类地址第1字节（最高位固定是10）和第2字节为网络地址，另外2个字节为主机地址。</li>
+<li>B类地址范围：128.0.0.0 - 191.255.255.255。</li>
+<li>B类网络默认子网掩码为255.255.0.0，也可写作/16。</li>
+<li>B类网络最大主机数量256×256-2=65534。</li>
+</ul>
+<h3 id="C类地址"><a href="#C类地址" class="headerlink" title="C类地址"></a>C类地址</h3><ul>
+<li>C类地址第1字节（最高位固定是110）、第2字节和第3个字节，另外1个字节为主机地址。</li>
+<li>C类地址范围：192.0.0.0 - 223.255.255.255。</li>
+<li>C类网络默认子网掩码为255.255.255.0，也可写作/24。</li>
+<li>C类网络最大主机数量256-2=254。</li>
+</ul>
+<h3 id="D类地址"><a href="#D类地址" class="headerlink" title="D类地址"></a>D类地址</h3><ul>
+<li>D类地址不分网络地址和主机地址，它的第1个字节的最高位固定是1110。</li>
+<li>D类地址用于组播（也称为多播）的地址，无子网掩码。</li>
+<li>D类地址范围：224.0.0.0 - 239.255.255.255。</li>
+</ul>
+<h3 id="E类地址："><a href="#E类地址：" class="headerlink" title="E类地址："></a>E类地址：</h3><ul>
+<li>E类地址也不分网络地址和主机地址，它的第1个字节的最高位固定是11110。</li>
+<li>E类地址范围：240.0.0.0 - 255.255.255.255。</li>
+<li>其中240.0.0.0-255.255.255.254作为保留地址，主要用于Internet试验和开发，255.255.255.255作为广播地址。</li>
+</ul>
+<h3 id="特殊IP地址"><a href="#特殊IP地址" class="headerlink" title="特殊IP地址"></a>特殊IP地址</h3><p>以下这些特殊IP地址都是不能分配给主机用的地址：</p>
+<ul>
+<li>主机ID全为0的地址：特指某个网段，比如：192.168.10.0 255.255.255.0，指192.168.10.0网段。</li>
+<li>主机ID全为1的地址：特指该网段的全部主机，比如：192.168.10.255，如果你的计算机发送数据包使用主机ID全是1的IP地址，数据链层地址用广播地址FF-FF-FF-FF-FF-FF。</li>
+<li>127.0.0.1：是本地环回地址，指本机地址，一般用来测试使用。回送地址(127.x.x.x)是本机回送地址(Loopback Address)，即主机IP堆栈内部的IP地址。</li>
+<li>169.254.0.0：169.254.0.0-169.254.255.255实际上是自动私有IP地址。</li>
+<li>0.0.0.0：如果计算机的IP地址和网络中的其他计算机地址冲突，使用ipconfig命令看到的就是0.0.0.0，子网掩码也是0.0.0.0。</li>
+</ul>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p>10.1.1.1<br>255.255.255.0</p>
+<p>10.1.1.1属于哪个网段，有多少可用IP地址？</p>
+<p>答： 10.1.1.1属于10.1.1.0网段<br>10.1.1.0网段可用IP地址范围： 10.1.1.1-10.1.1.254<br>10.1.1.0 网段的广播地址： 10.1.1.255</p>
+<h3 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h3><p>10.1.1.1<br>255.255.0.0<br>10.1.1.1属于哪个网段，有多少可用IP地址？</p>
+<p>答：<br>答： 10.1.1.1属于10.1.0.0网段<br>10.1.0.0网段可用IP地址范围： 10.1.0.1-10.1.255.254（65534）<br>10.1.0.0 网段的广播地址： 10.1.255.255</p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div><div class="tags"><a href="/tags/软考/">软考</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/blog/2022/07/HTTP详解.html" class="pre">HTTP详解</a><a href="/blog/2022/07/Socket详解.html" class="next">Socket详解</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC80MTc1MS8xODI5Nw=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">Inhalte</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IP地址格式-amp-表示"><span class="toc-text">IP地址格式 &amp; 表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子网掩码"><span class="toc-text">子网掩码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP地址详解"><span class="toc-text">IP地址详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A类地址："><span class="toc-text">A类地址：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B类地址："><span class="toc-text">B类地址：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C类地址"><span class="toc-text">C类地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D类地址"><span class="toc-text">D类地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#E类地址："><span class="toc-text">E类地址：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊IP地址"><span class="toc-text">特殊IP地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题一"><span class="toc-text">问题一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题二"><span class="toc-text">问题二</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ViewStub.html">ViewStub</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ReentrantLock-解析.html">ReentrantLock 解析</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/HTTP详解.html">HTTP详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ip地址详解.html">ip地址详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/Socket详解.html">Socket详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/TCP协议详解.html">TCP协议详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/计算机网络.html">计算机网络</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/程序设计语言.html">程序设计语言</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/面向对象.html">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/软件工程基础知识.html">软件工程基础知识</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> Tags</i></div><div class="tagcloud"><a href="/tags/wechatApp/" style="font-size: 15px;">wechatApp</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/react-spring/" style="font-size: 15px;">react+spring</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/flutter/" style="font-size: 15px;">flutter</a> <a href="/tags/react-native/" style="font-size: 15px;">react-native</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/kotlin/" style="font-size: 15px;">kotlin</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/facebook/" style="font-size: 15px;">facebook</a> <a href="/tags/andorid/" style="font-size: 15px;">andorid</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/面试/" style="font-size: 15px;">面试</a> <a href="/tags/c语言/" style="font-size: 15px;">c语言</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/Jetpack/" style="font-size: 15px;">Jetpack</a> <a href="/tags/android-Jetpack/" style="font-size: 15px;">android-Jetpack</a> <a href="/tags/live/" style="font-size: 15px;">live</a> <a href="/tags/软考/" style="font-size: 15px;">软考</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> Archiv</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> Blogroll</i></div><ul></ul><a href="http://subblogzhaoxunyongm70.lofter.com/" title="lofter" target="_blank">lofter</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">RSS</a> |  <a href="/about/">Über</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">justin.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?0af0c9cfcd648be735ccf119d51ae564";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
