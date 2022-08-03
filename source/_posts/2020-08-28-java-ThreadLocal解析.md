@@ -6,7 +6,7 @@ tags: java
 
 # ThreadLocal
 
-ThreadLocal 是一个线程的内部存储类，对于被存储的对象，在不同的线程读取的变量是独立的。
+* ThreadLocal 是一个线程的内部存储类，对于被存储的对象，在不同的线程读取的变量是独立的。
 
 实现原理是：对每一个线程都有一个 ThreadLocalMap，ThreadLocal 维护每个 ThreadLocalMap 中的值
 ThreadLocalMap 内部是一个[]Enter, 不同的 ThreadLocal 都是存储在线程的同一个 ThreadLocalMap 中的，只是下标位置不同，
@@ -39,8 +39,8 @@ public void set(T value) {
 }
 ```
 
-当调用 set 函数时，会去获取当前线程的 ThreadLocalMap 对象，该对象是在 Thread.java 中申明，默认值为 null。
-当 map 为 null 时，则调用 createMap,为 threadLocals 对象赋值，不为 null，在调用 ThreadLocalMap 中的 set 函数，将值保存到数组中
+* 当调用 set 函数时，会去获取当前线程的 ThreadLocalMap 对象，该对象是在 Thread.java 中申明，默认值为 null。
+* 当 map 为 null 时，则调用 createMap,为 threadLocals 对象赋值，不为 null，在调用 ThreadLocalMap 中的 set 函数，将值保存到数组中
 
 ### get
 
@@ -176,7 +176,7 @@ static class ThreadLocalMap {
 
 ```
 
-getEntry 函数就是获取 key 对应的节点 Entry
+* getEntry 函数就是获取 key 对应的节点 Entry
 在 getEntry、set 函数中可以看到 value 存储在[]Entry 中的下标位置是由 key.threadLocalHashCode & (len-1)计算得出的。
 就是 ThreadLocal 中的 threadLocalHashCode 对[]Entry 长度取模
 getEntry，通过下标获取 e，如果不为 null 而且再次校验 key 相等，则返回 e
@@ -222,10 +222,12 @@ private void resize() {
 
 ```
 
-当 Entry[] 中存入的值数量已达到数组长度的 3/4；
-则会调用 resize 函数，调整 Entry[]的长度，
-将新数组长度\*2，遍历老数组，
-重新获取下标 h，判断 h 处是否有值，无值填充，有值则重新获取 h，再填充
+* 当 Entry[] 中存入的值数量已达到数组长度的 3/4；
+* 则会调用 resize 函数，调整 Entry[]的长度，
+* 将新数组长度\*2，遍历老数组，
+* 重新获取下标 h，判断 h 处是否有值，无值填充，有值则重新获取 h，再填充
+
+**ThreadLocalMap 与HashMap有很多相似之处**
 
 ### Entry
 
@@ -259,7 +261,7 @@ Entry 虽然是继承自弱引用，但是存储的 value 是强引用，
 所以在 ThreadLocal 仍然存在内存泄漏可能，
 即使在 set 时会调用 replaceStaleEntry 来清理数据
 
-最好是在确定线程中不再使用 ThreadLocal 中线程副本时，调用 remove 函数，清除线程副本
+**最好是在确定线程中不再使用 ThreadLocal 中线程副本时，调用 remove 函数，清除线程副本**
 
 ## ThreadLocal 线程不安全
 
