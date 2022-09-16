@@ -61,12 +61,12 @@ public File getSharedPrefsFile(String name) {
 
 
 
-ContextImpl 中 维护有一个 静态集合 sSharedPrefs = ArrayMap<String, ArrayMap<String, SharedPreferencesImpl>> 
+ContextImpl 中维护有一个静态集合 sSharedPrefs = ArrayMap<String, ArrayMap<String, SharedPreferencesImpl>> 
 sSharedPrefs 全局唯一
 
 该map中 key为 应用包名，value 为一个 packagePrefs ArrayMap<String, SharedPreferencesImpl>,
 
-SharedPreferencesImpl 是单个sp实例信息， 文件、数据map缓存
+SharedPreferencesImpl 是单个sp实例信息，文件、数据map缓存
 
 packagePrefs 存有一个应用中所有的 sp实例 SharedPreferencesImpl
 
