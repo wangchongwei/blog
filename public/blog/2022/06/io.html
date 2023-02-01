@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog"><title>IO | Watch And Learn</title><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">IO</h1><a id="logo" href="/.">Watch And Learn</a><p class="description">Plan</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">IO</h1><div class="post-meta"><a href="/blog/2022/06/io.html#comments" class="comment-count"></a><p><span class="date">Jun 22, 2022</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>Schlägt</i></i></span></p></div><div class="post-content"><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="IO是什么"><a href="#IO是什么" class="headerlink" title="IO是什么"></a>IO是什么</h2><blockquote>
+<p>程序内部和外部进行数据交互的过程，就叫输入输出。</p>
+<blockquote>
+<p>程序内部是谁?内存<br>程序外部是谁?</p>
+<blockquote>
+<p>一般来说是两类:本地文件和网络。<br>也有别的情况，比如你和别的程序做交互，和你交互的程序也属于外部，但一般来说，就是文件和网络这么两种。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>从文件里或者从网络上读数据到内存里，就叫输入;从内存里写到文件里或者发送到网络上，就叫输出</p>
+</blockquote>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><ul>
+<li><p>使用流，例如 FileInputStream / FileOutputStream</p>
+</li>
+<li><p>可以用 Reader 和 Writer 来对字符进行读写</p>
+</li>
+<li><p>流的外面还可以套别的流，层层嵌套都可以</p>
+</li>
+<li><p>BufferedXXXX 可以给流加上缓冲。对于输入流，是每次多读一些放在内存 里面，下次再去数据就不用再和外部做交互(即不必做 IO 操作);对于输 出流，是把数据先在内存里面攒一下，攒够一波了再往外部去写。</p>
+</li>
+</ul>
+<p>通过缓存的方式减少和和外部的交互，从而可以提高效率</p>
+<ul>
+<li><p>文件的关闭:close()</p>
+</li>
+<li><p>需要用到的写过的数据，flush() 一下可以保证数据真正写到外部去(读数据 没有这样的担忧)</p>
+</li>
+<li><p>这个就是 Java 的 I/O，它的原理就是内存和外界的交互</p>
+</li>
+</ul>
+<p>IO 又可以分为 BIO、NIO、AIO</p>
+<h2 id="BIO、NIO、AIO-区别"><a href="#BIO、NIO、AIO-区别" class="headerlink" title="BIO、NIO、AIO 区别"></a>BIO、NIO、AIO 区别</h2><h3 id="IO模型主要分类："><a href="#IO模型主要分类：" class="headerlink" title="IO模型主要分类："></a>IO模型主要分类：</h3><ul>
+<li><p>同步(synchronous)IO与异步(asynchronous)IO</p>
+</li>
+<li><p>阻塞(blocking)IO与非阻塞(non-blocking)IO</p>
+</li>
+<li><p>同步阻塞IO(blocking-IO)即为 BIO</p>
+</li>
+<li><p>同步非阻塞IO(non-blocking-IO)即为 NIO</p>
+</li>
+<li><p>异步非阻塞IO(synchronous-non-blocking-IO)即为 AIO</p>
+</li>
+</ul>
+<h3 id="BIO（同步阻塞I-O模式）"><a href="#BIO（同步阻塞I-O模式）" class="headerlink" title="BIO（同步阻塞I/O模式）"></a>BIO（同步阻塞I/O模式）</h3><p>数据的读取、写入等操作必须阻塞在一个线程内等待操作完成</p>
+<h3 id="NIO（同步非阻塞I-O模式）"><a href="#NIO（同步非阻塞I-O模式）" class="headerlink" title="NIO（同步非阻塞I/O模式）"></a>NIO（同步非阻塞I/O模式）</h3><p>同时支持阻塞与非阻塞模式，NIO的做法是叫一个线程不断的轮询IO操作的的状态，看看是否有任务的状态发生了改变，从而进行下一步的操作。</p>
+<p>默认是阻塞式的</p>
+<h3 id="AIO-（异步非阻塞I-O模型）"><a href="#AIO-（异步非阻塞I-O模型）" class="headerlink" title="AIO （异步非阻塞I/O模型）"></a>AIO （异步非阻塞I/O模型）</h3><p>异步非阻塞与同步非阻塞的区别在哪里？异步非阻塞无需一个线程去轮询所有IO操作的状态改变，在相应的状态改变后，系统会通知对应的线程来处理。</p>
+<p>对应到IO操作中就是，为每次IO操作上面装了一个开关，IO操作完毕之后，会自动通知任务完成。</p>
+<h3 id="IO-与-NIO-的区别"><a href="#IO-与-NIO-的区别" class="headerlink" title="IO 与 NIO 的区别"></a>IO 与 NIO 的区别</h3><p>IO 面向流</p>
+<p>NIO 面向缓冲区，具备 选择器(Selectors)</p>
+<h3 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h3><ul>
+<li><p>同步</p>
+<ul>
+<li>发送一个请求，等待返回，再发送下一个请求，同步可以避免出现死锁，脏读的发生。</li>
+</ul>
+</li>
+<li><p>异步</p>
+<ul>
+<li>发送一个请求，不等待返回，随时可以再发送下一个请求，可以提高效率，保证并发。</li>
+</ul>
+</li>
+</ul>
+<h3 id="阻塞与非阻塞的区别"><a href="#阻塞与非阻塞的区别" class="headerlink" title="阻塞与非阻塞的区别"></a>阻塞与非阻塞的区别</h3><ul>
+<li>阻塞</li>
+</ul>
+<blockquote>
+<p>传统的IO流都是阻塞式的。也就是说，当一个线程调用read()或者write()方法时，该线程将被阻塞，直到有一些数据读读取或者被写入，在此期间，该线程不能执行其他任何任务。在完成网络通信进行IO操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量的客户端时，性能急剧下降。  </p>
+</blockquote>
+<ul>
+<li>非阻塞</li>
+</ul>
+<blockquote>
+<p>JavaNIO是非阻塞式的。当线程从某通道进行读写数据时，若没有数据可用时，该线程会去执行其他任务。线程通常将非阻塞IO的空闲时间用于在其他通道上执行IO操作，所以单独的线程可以管理多个输入和输出通道。因此NIO可以让服务器端使用一个或有限几个线程来同时处理连接到服务器端的所有客户端。  </p>
+</blockquote>
+<h2 id="NIO-3个核心概念"><a href="#NIO-3个核心概念" class="headerlink" title="NIO 3个核心概念"></a>NIO 3个核心概念</h2><p><img src="../../../images/nio.png" style="zoom:70%"></p>
+<p>NIO重点是把Channel（通道），Buffer（缓冲区），Selector（选择器）三个类之间的关系弄清楚。</p>
+<h3 id="缓冲区Buffer"><a href="#缓冲区Buffer" class="headerlink" title="缓冲区Buffer"></a>缓冲区Buffer</h3><p>Buffer是一个对象。它包含一些要写入或者读出的数据。在面向流的I/O中，可以将数据写入或者将数据直接读到Stream对象中。  </p>
+<p>在NIO中，所有的数据都是用缓冲区处理。这也就本文上面谈到的IO是面向流的，NIO是面向缓冲区的。  </p>
+<p>缓冲区实质是一个数组，通常它是一个字节数组（ByteBuffer），也可以使用其他类的数组。但是一个缓冲区不仅仅是一个数组，缓冲区提供了对数据的结构化访问以及维护读写位置（limit）等信息。  </p>
+<p>最常用的缓冲区是ByteBuffer，一个ByteBuffer提供了一组功能于操作byte数组。除了ByteBuffer，还有其他的一些缓冲区，事实上，每一种Java基本类型（除了Boolean）都对应一种缓冲区，具体如下：  </p>
+<ul>
+<li><p>ByteBuffer：字节缓冲区  </p>
+</li>
+<li><p>CharBuffer:字符缓冲区  </p>
+</li>
+<li><p>ShortBuffer：短整型缓冲区  </p>
+</li>
+<li><p>IntBuffer：整型缓冲区  </p>
+</li>
+<li><p>LongBuffer:长整型缓冲区  </p>
+</li>
+<li><p>FloatBuffer：浮点型缓冲区  </p>
+</li>
+<li><p>DoubleBuffer：双精度浮点型缓冲区  </p>
+</li>
+</ul>
+<h3 id="通道Channel"><a href="#通道Channel" class="headerlink" title="通道Channel"></a>通道Channel</h3><p>Channel是一个通道，可以通过它读取和写入数据，他就像自来水管一样，网络数据通过Channel读取和写入。</p>
+<p>通道和流不同之处在于通道是双向的，流只是在一个方向移动，而且通道可以用于读，写或者同时用于读写。</p>
+<p>因为Channel是全双工的，所以它比流更好地映射底层操作系统的API，特别是在UNIX网络编程中，底层操作系统的通道都是全双工的，同时支持读和写。</p>
+<p>Channel有四种实现：</p>
+<ul>
+<li><p>FileChannel:是从文件中读取数据。</p>
+</li>
+<li><p>DatagramChannel:从UDP网络中读取或者写入数据。</p>
+</li>
+<li><p>SocketChannel:从TCP网络中读取或者写入数据。</p>
+</li>
+<li><p>ServerSocketChannel:允许你监听来自TCP的连接，就像服务器一样。每一个连接都会有一个SocketChannel产生。</p>
+</li>
+</ul>
+<h3 id="多路复用器Selector"><a href="#多路复用器Selector" class="headerlink" title="多路复用器Selector"></a>多路复用器Selector</h3><p>Selector选择器可以监听多个Channel通道感兴趣的事情(read、write、accept(服务端接收)、connect，实现一个线程管理多个Channel，节省线程切换上下文的资源消耗。Selector只能管理非阻塞的通道，FileChannel是阻塞的，无法管理。</p>
+<h4 id="关键对象"><a href="#关键对象" class="headerlink" title="关键对象"></a>关键对象</h4><ul>
+<li><p>Selector：选择器对象，通道注册、通道监听对象和Selector相关。</p>
+</li>
+<li><p>SelectorKey：通道监听关键字，通过它来监听通道状态。</p>
+</li>
+</ul>
+<h4 id="监听注册"><a href="#监听注册" class="headerlink" title="监听注册"></a>监听注册</h4><p>监听注册在Selector</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socketChannel.register(selector, SelectionKey.OP_READ);</span><br></pre></td></tr></table></figure>
+<h4 id="监听的事件有"><a href="#监听的事件有" class="headerlink" title="监听的事件有"></a>监听的事件有</h4><ul>
+<li><p>OP_ACCEPT: 接收就绪，serviceSocketChannel使用的</p>
+</li>
+<li><p>OP_READ: 读取就绪，socketChannel使用</p>
+</li>
+<li><p>OP_WRITE: 写入就绪，socketChannel使用</p>
+</li>
+<li><p>OP_CONNECT: 连接就绪，socketChannel使用</p>
+</li>
+</ul>
+<h2 id="OKIO"><a href="#OKIO" class="headerlink" title="OKIO"></a>OKIO</h2><p>okhttp框架中，使用的io</p>
+<p>OKio本质上是对Java的NIO的一次扩展，并且做了缓存的优化，</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>它也是基于插管的，而且是单向的，输入源叫 Source，输出目标叫 Sink</li>
+<li>支持 Buffer<ul>
+<li>像 NIO 一样，可以对 Buffer 进行操作</li>
+<li>但不强制使用 Buffer</li>
+</ul>
+</li>
+</ul>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div><div class="tags"></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/blog/2022/06/android-API-更新.html" class="pre">android API 更新</a><a href="/blog/2022/06/jetpack-hilt.html" class="next">jetpack hilt</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC80MTc1MS8xODI5Nw=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">Inhalte</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IO"><span class="toc-text">IO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IO是什么"><span class="toc-text">IO是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用法"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BIO、NIO、AIO-区别"><span class="toc-text">BIO、NIO、AIO 区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IO模型主要分类："><span class="toc-text">IO模型主要分类：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BIO（同步阻塞I-O模式）"><span class="toc-text">BIO（同步阻塞I/O模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO（同步非阻塞I-O模式）"><span class="toc-text">NIO（同步非阻塞I/O模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AIO-（异步非阻塞I-O模型）"><span class="toc-text">AIO （异步非阻塞I/O模型）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO-与-NIO-的区别"><span class="toc-text">IO 与 NIO 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步与异步的区别"><span class="toc-text">同步与异步的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#阻塞与非阻塞的区别"><span class="toc-text">阻塞与非阻塞的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NIO-3个核心概念"><span class="toc-text">NIO 3个核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#缓冲区Buffer"><span class="toc-text">缓冲区Buffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通道Channel"><span class="toc-text">通道Channel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多路复用器Selector"><span class="toc-text">多路复用器Selector</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关键对象"><span class="toc-text">关键对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#监听注册"><span class="toc-text">监听注册</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#监听的事件有"><span class="toc-text">监听的事件有</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OKIO"><span class="toc-text">OKIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2022/11/面试题.html">面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/09/bug记录.html">bug记录</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/08/PV操作.html">PV操作</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/android系统启动流程.html">android系统启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ViewStub.html">ViewStub</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ReentrantLock-解析.html">ReentrantLock 解析</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/HTTP详解.html">HTTP详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/ip地址详解.html">ip地址详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/Socket详解.html">Socket详解</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/07/TCP协议详解.html">TCP协议详解</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> Tags</i></div><div class="tagcloud"><a href="/tags/wechatApp/" style="font-size: 15px;">wechatApp</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/facebook/" style="font-size: 15px;">facebook</a> <a href="/tags/flutter/" style="font-size: 15px;">flutter</a> <a href="/tags/react-native/" style="font-size: 15px;">react-native</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/react-spring/" style="font-size: 15px;">react+spring</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/kotlin/" style="font-size: 15px;">kotlin</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/andorid/" style="font-size: 15px;">andorid</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/面试/" style="font-size: 15px;">面试</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/c语言/" style="font-size: 15px;">c语言</a> <a href="/tags/Jetpack/" style="font-size: 15px;">Jetpack</a> <a href="/tags/live/" style="font-size: 15px;">live</a> <a href="/tags/软考/" style="font-size: 15px;">软考</a> <a href="/tags/android-Jetpack/" style="font-size: 15px;">android-Jetpack</a> <a href="/tags/bug/" style="font-size: 15px;">bug</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> Archiv</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> Blogroll</i></div><ul></ul><a href="http://subblogzhaoxunyongm70.lofter.com/" title="lofter" target="_blank">lofter</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">RSS</a> |  <a href="/about/">Über</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">justin.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?0af0c9cfcd648be735ccf119d51ae564";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
